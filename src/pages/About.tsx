@@ -9,13 +9,13 @@ const About = () => {
       name: 'Neeraj Kumhar',
       role: 'Founder & CEO',
       image: '/img/1.png',
-      bio: ' A passionate web developer and Founder of Visuark, specializing in crafting impactful digital solutions through expertise in Computer Science.'
+      bio: 'A passionate web developer and Founder of Visuark, specializing in crafting impactful digital solutions through expertise in Software Engineering.'
     },
     {
-      name: 'Yogesh Tandi',
+      name: 'Sunil Sharma',
       role: 'Co-Founder',
-      image: '/img/2.png',
-      bio: 'Full-stack developer passionate about creating scalable, performant web applications using cutting-edge technologies.'
+      image: '/img/4.png',
+      bio: 'Visionary co-founder driving strategic growth and innovation at Visuark with a strong background in business development and technology.'
     },
     {
       name: 'Vansh Katiyar',
@@ -24,10 +24,10 @@ const About = () => {
       bio: 'User experience specialist focused on creating intuitive, accessible designs that delight users and drive conversions.'
     },
     {
-      name: 'Sunil Sharma',
-      role: 'Video Producer',
-      image: '/img/4.png',
-      bio: 'Award-winning video producer with expertise in storytelling, motion graphics, and post-production workflows.'
+      name: 'Yogesh Tandi',
+      role: 'Web Developer',
+      image: '/img/2.png',
+      bio: 'Full-stack developer passionate about creating scalable, performant web applications using cutting-edge technologies.'
     }
   ];
 

@@ -29,19 +29,19 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-cyan-400" />,
       title: 'Email',
-      details: 'hello@visuark.com',
-      link: 'mailto:hello@visuark.com'
+      details: 'visuark.info@gmail.com',
+      link: 'mailto:visuark.info@gmail.com'
     },
     {
       icon: <Phone className="h-6 w-6 text-orange-400" />,
       title: 'Phone',
-      details: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      details: '+91 78785-39633',
+      link: 'tel:+917878539633'
     },
     {
       icon: <MapPin className="h-6 w-6 text-green-400" />,
       title: 'Location',
-      details: 'San Francisco, CA',
+      details: 'Rajasthan, IND',
       link: '#'
     },
     {
@@ -54,9 +54,9 @@ const Contact = () => {
 
   const socialLinks = [
     { icon: <Facebook className="h-6 w-6" />, link: '#', color: 'hover:text-blue-400', name: 'Facebook' },
-    { icon: <Twitter className="h-6 w-6" />, link: '#', color: 'hover:text-cyan-400', name: 'Twitter' },
-    { icon: <Instagram className="h-6 w-6" />, link: '#', color: 'hover:text-pink-400', name: 'Instagram' },
-    { icon: <Linkedin className="h-6 w-6" />, link: '#', color: 'hover:text-blue-500', name: 'LinkedIn' }
+    { icon: <Twitter className="h-6 w-6" />, link: 'https://x.com/Visuarkofficial', color: 'hover:text-cyan-400', name: 'Twitter' },
+    { icon: <Instagram className="h-6 w-6" />, link: 'https://www.instagram.com/visuarkofficial/', color: 'hover:text-pink-400', name: 'Instagram' },
+    { icon: <Linkedin className="h-6 w-6" />, link: 'https://www.linkedin.com/company/visuark/', color: 'hover:text-blue-500', name: 'LinkedIn' }
   ];
 
   const faqs = [
