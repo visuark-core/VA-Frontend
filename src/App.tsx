@@ -23,17 +23,13 @@ import Referral from './pages/Referral'; // <-- 1. IMPORT YOUR NEW PAGE
 
 function App() {
   const [loading, setLoading] = React.useState(true);
-
+  const location = window.location.pathname;
   React.useEffect(() => {
-    // Simulate loading for 1s or until window 'load' event
-    const handleLoad = () => setLoading(false);
-    window.addEventListener('load', handleLoad);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => {
-      window.removeEventListener('load', handleLoad);
-      clearTimeout(timer);
-    };
-  }, []);
+    setLoading(true);
+    // Wait for next paint, then hide loader
+    const timer = setTimeout(() => setLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, [location]);
 
   if (loading) {
     return <LoadingSpinner />;
