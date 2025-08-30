@@ -75,18 +75,18 @@ const Portfolio = () => {
               </p>
             </div>
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.1s' }}>
-              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client Photo" />
-              <h3 className="font-semibold text-lg text-cyan-400">Johnathan Doe</h3>
+              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="/img/Sunil.png" alt="Client Photo" />
+              <h3 className="font-semibold text-lg text-cyan-400">Sunil Soni</h3>
               <p className="text-gray-400">Chief Executive Officer</p>
-              <p className="text-gray-500 text-sm">Tech Innovators Inc.</p>
+              <p className="text-gray-500 text-sm">Satlaa Pvt. Ltd.</p>
             </div>
 
             {/* --- TESTIMONIAL 2 --- */}
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.2s' }}>
-              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client Photo" />
-              <h3 className="font-semibold text-lg text-cyan-400">Sarah Jenkins</h3>
+              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="/img/Dipanshu.png" alt="Client Photo" />
+              <h3 className="font-semibold text-lg text-cyan-400">Dipanshu Verma</h3>
               <p className="text-gray-400">Product Manager</p>
-              <p className="text-gray-500 text-sm">Creative Solutions</p>
+              <p className="text-gray-500 text-sm">Tech Frigate</p>
             </div>
             <div className="lg:col-span-2 card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex items-center" style={{ animationDelay: '0.3s' }}>
               <p className="text-gray-300 italic text-xl">
@@ -101,10 +101,10 @@ const Portfolio = () => {
               </p>
             </div>
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.5s' }}>
-              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="https://randomuser.me/api/portraits/men/56.jpg" alt="Client Photo" />
-              <h3 className="font-semibold text-lg text-cyan-400">Michael Chen</h3>
-              <p className="text-gray-400">Marketing Director</p>
-              <p className="text-gray-500 text-sm">Global Ventures</p>
+              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="/img/Vikash.jpg" alt="Client Photo" />
+              <h3 className="font-semibold text-lg text-cyan-400">Vikash Vaishnav</h3>
+              <p className="text-gray-400">Chief Executive Officer</p>
+              <p className="text-gray-500 text-sm">Vagwiin IT Solutions</p>
             </div>
 
           </div>
