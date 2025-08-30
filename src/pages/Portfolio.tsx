@@ -17,28 +17,41 @@ const Portfolio = () => {
             </p>
           </div>
 
-          <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-            <div className="scroller-inner flex items-center gap-16 w-max">
+            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+              <div
+                className="scroller-inner flex items-center gap-16 w-max animate-scroll-x"
+                style={{ animation: 'scrollX 30s linear infinite' }}
+              >
               {/* Note: Replace these src URLs with your actual logos */}
               {/* First Set */}
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Accenture_logo.svg" alt="Accenture Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/50/Jio_logo.svg" alt="Jio Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/TVS_Motor_Company_logo.svg" alt="TVS Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Hero_MotoCorp_logo.svg" alt="Hero MotoCorp Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="https://satlaa.com/_next/image?url=https%3A%2F%2Fapi.satlaa.com%2Fimages%2Fuploads%2Fcustom%2Flogo.png&w=384&q=75" alt="Satlaa Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/Graphic Line.png" alt="Monster Detailing Logo" />
+              <img className="h-12 sm:h-14 object-contain" src="/img/Vagwiinlogo.png" alt="Vagwiin Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
+              <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="Techfrigate Logo" />
               
               {/* Duplicate Set for seamless loop */}
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Accenture_logo.svg" alt="Accenture Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/50/Jio_logo.svg" alt="Jio Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/TVS_Motor_Company_logo.svg" alt="TVS Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Hero_MotoCorp_logo.svg" alt="Hero MotoCorp Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="https://satlaa.com/_next/image?url=https%3A%2F%2Fapi.satlaa.com%2Fimages%2Fuploads%2Fcustom%2Flogo.png&w=384&q=75" alt="Satlaa Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
+              <img className="h-12 sm:h-14 object-contain" src="/img/Vagwiinlogo.png" alt="Vagwiin Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
+              <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="TechFrigate Logo" />
             </div>
           </div>
+            {/* Endless scroll animation keyframes */}
+            <style>
+              {`
+                @keyframes scrollX {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(-50%); }
+                }
+              `}
+            </style>
         </section>
 
         {/* ============== TESTIMONIALS SECTION ============== */}
