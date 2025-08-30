@@ -27,19 +27,19 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-cyan-400" />,
       title: 'Email',
-      details: 'hello@visuark.com',
-      link: 'mailto:hello@visuark.com'
+      details: 'visuark.info@gmail.com',
+      link: 'mailto:visuark.info@gmail.com'
     },
     {
       icon: <Phone className="h-6 w-6 text-orange-400" />,
       title: 'Phone',
-      details: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      details: '+91 78785-539633',
+      link: 'tel:+9178785539633'
     },
     {
       icon: <MapPin className="h-6 w-6 text-green-400" />,
       title: 'Location',
-      details: 'San Francisco, CA',
+      details: 'Rajastan, IND',
       link: '#'
     }
   ];
