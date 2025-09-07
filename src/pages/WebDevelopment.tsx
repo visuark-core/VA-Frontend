@@ -36,34 +36,46 @@ const technologies = [
 
 const works = [
   {
-    image: '/img/CRC GLOBAL.png',
-    title: 'CRC Global',
-    description: 'Corporate website for a global consulting firm, featuring a modern UI and robust CMS integration.'
+    image: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80',
+    title: 'School Management System',
+    description: 'A complete platform for managing students, teachers, classes, and exams for schools and colleges.',
+    demo: '#',
+    github: '#'
   },
   {
-    image: '/img/MonsterDetailing.png',
-    title: 'Monster Detailing',
-    description: 'Brand site for a premium car detailing service, with booking system and gallery.'
+    image: 'https://images.unsplash.com/photo-1519494080410-f9aa8f52f1e1?auto=format&fit=crop&w=600&q=80',
+    title: 'Hospital Management App',
+    description: 'A web app for hospitals to manage patients, appointments, billing, and staff efficiently.',
+    demo: '#',
+    github: '#'
   },
   {
-    image: '/img/Graphic Line.png',
-    title: 'Graphic Line',
-    description: 'Portfolio and service showcase for a creative design agency.'
+    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+    title: 'Car Dealership Website',
+    description: 'A modern website for car dealerships to showcase inventory, schedule test drives, and manage leads.',
+    demo: '#',
+    github: '#'
   },
   {
-    image: '/img/TechfrigateLogo.png',
-    title: 'Techfrigate',
-    description: 'Landing page and dashboard for a SaaS startup, built with React and Node.js.'
+    image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+    title: 'E-commerce Platform',
+    description: 'A scalable e-commerce solution with product management, shopping cart, and payment integration.',
+    demo: '#',
+    github: '#'
   },
   {
-    image: '/img/Vagwiinlogo.png',
-    title: 'Vagwiin IT Solutions',
-    description: 'Corporate site for an IT solutions provider, with case studies and blog.'
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80',
+    title: 'Portfolio Website',
+    description: 'A personal portfolio site for designers and developers to showcase their work and skills.',
+    demo: '#',
+    github: '#'
   },
   {
-    image: '/img/AND Offset.png',
-    title: 'AND Offset',
-    description: 'Print and digital presence for a leading offset printing company.'
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+    title: 'Online Learning Platform',
+    description: 'A platform for online courses, video lessons, quizzes, and student progress tracking.',
+    demo: '#',
+    github: '#'
   },
 ];
 
@@ -146,7 +158,7 @@ const WebDevelopment = () => (
 
       {/* Gallery Animation */}
       <section className="container mx-auto px-4 mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Work Gallery</h2>
+        <h2 className="text-3xl font-bold text-white mb-8 text-center">Project Gallery</h2>
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
           initial="hidden"
@@ -169,7 +181,11 @@ const WebDevelopment = () => (
                 loading="lazy"
               />
               <h3 className="text-xl font-bold text-cyan-400 mb-2 text-center">{work.title}</h3>
-              <p className="text-gray-300 text-center text-sm">{work.description}</p>
+              <p className="text-gray-300 text-center text-sm mb-4">{work.description}</p>
+              <div className="flex gap-4 mt-auto">
+                <a href={work.demo} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold text-sm transition-colors">Live Demo</a>
+                <a href={work.github} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold text-sm transition-colors">GitHub</a>
+              </div>
             </motion.div>
           ))}
         </motion.div>
