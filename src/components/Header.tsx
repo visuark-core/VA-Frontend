@@ -31,10 +31,10 @@ const Header = () => {
       path: '/services',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Web Development', path: '/services#web-development' },
-        { name: 'Graphic Design', path: '/services#graphic-design' },
-        { name: 'Video Editing', path: '/services#video-editing' },
-        { name: 'UI/UX Design', path: '/services#ui-ux-design' }
+        { name: 'Web Development', path: '/services/web-development' },
+        { name: 'Graphic Design', path: '/services/graphic-design' },
+        { name: 'Video Editing', path: '/services/video-editing' },
+        { name: 'UI/UX Design', path: '/services/ui-ux-design' }
       ]
     },
     { name: 'Portfolio', path: '/portfolio' },

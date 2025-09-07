@@ -19,7 +19,11 @@ import TermsOfService from './pages/TermsOfService';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
-import Referral from './pages/Referral'; // <-- 1. IMPORT YOUR NEW PAGE
+import Referral from './pages/Referral';
+import WebDevelopment from './pages/WebDevelopment';
+import GraphicDesign from './pages/GraphicDesign';
+import VideoEditing from './pages/VideoEditing';
+import UIUXDesign from './pages/UIUXDesign';
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -47,6 +51,10 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/services/web-development" element={<WebDevelopment />} />
+                <Route path="/services/graphic-design" element={<GraphicDesign />} />
+                <Route path="/services/video-editing" element={<VideoEditing />} />
+                <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
                 <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/blog" element={<Blog />} />
@@ -54,7 +62,7 @@ function App() {
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/referral" element={<Referral />} /> {/* <-- 2. ADD THE ROUTE */}
+                <Route path="/referral" element={<Referral />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AnimatePresence>
