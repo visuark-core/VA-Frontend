@@ -82,6 +82,39 @@ const About = () => {
     { year: '2025', event: 'Innovation Lab', description: 'Launched R&D division for emerging technologies' }
   ];
 
+  const projects = [
+    {
+      name: 'Vagwiin Official Website',
+      description: 'Official website for Vagwiin, showcasing services and portfolio.',
+      image: '/img/Vagwin-official.png',
+      link: 'https://vagwiin.com'
+    },
+    {
+      name: 'Car Dealership Website',
+      description: 'A modern and responsive website for a car dealership.',
+      image: '/img/Car-Dealership.png',
+      link: 'https://neerajkumhar.github.io/Car-Delership-website/'
+    },
+    {
+      name: 'Taskflow',
+      description: 'Project management platform to streamline team collaboration and productivity.',
+      image: '/img/Taskflow.png',
+      link: 'https://remarkable-mandazi-a53c25.netlify.app'
+    },
+    {
+      name: 'Property Pulse',
+      description: 'A Real Estate platform for browsing and managing property listings.',
+      image: '/img/property-pulse.png',
+      link: 'https://dashing-beignet-75a287.netlify.app'
+    },
+    {
+      name: 'Vagwiin Vercel Deployment',
+      description: 'Alternative deployment of Vagwiin website on Vercel.',
+      image: '/img/Vagwiin-demo.png',
+      link: 'https://vagwiin.vercel.app/'
+    }
+  ];
+
   return (
     <PageTransition>
       <div className="pt-20">
@@ -241,6 +274,52 @@ const About = () => {
                     <svg className="absolute bottom-2 right-2 w-8 h-8 opacity-10 animate-pulse" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="blue" strokeWidth="2" fill="none" /></svg>
                   </div>
                 </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Live Projects */}
+        <section className="py-16 md:py-20 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Our <span className="text-cyan-400">Live Projects</span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Explore some of the exciting projects we've brought to life.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project, index) => (
+                <motion.a
+                  key={project.name}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="block bg-gray-800/50 rounded-lg p-6 border border-gray-700 hover:border-cyan-400 transition-all duration-300 hover:transform hover:scale-105 group"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-48 object-contain rounded-md mb-4 group-hover:opacity-80 transition-opacity duration-300"
+                  />
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+                    {project.name}
+                  </h3>
+                  <p className="text-gray-300 text-base">{project.description}</p>
+                </motion.a>
               ))}
             </div>
           </div>
