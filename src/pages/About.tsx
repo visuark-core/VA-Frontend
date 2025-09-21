@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Users, Award, Zap, Heart, Globe, Lightbulb, Shield } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
