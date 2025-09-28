@@ -18,15 +18,15 @@ const About = () => {
     },
     {
       name: 'Vansh Katiyar',
-      role: 'UX/UI Designer',
+      role: 'Web Developer',
       image: '/img/3.png',
-      bio: 'User experience specialist focused on creating intuitive, accessible designs that delight users and drive conversions.'
+      bio: 'Skilled web developer at Visuark, creating seamless and engaging digital experiences with expertise in front-end and back-end technologies.'
     },
     {
-      name: 'Yogesh Tandi',
-      role: 'Web Developer',
+      name: 'Tarun Singh',
+      role: 'Cyber Security Expert',
       image: '/img/2.png',
-      bio: 'Full-stack developer passionate about creating scalable, performant web applications using cutting-edge technologies.'
+      bio: 'Cyber Security Expert with a passion for safeguarding digital assets and ensuring robust security measures.'
     }
   ];
 
