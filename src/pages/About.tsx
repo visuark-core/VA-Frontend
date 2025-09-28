@@ -18,9 +18,9 @@ const About = () => {
     },
     {
       name: 'Vansh Katiyar',
-      role: 'Web Developer',
+      role: 'Team Leader',
       image: '/img/3.png',
-      bio: 'Skilled web developer at Visuark, creating seamless and engaging digital experiences with expertise in front-end and back-end technologies.'
+      bio: 'Dynamic team leader at Visuark, skilled in project management and fostering collaboration to deliver exceptional digital experiences.'
     },
     {
       name: 'Tarun Singh',
