@@ -24,7 +24,7 @@ const About = () => {
     },
     {
       name: 'Tarun Singh',
-      role: 'Cyber Security Expert',
+      role: 'Security Expert',
       image: '/img/2.png',
       bio: 'Cyber Security Expert with a passion for safeguarding digital assets and ensuring robust security measures.'
     }
