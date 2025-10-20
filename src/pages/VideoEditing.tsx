@@ -15,33 +15,6 @@ const features = [
 const tools = [
   'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Final Cut Pro', 'Cinema 4D', 'Audition', 'Photoshop', 'OBS Studio'
 ];
-const works = [
-  {
-    image: '/img/MonsterDetailing.png',
-    title: 'Monster Detailing',
-    description: 'Promotional video edits and motion graphics for a car detailing brand.'
-  },
-  {
-    image: '/img/TechfrigateLogo.png',
-    title: 'Techfrigate',
-    description: 'Explainer and onboarding videos for a SaaS startup.'
-  },
-  {
-    image: '/img/CRC GLOBAL.png',
-    title: 'CRC Global',
-    description: 'Corporate video production and editing for a global consulting firm.'
-  },
-  {
-    image: '/img/Graphic Line.png',
-    title: 'Graphic Line',
-    description: 'Animated logo and social media video content for a creative agency.'
-  },
-  {
-    image: '/img/AND Offset.png',
-    title: 'AND Offset',
-    description: 'Product showcase and print process videos for a printing company.'
-  },
-];
 
 const VideoEditing = () => (
   <PageTransition>
@@ -114,45 +87,7 @@ const VideoEditing = () => (
         </motion.div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="container mx-auto px-4 mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Video Gallery</h2>
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.15
-              }
-            }
-          }}
-        >
-          {works.map((work, i) => (
-            <motion.div
-              key={work.title}
-              className="bg-gray-800/80 rounded-xl shadow-lg p-4 flex flex-col items-center border-2 border-green-400 transition-transform duration-300"
-              variants={{
-                hidden: { opacity: 0, scale: 0.85 },
-                visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }
-              }}
-              whileHover={{ scale: 1.05, y: -12, boxShadow: '0 8px 32px 0 rgba(34,197,94,0.25)' }}
-            >
-              <img
-                src={work.image}
-                alt={work.title}
-                className="rounded-lg w-full h-40 object-contain mb-4 bg-gray-900 border border-cyan-900"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-bold text-green-400 mb-2 text-center">{work.title}</h3>
-              <p className="text-gray-300 text-center text-sm">{work.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+      {/* Gallery removed per request */}
 
       {/* Animated Call to Action */}
       <section className="container mx-auto px-4 text-center">

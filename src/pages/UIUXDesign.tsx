@@ -15,33 +15,6 @@ const features = [
 const tools = [
   'Figma', 'Adobe XD', 'Sketch', 'InVision', 'Principle', 'Zeplin', 'Miro', 'Balsamiq'
 ];
-const works = [
-  {
-    image: '/img/TechfrigateLogo.png',
-    title: 'Techfrigate',
-    description: 'UI/UX for SaaS dashboard and onboarding flows.'
-  },
-  {
-    image: '/img/CRC GLOBAL.png',
-    title: 'CRC Global',
-    description: 'Corporate web app design and user research.'
-  },
-  {
-    image: '/img/MonsterDetailing.png',
-    title: 'Monster Detailing',
-    description: 'Mobile-first booking and service experience.'
-  },
-  {
-    image: '/img/Graphic Line.png',
-    title: 'Graphic Line',
-    description: 'Design system and brand UI kit for a creative agency.'
-  },
-  {
-    image: '/img/Vagwiinlogo.png',
-    title: 'Vagwiin IT Solutions',
-    description: 'Enterprise dashboard and accessibility improvements.'
-  },
-];
 
 const UIUXDesign = () => (
   <PageTransition>
@@ -114,45 +87,7 @@ const UIUXDesign = () => (
         </motion.div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="container mx-auto px-4 mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 text-center">Our UI/UX Gallery</h2>
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.15
-              }
-            }
-          }}
-        >
-          {works.map((work, i) => (
-            <motion.div
-              key={work.title}
-              className="bg-gray-800/80 rounded-xl shadow-lg p-4 flex flex-col items-center border-2 border-purple-400 transition-transform duration-300"
-              variants={{
-                hidden: { opacity: 0, scale: 0.85 },
-                visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }
-              }}
-              whileHover={{ scale: 1.05, y: -12, boxShadow: '0 8px 32px 0 rgba(168,139,250,0.25)' }}
-            >
-              <img
-                src={work.image}
-                alt={work.title}
-                className="rounded-lg w-full h-40 object-contain mb-4 bg-gray-900 border border-purple-900"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-bold text-purple-400 mb-2 text-center">{work.title}</h3>
-              <p className="text-gray-300 text-center text-sm">{work.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+      {/* Gallery removed per request */}
 
       {/* Animated Call to Action */}
       <section className="container mx-auto px-4 text-center">
