@@ -94,31 +94,37 @@ const GraphicDesign = () => (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Simple</h3>
-            <p className="text-4xl font-extrabold text-orange-300 mb-4">$1,500</p>
+            <p className="text-4xl font-extrabold text-orange-300 mb-4">₹999/mo</p>
             <ul className="text-gray-300 mb-6 space-y-2">
-              <li>Logo & basic brand kit</li>
-              <li>Print-ready files</li>
-              <li>2 rounds of revisions</li>
+              <li>Up to 5 designs per month</li>
+              <li>2 revisions per design</li>
+              <li>72-hour turnaround time</li>
+              <li>JPG/PNG file formats (ready for web & social media)</li>
             </ul>
             <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
-            <p className="text-4xl font-extrabold text-orange-300 mb-4">$4,000</p>
+            <p className="text-4xl font-extrabold text-orange-300 mb-4">₹2,499/mo</p>
             <ul className="text-gray-300 mb-6 space-y-2">
-              <li>Brand identity</li>
-              <li>Multiple deliverables</li>
-              <li>Style guide</li>
+              <li>Up to 15 designs per month</li>
+              <li>5 revisions per design</li>
+              <li>48-hour turnaround time</li>
+              <li>Source files (AI, PSD, SVG) included</li>
+              <li>Social media kit with 2 design variations</li>
             </ul>
             <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
-            <p className="text-4xl font-extrabold text-orange-300 mb-4">$8,500</p>
+            <p className="text-4xl font-extrabold text-orange-300 mb-4">₹4,999/mo</p>
             <ul className="text-gray-300 mb-6 space-y-2">
-              <li>Full brand system</li>
-              <li>Marketing collateral</li>
-              <li>Ongoing support</li>
+              <li>Up to 40 designs per month</li>
+              <li>Unlimited small revisions</li>
+              <li>Priority turnaround (24–48 hours)</li>
+              <li>Source files + commercial license</li>
+              <li>Dedicated designer & monthly strategy call</li>
+              <li>Branding assets and basic style guide</li>
             </ul>
             <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
           </div>

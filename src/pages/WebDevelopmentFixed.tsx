@@ -127,7 +127,7 @@ const WebDevelopmentFixed = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
               <h3 className="text-xl font-bold text-white mb-2">Simple</h3>
-              <p className="text-4xl font-extrabold text-cyan-300 mb-4">$2,500</p>
+              <p className="text-4xl font-extrabold text-cyan-300 mb-4">₹7,500</p>
               <ul className="text-gray-300 mb-6 space-y-2">
                 <li>Basic website (up to 5 pages)</li>
                 <li>Responsive design</li>
@@ -137,7 +137,7 @@ const WebDevelopmentFixed = () => {
             </div>
             <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
               <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
-              <p className="text-4xl font-extrabold text-cyan-300 mb-4">$7,500</p>
+              <p className="text-4xl font-extrabold text-cyan-300 mb-4">₹20,000</p>
               <ul className="text-gray-300 mb-6 space-y-2">
                 <li>Custom web app</li>
                 <li>E-commerce or CMS</li>
@@ -147,7 +147,7 @@ const WebDevelopmentFixed = () => {
             </div>
             <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
               <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
-              <p className="text-4xl font-extrabold text-cyan-300 mb-4">$15,000</p>
+              <p className="text-4xl font-extrabold text-cyan-300 mb-4">₹45,000</p>
               <ul className="text-gray-300 mb-6 space-y-2">
                 <li>Enterprise-grade platform</li>
                 <li>Custom integrations & APIs</li>
