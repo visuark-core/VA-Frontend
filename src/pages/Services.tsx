@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Code, Palette, Video, Smartphone, ArrowRight, Check, Star } from 'lucide-react';
+import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
-  const [activeService, setActiveService] = useState('web-development');
 
   const services = [
     {
@@ -126,7 +125,7 @@ const Services = () => {
     }
   ];
 
-  const activeServiceData = services.find(service => service.id === activeService);
+  
 
   return (
     <PageTransition>
@@ -161,96 +160,23 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className={`bg-gray-800/50 rounded-lg p-8 border-2 border-gray-700 hover:border-${service.color}-400 transition-all duration-300 hover:transform hover:scale-105 cursor-pointer ${
-                    activeService === service.id ? `border-${service.color}-400` : ''
-                  }`}
-                  onClick={() => setActiveService(service.id)}
+                  className={`bg-gray-800/50 rounded-lg p-8 border-2 border-gray-700 hover:border-${service.color}-400 transition-all duration-300 hover:transform hover:scale-105`}
                 >
                   <div className="mb-6">{service.icon}</div>
                   <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
                   <p className="text-gray-300 mb-6">{service.shortDescription}</p>
-                  <button className="text-cyan-400 font-semibold flex items-center space-x-2 hover:text-cyan-300 transition-colors">
+                  <Link to={`/services/${service.id}`} className="text-cyan-400 font-semibold flex items-center space-x-2 hover:text-cyan-300 transition-colors">
                     <span>Learn More</span>
                     <ArrowRight className="h-4 w-4" />
-                  </button>
+                  </Link>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Service Details */}
-        {activeServiceData && (
-          <section className="py-20 bg-gradient-to-br from-gray-800 to-gray-900">
-            <div className="container mx-auto px-4">
-              <motion.div
-                key={activeService}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="grid lg:grid-cols-2 gap-16 items-center"
-              >
-                <div>
-                  <div className="flex items-center space-x-4 mb-6">
-                    {activeServiceData.icon}
-                    <h2 className="text-4xl font-bold text-white">{activeServiceData.title}</h2>
-                  </div>
-                  
-                  <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                    {activeServiceData.fullDescription}
-                  </p>
-
-                  <div className="grid md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                      <h4 className="text-white font-semibold mb-3 flex items-center">
-                        <Star className="h-5 w-5 text-yellow-400 mr-2" />
-                        Pricing
-                      </h4>
-                      <p className="text-cyan-400 font-bold text-xl">{activeServiceData.pricing}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold mb-3 flex items-center">
-                        <Star className="h-5 w-5 text-yellow-400 mr-2" />
-                        Timeline
-                      </h4>
-                      <p className="text-cyan-400 font-bold text-xl">{activeServiceData.timeline}</p>
-                    </div>
-                  </div>
-
-                  <div className="mb-8">
-                    <h4 className="text-white font-semibold mb-4">Technologies We Use:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {activeServiceData.technologies?.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg text-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-800/50 rounded-lg p-8 border border-gray-700">
-                  <h3 className="text-2xl font-bold text-white mb-6">What's Included:</h3>
-                  <ul className="space-y-3">
-                    {activeServiceData.features?.map((feature) => (
-                      <li key={feature} className="flex items-center text-gray-300">
-                        <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <button className="w-full mt-8 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105 transition-all duration-300">
-                    Get Started
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          </section>
-        )}
+        {/* Service details are intentionally removed from this overview page.
+            Each card now links to its dedicated service page for full details. */}
 
         {/* Process */}
         <section className="py-20 bg-gray-900">
