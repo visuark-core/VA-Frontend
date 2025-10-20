@@ -1,28 +1,54 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Linkedin, Clock, MessageCircle } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import { submitContactComplete } from '../utils/integrations';
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
   
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setSubmitStatus('success');
-      setIsSubmitting(false);
-      reset();
+    setSubmitStatus('idle');
+    setSubmitMessage('');
+
+    try {
+      // Submit to both Google Sheets AND send email
+      const result = await submitContactComplete({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        company: data.company || '',
+        service: data.service || '',
+        message: data.message
+      });
       
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 3000);
-    }, 2000);
+      if (result.success) {
+        setSubmitStatus('success');
+        setSubmitMessage(result.message);
+        reset();
+        
+        // Reset status after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle');
+          setSubmitMessage('');
+        }, 5000);
+      } else {
+        setSubmitStatus('error');
+        setSubmitMessage(result.message);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setSubmitMessage('An unexpected error occurred. Please try again.');
+      console.error('Contact form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -229,6 +255,8 @@ const Contact = () => {
                         ? 'bg-gray-600 cursor-not-allowed'
                         : submitStatus === 'success'
                         ? 'bg-green-500 hover:bg-green-400'
+                        : submitStatus === 'error'
+                        ? 'bg-red-500 hover:bg-red-400'
                         : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105'
                     } text-white`}
                   >
@@ -239,6 +267,8 @@ const Contact = () => {
                       </>
                     ) : submitStatus === 'success' ? (
                       <span>Message Sent Successfully!</span>
+                    ) : submitStatus === 'error' ? (
+                      <span>Try Again</span>
                     ) : (
                       <>
                         <Send className="h-5 w-5" />
@@ -246,6 +276,19 @@ const Contact = () => {
                       </>
                     )}
                   </button>
+
+                  {/* Status Messages */}
+                  {submitStatus === 'success' && (
+                    <div className="mt-4 p-4 bg-green-800/50 border border-green-600 rounded-lg">
+                      <p className="text-green-300 font-semibold">✅ {submitMessage}</p>
+                    </div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <div className="mt-4 p-4 bg-red-800/50 border border-red-600 rounded-lg">
+                      <p className="text-red-300 font-semibold">❌ {submitMessage}</p>
+                    </div>
+                  )}
 
                 </form>
               </motion.div>

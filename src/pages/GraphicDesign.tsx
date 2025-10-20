@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import { Palette, Check, Star } from 'lucide-react';
+import { sendWhatsAppMessage } from '../utils/integrations';
 
 const features = [
   'Brand Identity Design',
@@ -101,7 +102,12 @@ const GraphicDesign = () => (
               <li>72-hour turnaround time</li>
               <li>JPG/PNG file formats (ready for web & social media)</li>
             </ul>
-            <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Simple', 'Graphic Design', '₹7,500')}
+              className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Simple
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
@@ -113,7 +119,12 @@ const GraphicDesign = () => (
               <li>Source files (AI, PSD, SVG) included</li>
               <li>Social media kit with 2 design variations</li>
             </ul>
-            <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Pro', 'Graphic Design', '₹20,000')}
+              className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Pro
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
@@ -126,7 +137,12 @@ const GraphicDesign = () => (
               <li>Dedicated designer & monthly strategy call</li>
               <li>Branding assets and basic style guide</li>
             </ul>
-            <button className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Advance', 'Graphic Design', '₹45,000')}
+              className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Advance
+            </button>
           </div>
         </div>
       </section>

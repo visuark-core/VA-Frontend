@@ -1,9 +1,10 @@
 // src/pages/Referral.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FaGift, FaMoneyBillWave, FaUsers, FaCheckCircle, FaUserCircle, FaBriefcase, FaClipboardList, FaArrowRight } from 'react-icons/fa';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { submitReferralComplete } from '../utils/integrations';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -12,12 +13,67 @@ const pageVariants = {
 };
 
 const pageTransition = {
-  type: "tween",
-  ease: "anticipate",
+  type: "tween" as const,
+  ease: "anticipate" as const,
   duration: 0.5,
 };
 
 const ReferralPage = () => {
+  const [formData, setFormData] = useState({
+    yourName: '',
+    yourPhone: '',
+    clientName: '',
+    clientPhone: '',
+    projectType: '',
+    projectDescription: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setSubmitMessage('');
+
+    try {
+      // Submit to both Google Sheets AND send email
+      const result = await submitReferralComplete(formData);
+
+      if (result.success) {
+        setSubmitStatus('success');
+        setSubmitMessage(result.message);
+        // Reset form
+        setFormData({
+          yourName: '',
+          yourPhone: '',
+          clientName: '',
+          clientPhone: '',
+          projectType: '',
+          projectDescription: ''
+        });
+      } else {
+        setSubmitStatus('error');
+        setSubmitMessage(result.message);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setSubmitMessage('An unexpected error occurred. Please try again.');
+      console.error('Submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <motion.div
       initial="initial"
@@ -30,16 +86,16 @@ const ReferralPage = () => {
         <title>Referral Program | Visuark</title>
         <meta name="description" content="Join the Visuark referral program. Refer a client and earn rewards for successful projects." />
       </Helmet>
-      
+
       <div className="bg-gray-950 text-gray-200 font-sans">
-        
+
         {/* ============== 1. HERO SECTION ============== */}
         <section className="relative bg-gray-900 text-white text-center py-20 sm:py-32 overflow-hidden">
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center opacity-10"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2070&auto=format&fit=crop')" }} 
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2070&auto=format&fit=crop')" }}
           ></div>
-          <div 
+          <div
             className="absolute inset-0 bg-gradient-to-b from-gray-950/80 to-gray-950/100"
           ></div>
           <div className="relative container mx-auto px-4">
@@ -84,7 +140,7 @@ const ReferralPage = () => {
             </div>
           </div>
         </section>
-        
+
         {/* ============== 3. HOW IT WORKS SECTION ============== */}
         <section className="py-16 sm:py-24 bg-gray-900">
           <div className="container mx-auto px-4">
@@ -95,7 +151,7 @@ const ReferralPage = () => {
             <div className="relative">
               {/* The connecting line */}
               <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-gray-700"></div>
-              
+
               <div className="relative grid grid-cols-1 md:grid-cols-4 gap-12">
                 {/* Steps... */}
                 <div className="text-center">
@@ -130,8 +186,8 @@ const ReferralPage = () => {
               <h2 className="text-3xl sm:text-4xl font-bold text-white">Submit a Referral</h2>
               <p className="mt-4 text-lg text-gray-400">Fill out the form below to refer a potential client to Visuark. We'll take care of the rest!</p>
             </div>
-            
-            <form className="max-w-4xl mx-auto bg-gray-900 p-8 sm:p-12 rounded-2xl border border-gray-800 space-y-12">
+
+            <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-gray-900 p-8 sm:p-12 rounded-2xl border border-gray-800 space-y-12">
               {/* Form content... */}
               <fieldset>
                 <legend className="flex items-center gap-3 text-2xl font-bold text-white mb-6">
@@ -141,11 +197,29 @@ const ReferralPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="your-name" className="block text-sm font-medium text-gray-300 mb-2">Your Name *</label>
-                    <input type="text" id="your-name" name="your-name" className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" placeholder="John Doe" required />
+                    <input
+                      type="text"
+                      id="your-name"
+                      name="yourName"
+                      value={formData.yourName}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      placeholder="John Doe"
+                      required
+                    />
                   </div>
                   <div>
                     <label htmlFor="your-phone" className="block text-sm font-medium text-gray-300 mb-2">Your Phone Number *</label>
-                    <input type="tel" id="your-phone" name="your-phone" className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" placeholder="1234567890" required />
+                    <input
+                      type="tel"
+                      id="your-phone"
+                      name="yourPhone"
+                      value={formData.yourPhone}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      placeholder="1234567890"
+                      required
+                    />
                   </div>
                 </div>
               </fieldset>
@@ -157,11 +231,29 @@ const ReferralPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="client-name" className="block text-sm font-medium text-gray-300 mb-2">Client Name *</label>
-                    <input type="text" id="client-name" name="client-name" className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" placeholder="Jane Smith" required />
+                    <input
+                      type="text"
+                      id="client-name"
+                      name="clientName"
+                      value={formData.clientName}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      placeholder="Jane Smith"
+                      required
+                    />
                   </div>
                   <div>
                     <label htmlFor="client-phone" className="block text-sm font-medium text-gray-300 mb-2">Client Phone Number *</label>
-                    <input type="tel" id="client-phone" name="client-phone" className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" placeholder="0987654321" required />
+                    <input
+                      type="tel"
+                      id="client-phone"
+                      name="clientPhone"
+                      value={formData.clientPhone}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      placeholder="0987654321"
+                      required
+                    />
                   </div>
                 </div>
               </fieldset>
@@ -173,7 +265,14 @@ const ReferralPage = () => {
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <label htmlFor="project-type" className="block text-sm font-medium text-gray-300 mb-2">Project Type *</label>
-                    <select id="project-type" name="project-type" className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" required>
+                    <select
+                      id="project-type"
+                      name="projectType"
+                      value={formData.projectType}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      required
+                    >
                       <option value="">Select project type</option>
                       <option value="web-development">Web Development</option>
                       <option value="graphic-design">Graphic Design</option>
@@ -184,15 +283,40 @@ const ReferralPage = () => {
                   </div>
                   <div>
                     <label htmlFor="project-description" className="block text-sm font-medium text-gray-300 mb-2">Project Description *</label>
-                    <textarea id="project-description" name="project-description" rows={5} className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none" placeholder="Please provide a brief description of the client's requirements..." required></textarea>
+                    <textarea
+                      id="project-description"
+                      name="projectDescription"
+                      value={formData.projectDescription}
+                      onChange={handleInputChange}
+                      rows={5}
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                      placeholder="Please provide a brief description of the client's requirements..."
+                      required
+                    ></textarea>
                   </div>
                 </div>
               </fieldset>
               <div className="text-center">
-                <button type="submit" className="inline-flex items-center gap-2 text-white font-bold py-3 px-8 bg-gradient-to-r from-cyan-500 to-orange-500 rounded-lg hover:from-cyan-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105">
-                  Submit Referral
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center gap-2 text-white font-bold py-3 px-8 bg-gradient-to-r from-cyan-500 to-orange-500 rounded-lg hover:from-cyan-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Referral'}
                   <FaArrowRight />
                 </button>
+
+                {submitStatus === 'success' && (
+                  <div className="mt-4 p-4 bg-green-800/50 border border-green-600 rounded-lg">
+                    <p className="text-green-300 font-semibold">✅ {submitMessage}</p>
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="mt-4 p-4 bg-red-800/50 border border-red-600 rounded-lg">
+                    <p className="text-red-300 font-semibold">❌ {submitMessage}</p>
+                  </div>
+                )}
               </div>
             </form>
           </div>

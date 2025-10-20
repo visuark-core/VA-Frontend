@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import { Code, Check, Star } from 'lucide-react';
+import { sendWhatsAppMessage } from '../utils/integrations';
 
 const features = [
   'Responsive Design',
@@ -133,7 +134,12 @@ const WebDevelopmentFixed = () => {
                 <li>Responsive design</li>
                 <li>Basic SEO</li>
               </ul>
-              <button className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+              <button 
+                onClick={() => sendWhatsAppMessage('Simple', 'Web Development', '₹7,500')}
+                className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+              >
+                Choose Simple
+              </button>
             </div>
             <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
               <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
@@ -143,7 +149,12 @@ const WebDevelopmentFixed = () => {
                 <li>E-commerce or CMS</li>
                 <li>Performance optimization</li>
               </ul>
-              <button className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+              <button 
+                onClick={() => sendWhatsAppMessage('Pro', 'Web Development', '₹20,000')}
+                className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+              >
+                Choose Pro
+              </button>
             </div>
             <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
               <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
@@ -153,7 +164,12 @@ const WebDevelopmentFixed = () => {
                 <li>Custom integrations & APIs</li>
                 <li>Ongoing support</li>
               </ul>
-              <button className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+              <button 
+                onClick={() => sendWhatsAppMessage('Advance', 'Web Development', '₹45,000')}
+                className="bg-cyan-400 hover:bg-cyan-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+              >
+                Choose Advance
+              </button>
             </div>
           </div>
         </section>

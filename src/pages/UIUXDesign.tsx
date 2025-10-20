@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import { Smartphone, Check, Star } from 'lucide-react';
+import { sendWhatsAppMessage } from '../utils/integrations';
 
 const features = [
   'User Research',
@@ -99,7 +100,12 @@ const UIUXDesign = () => (
               <li>Usability review</li>
               <li>1 round of revisions</li>
             </ul>
-            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Simple', 'UI/UX Design', '₹7,500')}
+              className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Simple
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
@@ -109,7 +115,12 @@ const UIUXDesign = () => (
               <li>User testing</li>
               <li>Design system starter</li>
             </ul>
-            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Pro', 'UI/UX Design', '₹20,000')}
+              className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Pro
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
@@ -119,7 +130,12 @@ const UIUXDesign = () => (
               <li>Design system & handoff</li>
               <li>Ongoing design support</li>
             </ul>
-            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Advance', 'UI/UX Design', '₹45,000')}
+              className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Advance
+            </button>
           </div>
         </div>
       </section>

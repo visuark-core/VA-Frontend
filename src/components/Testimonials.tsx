@@ -5,24 +5,27 @@ import { Star, Quote } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
-      name: 'Sarah Mitchell',
-      role: 'CEO, TechStart Inc.',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      content: 'Visuark transformed our digital presence completely. Their attention to detail and creative approach exceeded our expectations. The team delivered on time and within budget.',
+      name: 'Sunil Soni',
+      role: 'Chief Executive Officer',
+      company: 'Satlaa Pvt. Ltd.',
+      image: '/img/Sunil.png',
+      content: 'Hi Neeraj, I really liked the design and pitch deck you made. The way you matched it with my brand identity was great. I loved your work and will surely give you more projects with Visuark.',
       rating: 5
     },
     {
-      name: 'Michael Rodriguez',
-      role: 'Marketing Director, GrowthCorp',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      content: 'Working with Visuark was a game-changer for our brand. They understood our vision and brought it to life with stunning visuals and seamless functionality.',
+      name: 'Dipanshu Verma',
+      role: 'Product Manager',
+      company: 'Tech Frigate',
+      image: '/img/Dipanshu.png',
+      content: 'The UI/UX design process was incredibly collaborative and insightful. Visuark transformed our complex requirements into an intuitive and beautiful interface that our users love. We saw a 40% increase in user engagement.',
       rating: 5
     },
     {
-      name: 'Emily Chen',
-      role: 'Founder, InnovateLab',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      content: 'The team at Visuark is incredibly talented and professional. They delivered a website that not only looks amazing but also performs exceptionally well.',
+      name: 'Vikash Vaishnav',
+      role: 'Chief Executive Officer',
+      company: 'Vagwiin IT Solutions',
+      image: '/img/Vikash.jpg',
+      content: 'From graphic design to the final video edit, the attention to detail was impeccable. Visuark is not just a digital agency; they are true partners in success. I highly recommend them to anyone looking for top-tier digital services.',
       rating: 5
     }
   ];

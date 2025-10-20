@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import { Video, Check, Star } from 'lucide-react';
+import { sendWhatsAppMessage } from '../utils/integrations';
 
 const features = [
   'Commercial Videos',
@@ -99,7 +100,12 @@ const VideoEditing = () => (
               <li>1 promo video</li>
               <li>1 round of revisions</li>
             </ul>
-            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Simple', 'Video Editing', '₹7,500')}
+              className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Simple
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
@@ -109,7 +115,12 @@ const VideoEditing = () => (
               <li>2 promo videos</li>
               <li>3 rounds of revisions</li>
             </ul>
-            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Pro', 'Video Editing', '₹20,000')}
+              className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Pro
+            </button>
           </div>
           <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
@@ -119,7 +130,12 @@ const VideoEditing = () => (
               <li>4 promo videos</li>
               <li>Priority support</li>
             </ul>
-            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+            <button 
+              onClick={() => sendWhatsAppMessage('Advance', 'Video Editing', '₹45,000')}
+              className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            >
+              Choose Advance
+            </button>
           </div>
         </div>
       </section>
