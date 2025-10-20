@@ -87,7 +87,42 @@ const UIUXDesign = () => (
         </motion.div>
       </section>
 
-      {/* Gallery removed per request */}
+      {/* Pricing */}
+      <section className="container mx-auto px-4 mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">Pricing</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Simple</h3>
+            <p className="text-4xl font-extrabold text-purple-300 mb-4">$1,800</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>Wireframes & basic prototype</li>
+              <li>Usability review</li>
+              <li>1 round of revisions</li>
+            </ul>
+            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+          </div>
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
+            <p className="text-4xl font-extrabold text-purple-300 mb-4">$5,000</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>Full UX flows & hi-fi prototype</li>
+              <li>User testing</li>
+              <li>Design system starter</li>
+            </ul>
+            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+          </div>
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
+            <p className="text-4xl font-extrabold text-purple-300 mb-4">$10,000</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>End-to-end product design</li>
+              <li>Design system & handoff</li>
+              <li>Ongoing design support</li>
+            </ul>
+            <button className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+          </div>
+        </div>
+      </section>
 
       {/* Animated Call to Action */}
       <section className="container mx-auto px-4 text-center">

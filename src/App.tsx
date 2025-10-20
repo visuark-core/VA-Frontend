@@ -3,7 +3,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -20,7 +20,8 @@ import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
 import Referral from './pages/Referral';
-import WebDevelopment from './pages/WebDevelopment';
+// Temporary: use WebDevelopmentFixed while repairing original WebDevelopment.tsx
+import WebDevelopment from './pages/WebDevelopmentFixed';
 import GraphicDesign from './pages/GraphicDesign';
 import VideoEditing from './pages/VideoEditing';
 import UIUXDesign from './pages/UIUXDesign';

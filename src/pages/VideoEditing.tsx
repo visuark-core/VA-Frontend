@@ -87,7 +87,42 @@ const VideoEditing = () => (
         </motion.div>
       </section>
 
-      {/* Gallery removed per request */}
+      {/* Pricing */}
+      <section className="container mx-auto px-4 mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">Pricing</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Simple</h3>
+            <p className="text-4xl font-extrabold text-green-300 mb-4">$1,200</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>Basic clip editing</li>
+              <li>Simple transitions</li>
+              <li>1 round of revisions</li>
+            </ul>
+            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Simple</button>
+          </div>
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
+            <p className="text-4xl font-extrabold text-green-300 mb-4">$3,500</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>Full edit & color grading</li>
+              <li>Motion graphics</li>
+              <li>3 rounds of revisions</li>
+            </ul>
+            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Pro</button>
+          </div>
+          <div className="bg-gray-800/60 rounded-2xl p-8 border border-gray-700 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Advance</h3>
+            <p className="text-4xl font-extrabold text-green-300 mb-4">$7,000</p>
+            <ul className="text-gray-300 mb-6 space-y-2">
+              <li>End-to-end production</li>
+              <li>Animation & VFX</li>
+              <li>Priority support</li>
+            </ul>
+            <button className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold">Choose Advance</button>
+          </div>
+        </div>
+      </section>
 
       {/* Animated Call to Action */}
       <section className="container mx-auto px-4 text-center">
