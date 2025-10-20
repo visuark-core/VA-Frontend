@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
 
 const Services = () => {
@@ -66,7 +66,7 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
               key={service.title}
               className={`bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border-2 border-gray-700 hover:${getColorClasses(service.color)} transition-all duration-300 hover:transform hover:scale-105 group`}
@@ -92,10 +92,30 @@ const Services = () => {
                 ))}
               </ul>
               
-              <button className={`${getButtonClasses(service.color)} px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 hover:transform hover:scale-105`}>
+              {/* Link to specific service page */}
+              <Link
+                to={(() => {
+                  // map service titles to routes
+                  const slug = service.title.toLowerCase().replace(/\s+/g, '-');
+                  switch (slug) {
+                    case 'web-development':
+                      return '/services/web-development';
+                    case 'graphic-design':
+                      return '/services/graphic-design';
+                    case 'video-editing':
+                      return '/services/video-editing';
+                    case 'ui/ux-design':
+                      // slug for UI/UX is 'ui/ux-design' from title 'UI/UX Design', normalize to ui-ux-design
+                      return '/services/ui-ux-design';
+                    default:
+                      return '/services';
+                  }
+                })()}
+                className={`${getButtonClasses(service.color)} inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 space-x-2 hover:transform hover:scale-105`}
+              >
                 <span>Learn More</span>
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
           ))}
         </div>

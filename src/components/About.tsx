@@ -55,7 +55,7 @@ const About = () => {
           <div className="relative">
             <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-8 backdrop-blur-sm border border-gray-700">
               <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                src="/public/img/team.png"
                 alt="Team collaboration"
                 className="rounded-lg shadow-2xl"
               />
