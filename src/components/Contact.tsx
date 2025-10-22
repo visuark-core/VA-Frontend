@@ -33,13 +33,13 @@ const Contact = () => {
     {
       icon: <Phone className="h-6 w-6 text-orange-400" />,
       title: 'Phone',
-      details: '+91 78785-539633',
+      details: '+91 78785539633',
       link: 'tel:+9178785539633'
     },
     {
       icon: <MapPin className="h-6 w-6 text-green-400" />,
       title: 'Location',
-      details: 'Rajastan, IND',
+      details: 'Rajasthan, IND',
       link: '#'
     }
   ];
@@ -47,8 +47,8 @@ const Contact = () => {
   const socialLinks = [
     { icon: <Facebook className="h-6 w-6" />, link: '#', color: 'hover:text-blue-400' },
     { icon: <Twitter className="h-6 w-6" />, link: '#', color: 'hover:text-cyan-400' },
-    { icon: <Instagram className="h-6 w-6" />, link: '#', color: 'hover:text-pink-400' },
-    { icon: <Linkedin className="h-6 w-6" />, link: '#', color: 'hover:text-blue-500' }
+    { icon: <Instagram className="h-6 w-6" />, link: 'https://www.instagram.com/visuarkofficial/', color: 'hover:text-pink-400' },
+    { icon: <Linkedin className="h-6 w-6" />, link: 'https://www.linkedin.com/company/visuark/', color: 'hover:text-blue-500' }
   ];
 
   return (
