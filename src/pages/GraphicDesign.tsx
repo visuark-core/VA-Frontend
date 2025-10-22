@@ -103,7 +103,7 @@ const GraphicDesign = () => (
               <li>JPG/PNG file formats (ready for web & social media)</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Simple', 'Graphic Design', '₹7,500')}
+              onClick={() => sendWhatsAppMessage('Simple', 'Graphic Design', '₹999/mo')}
               className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Simple
@@ -120,7 +120,7 @@ const GraphicDesign = () => (
               <li>Social media kit with 2 design variations</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Pro', 'Graphic Design', '₹20,000')}
+              onClick={() => sendWhatsAppMessage('Pro', 'Graphic Design', '₹2,499/mo')}
               className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Pro
@@ -138,7 +138,7 @@ const GraphicDesign = () => (
               <li>Branding assets and basic style guide</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Advance', 'Graphic Design', '₹45,000')}
+              onClick={() => sendWhatsAppMessage('Advance', 'Graphic Design', '₹4,999/mo')}
               className="bg-orange-400 hover:bg-orange-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Advance

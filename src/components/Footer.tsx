@@ -6,8 +6,8 @@ const Footer = () => {
   const socialLinks = [
     { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
     { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
-    { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
-    { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' }
+    { icon: <Instagram className="h-5 w-5" />, href: 'https://www.instagram.com/visuarkofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==', label: 'Instagram' },
+    { icon: <Linkedin className="h-5 w-5" />, href: 'https://www.linkedin.com/company/visuark/', label: 'LinkedIn' }
   ];
 
   return (
@@ -29,6 +29,8 @@ const Footer = () => {
                   key={index}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-cyan-400 transition-colors duration-200"
                 >
                   {social.icon}

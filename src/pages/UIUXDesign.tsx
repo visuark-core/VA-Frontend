@@ -101,7 +101,7 @@ const UIUXDesign = () => (
               <li>1 round of revisions</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Simple', 'UI/UX Design', '₹7,500')}
+              onClick={() => sendWhatsAppMessage('Simple', 'UI/UX Design', '$1,800')}
               className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Simple
@@ -116,7 +116,7 @@ const UIUXDesign = () => (
               <li>Design system starter</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Pro', 'UI/UX Design', '₹20,000')}
+              onClick={() => sendWhatsAppMessage('Pro', 'UI/UX Design', '$5,000')}
               className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Pro
@@ -131,7 +131,7 @@ const UIUXDesign = () => (
               <li>Ongoing design support</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Advance', 'UI/UX Design', '₹45,000')}
+              onClick={() => sendWhatsAppMessage('Advance', 'UI/UX Design', '$10,000')}
               className="bg-purple-400 hover:bg-purple-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Advance

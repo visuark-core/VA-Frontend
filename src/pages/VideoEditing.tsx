@@ -101,7 +101,7 @@ const VideoEditing = () => (
               <li>1 round of revisions</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Simple', 'Video Editing', '₹7,500')}
+              onClick={() => sendWhatsAppMessage('Simple', 'Video Editing', '₹4,999/mo')}
               className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Simple
@@ -116,7 +116,7 @@ const VideoEditing = () => (
               <li>3 rounds of revisions</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Pro', 'Video Editing', '₹20,000')}
+              onClick={() => sendWhatsAppMessage('Pro', 'Video Editing', '₹9,999/mo')}
               className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Pro
@@ -131,7 +131,7 @@ const VideoEditing = () => (
               <li>Priority support</li>
             </ul>
             <button 
-              onClick={() => sendWhatsAppMessage('Advance', 'Video Editing', '₹45,000')}
+              onClick={() => sendWhatsAppMessage('Advance', 'Video Editing', '₹19,999/mo')}
               className="bg-green-400 hover:bg-green-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             >
               Choose Advance
