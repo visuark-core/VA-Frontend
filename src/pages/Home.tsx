@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import StudentCommunity from '../components/StudentCommunity';
 import Services from '../components/Services';
 import Contact from '../components/Contact';
 import Testimonials from '../components/Testimonials';
@@ -15,6 +16,7 @@ const Home = () => {
       <Hero />
       <Stats />
       <About />
+  <StudentCommunity />
       <Services />
       <Testimonials />
       <CTA />
