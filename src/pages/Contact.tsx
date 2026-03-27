@@ -9,7 +9,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage, setSubmitMessage] = useState('');
-  
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -27,12 +27,12 @@ const Contact = () => {
         service: data.service || '',
         message: data.message
       });
-      
+
       if (result.success) {
         setSubmitStatus('success');
         setSubmitMessage(result.message);
         reset();
-        
+
         // Reset status after 5 seconds
         setTimeout(() => {
           setSubmitStatus('idle');
@@ -55,8 +55,8 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-cyan-400" />,
       title: 'Email',
-      details: 'visuark.info@gmail.com',
-      link: 'mailto:visuark.info@gmail.com'
+      details: 'contact@visuark.com',
+      link: 'mailto:contact@visuark.com'
     },
     {
       icon: <Phone className="h-6 w-6 text-orange-400" />,
@@ -142,7 +142,7 @@ const Contact = () => {
                   <MessageCircle className="h-8 w-8 text-cyan-400 mr-3" />
                   Send us a message
                 </h2>
-                
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
@@ -160,7 +160,7 @@ const Contact = () => {
                         <p className="text-red-400 text-sm mt-1">{errors.firstName.message as string}</p>
                       )}
                     </div>
-                    
+
                     <div>
                       <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-2">
                         Last Name *
@@ -177,7 +177,7 @@ const Contact = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address *
@@ -185,7 +185,7 @@ const Contact = () => {
                     <input
                       type="email"
                       id="email"
-                      {...register('email', { 
+                      {...register('email', {
                         required: 'Email is required',
                         pattern: {
                           value: /^\S+@\S+$/i,
@@ -199,7 +199,7 @@ const Contact = () => {
                       <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>
                     )}
                   </div>
-                  
+
                   <div>
                     <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
                       Company
@@ -212,7 +212,7 @@ const Contact = () => {
                       placeholder="Your Company"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">
                       Service Interested In
@@ -230,7 +230,7 @@ const Contact = () => {
                       <option value="consultation">Consultation</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                       Message *
@@ -246,19 +246,18 @@ const Contact = () => {
                       <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>
                     )}
                   </div>
-                  
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${
-                      isSubmitting
+                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${isSubmitting
                         ? 'bg-gray-600 cursor-not-allowed'
                         : submitStatus === 'success'
-                        ? 'bg-green-500 hover:bg-green-400'
-                        : submitStatus === 'error'
-                        ? 'bg-red-500 hover:bg-red-400'
-                        : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105'
-                    } text-white`}
+                          ? 'bg-green-500 hover:bg-green-400'
+                          : submitStatus === 'error'
+                            ? 'bg-red-500 hover:bg-red-400'
+                            : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105'
+                      } text-white`}
                   >
                     {isSubmitting ? (
                       <>
@@ -283,7 +282,7 @@ const Contact = () => {
                       <p className="text-green-300 font-semibold">✅ {submitMessage}</p>
                     </div>
                   )}
-                  
+
                   {submitStatus === 'error' && (
                     <div className="mt-4 p-4 bg-red-800/50 border border-red-600 rounded-lg">
                       <p className="text-red-300 font-semibold">❌ {submitMessage}</p>

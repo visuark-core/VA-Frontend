@@ -27,8 +27,8 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-cyan-400" />,
       title: 'Email',
-      details: 'visuark.info@gmail.com',
-      link: 'mailto:visuark.info@gmail.com'
+      details: 'contact@visuark.com',
+      link: 'mailto:contact@visuark.com'
     },
     {
       icon: <Phone className="h-6 w-6 text-orange-400" />,
@@ -67,7 +67,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700">
             <h3 className="text-2xl font-bold text-white mb-6">Send us a message</h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -84,7 +84,7 @@ const Contact = () => {
                   placeholder="John Doe"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                   Email Address
@@ -100,7 +100,7 @@ const Contact = () => {
                   placeholder="john@example.com"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                   Message
@@ -116,7 +116,7 @@ const Contact = () => {
                   placeholder="Tell us about your project..."
                 />
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
@@ -131,7 +131,7 @@ const Contact = () => {
           <div className="space-y-8">
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700">
               <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
-              
+
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <a
@@ -154,7 +154,7 @@ const Contact = () => {
             {/* Social Media */}
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700">
               <h3 className="text-2xl font-bold text-white mb-6">Follow Us</h3>
-              
+
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <a

@@ -21,11 +21,6 @@ import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
 import Referral from './pages/Referral';
-// Temporary: use WebDevelopmentFixed while repairing original WebDevelopment.tsx
-import WebDevelopment from './pages/WebDevelopmentFixed';
-import GraphicDesign from './pages/GraphicDesign';
-import VideoEditing from './pages/VideoEditing';
-import UIUXDesign from './pages/UIUXDesign';
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -53,10 +48,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
-                <Route path="/services/web-development" element={<WebDevelopment />} />
-                <Route path="/services/graphic-design" element={<GraphicDesign />} />
-                <Route path="/services/video-editing" element={<VideoEditing />} />
-                <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
                 <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/blog" element={<Blog />} />

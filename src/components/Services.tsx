@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
 
 const Services = () => {
@@ -43,16 +42,6 @@ const Services = () => {
     return colorMap[color as keyof typeof colorMap] || colorMap.cyan;
   };
 
-  const getButtonClasses = (color: string) => {
-    const colorMap = {
-      cyan: 'bg-cyan-400 hover:bg-cyan-300 text-gray-900',
-      orange: 'bg-orange-400 hover:bg-orange-300 text-gray-900',
-      green: 'bg-green-400 hover:bg-green-300 text-gray-900',
-      purple: 'bg-purple-400 hover:bg-purple-300 text-gray-900'
-    };
-    return colorMap[color as keyof typeof colorMap] || colorMap.cyan;
-  };
-
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-gray-800 to-gray-900">
       <div className="container mx-auto px-4">
@@ -91,31 +80,6 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-              
-              {/* Link to specific service page */}
-              <Link
-                to={(() => {
-                  // map service titles to routes
-                  const slug = service.title.toLowerCase().replace(/\s+/g, '-');
-                  switch (slug) {
-                    case 'web-development':
-                      return '/services/web-development';
-                    case 'graphic-design':
-                      return '/services/graphic-design';
-                    case 'video-editing':
-                      return '/services/video-editing';
-                    case 'ui/ux-design':
-                      // slug for UI/UX is 'ui/ux-design' from title 'UI/UX Design', normalize to ui-ux-design
-                      return '/services/ui-ux-design';
-                    default:
-                      return '/services';
-                  }
-                })()}
-                className={`${getButtonClasses(service.color)} inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 space-x-2 hover:transform hover:scale-105`}
-              >
-                <span>Learn More</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
           ))}
         </div>

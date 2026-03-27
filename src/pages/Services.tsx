@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
+import { Code, Palette, Video, Smartphone } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import { Link } from 'react-router-dom';
 
 const Services = () => {
 
@@ -165,10 +164,6 @@ const Services = () => {
                   <div className="mb-6">{service.icon}</div>
                   <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
                   <p className="text-gray-300 mb-6">{service.shortDescription}</p>
-                  <Link to={`/services/${service.id}`} className="text-cyan-400 font-semibold flex items-center space-x-2 hover:text-cyan-300 transition-colors">
-                    <span>Learn More</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
                 </motion.div>
               ))}
             </div>

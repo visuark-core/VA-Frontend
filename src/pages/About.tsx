@@ -3,33 +3,6 @@ import { Target, Users, Award, Zap, Heart, Globe, Lightbulb, Shield } from 'luci
 import PageTransition from '../components/PageTransition';
 
 const About = () => {
-  const team = [
-    {
-      name: 'Neeraj Kumhar',
-      role: 'Founder & CEO',
-      image: '/img/1.png',
-      bio: 'A passionate web developer and Founder of Visuark, specializing in crafting impactful digital solutions through expertise in Software Engineering.'
-    },
-    {
-      name: 'Sunil Sharma',
-      role: 'Co-Founder',
-      image: '/img/4.png',
-      bio: 'Visionary co-founder driving strategic growth and innovation at Visuark with a strong background in business development and technology.'
-    },
-    {
-      name: 'Vansh Katiyar',
-      role: 'Team Leader',
-      image: '/img/3.png',
-      bio: 'Dynamic team leader at Visuark, skilled in project management and fostering collaboration to deliver exceptional digital experiences.'
-    },
-    {
-      name: 'Tarun Singh',
-      role: 'Security Expert',
-      image: '/img/2.png',
-      bio: 'Cyber Security Expert with a passion for safeguarding digital assets and ensuring robust security measures.'
-    }
-  ];
-
   const values = [
     {
       icon: <Target className="h-8 w-8 text-cyan-400" />,
@@ -77,42 +50,9 @@ const About = () => {
     { year: '2024', event: 'Visuark Founded', description: 'Started as a small design studio with big dreams' },
     { year: '2024', event: 'First Major Client', description: 'Landed our first Fortune 50 company project' },
     { year: '2025', event: 'Team Expansion', description: 'Grew to 15+ talented professionals' },
-    { year: '2025', event: 'Award Recognition', description: 'Won Best Digital Agency at Web Excellence Awards' },
-    { year: '2025', event: 'Innovation Lab', description: 'Launched R&D division for emerging technologies' }
+    { year: '2026', event: 'Innovation Lab', description: 'Launched R&D division for emerging technologies' }
   ];
 
-  const projects = [
-    {
-      name: 'Vagwiin Official Website',
-      description: 'Official website for Vagwiin, showcasing services and portfolio.',
-      image: '/img/Vagwin-official.png',
-      link: 'https://vagwiin.com'
-    },
-    {
-      name: 'Car Dealership Website',
-      description: 'A modern and responsive website for a car dealership.',
-      image: '/img/Car-Dealership.png',
-      link: 'https://neerajkumhar.github.io/Car-Delership-website/'
-    },
-    {
-      name: 'Taskflow',
-      description: 'Project management platform to streamline team collaboration and productivity.',
-      image: '/img/Taskflow.png',
-      link: 'https://remarkable-mandazi-a53c25.netlify.app'
-    },
-    {
-      name: 'Property Pulse',
-      description: 'A Real Estate platform for browsing and managing property listings.',
-      image: '/img/property-pulse.png',
-      link: 'https://dashing-beignet-75a287.netlify.app'
-    },
-    {
-      name: 'Vagwiin Vercel Deployment',
-      description: 'Alternative deployment of Vagwiin website on Vercel.',
-      image: '/img/Vagwiin-demo.png',
-      link: 'https://vagwiin.vercel.app/'
-    }
-  ];
 
   return (
     <PageTransition>
@@ -130,7 +70,7 @@ const About = () => {
                 About <span className="text-cyan-400">Visuark</span>
               </h1>
               <p className="text-base md:text-xl lg:text-2xl text-gray-300 max-w-2xl md:max-w-4xl mx-auto">
-                We're a team of passionate creators, developers, and designers who believe 
+                We're a team of passionate creators, developers, and designers who believe
                 in the power of digital storytelling to transform businesses and connect people.
               </p>
             </motion.div>
@@ -149,24 +89,24 @@ const About = () => {
               >
                 <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 md:mb-8">Our Mission</h2>
                 <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
-                  At Visuark, we anchor your digital dreams to reality through innovative design 
-                  and development solutions. Our mission is to help businesses navigate the digital 
+                  At Visuark, we anchor your digital dreams to reality through innovative design
+                  and development solutions. Our mission is to help businesses navigate the digital
                   landscape with confidence and creativity.
                 </p>
                 <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-6 md:mb-8">
-                  We combine technical expertise with artistic vision to create digital experiences 
-                  that not only look amazing but also drive results. From concept to launch, we're 
+                  We combine technical expertise with artistic vision to create digital experiences
+                  that not only look amazing but also drive results. From concept to launch, we're
                   your trusted partner in digital transformation.
                 </p>
                 <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-6 border border-gray-700">
                   <h3 className="text-xl font-bold text-white mb-3">Our Vision</h3>
                   <p className="text-gray-300">
-                    To be the world's most trusted digital agency, known for creating 
+                    To be the world's most trusted digital agency, known for creating
                     transformative digital experiences that inspire, engage, and deliver results.
                   </p>
                 </div>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -175,7 +115,7 @@ const About = () => {
                 className="relative"
               >
                 <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-8 backdrop-blur-sm border border-gray-700">
-                  <img 
+                  <img
                     src="/img/Visuark Team.png"
                     alt="Team collaboration"
                     className="rounded-lg shadow-2xl w-full h-auto max-h-64 md:max-h-96 object-cover"
@@ -223,106 +163,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Team */}
-        <section className="py-16 md:py-20 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Meet Our <span className="text-cyan-400">Team</span>
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                The talented individuals behind Visuark's success.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
-              {team.map((member, index) => (
-                <motion.div
-                  key={member.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="relative flex flex-col items-center justify-between bg-gradient-to-br from-cyan-400/10 via-gray-800/60 to-blue-500/10 rounded-3xl border-2 border-cyan-500/30 hover:border-cyan-400 shadow-2xl p-6 md:p-8 backdrop-blur-xl transition-all duration-300 hover:scale-[1.07] hover:shadow-cyan-400/30 group overflow-hidden text-center"
-                >
-                  {/* Animated glowing border */}
-                  <div className="absolute -inset-0.5 rounded-3xl pointer-events-none z-0 group-hover:animate-pulse-glow bg-gradient-to-br from-cyan-400/30 via-transparent to-blue-500/30 blur-lg opacity-60"></div>
-                  {/* Futuristic avatar with ring and glow */}
-                  <div className="relative mb-6 z-10">
-                    <div className="mx-auto w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-cyan-400/40 to-blue-500/30 flex items-center justify-center shadow-xl ring-4 ring-cyan-400/40 group-hover:ring-cyan-400/80 transition-all duration-300">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-4 border-white/10 shadow-lg"
-                      />
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-xs md:text-sm font-bold px-4 py-1 rounded-full shadow-lg border border-white/10 tracking-wide uppercase backdrop-blur-md">{member.role}</span>
-                  </div>
-                  {/* Name and bio */}
-                  <h3 className="text-xl md:text-2xl font-extrabold text-white mb-2 z-10 tracking-wide futuristic-font drop-shadow-lg">{member.name}</h3>
-                  <p className="text-cyan-200 text-xs md:text-sm mb-2 z-10 font-mono opacity-90">{member.bio}</p>
-                  {/* Subtle animated background particles (optional, can be removed if not desired) */}
-                  <div className="absolute inset-0 pointer-events-none z-0">
-                    <svg className="absolute top-2 left-2 w-8 h-8 opacity-20 animate-spin-slow" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="cyan" strokeWidth="2" fill="none" /></svg>
-                    <svg className="absolute bottom-2 right-2 w-8 h-8 opacity-10 animate-pulse" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="blue" strokeWidth="2" fill="none" /></svg>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Live Projects */}
-        <section className="py-16 md:py-20 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Our <span className="text-cyan-400">Live Projects</span>
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Explore some of the exciting projects we've brought to life.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
-                <motion.a
-                  key={project.name}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="block bg-gray-800/50 rounded-lg p-6 border border-gray-700 hover:border-cyan-400 transition-all duration-300 hover:transform hover:scale-105 group"
-                >
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="w-full h-48 object-contain rounded-md mb-4 group-hover:opacity-80 transition-opacity duration-300"
-                  />
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                    {project.name}
-                  </h3>
-                  <p className="text-gray-300 text-base">{project.description}</p>
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Timeline */}
         <section className="py-16 md:py-20 bg-gradient-to-br from-gray-800 to-gray-900">
@@ -343,39 +183,65 @@ const About = () => {
             </motion.div>
 
             <div className="relative">
-              {/* Vertical line for desktop */}
-              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-cyan-400 to-orange-400"></div>
-              <div className="flex flex-col gap-8">
+              {/* Central vertical line (The Tree Trunk) */}
+              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_15px_rgba(34,211,238,0.5)]"></div>
+              
+              <div className="flex flex-col gap-12 md:gap-24">
                 {milestones.map((milestone, index) => (
                   <motion.div
-                    key={milestone.year}
-                    initial={{ opacity: 0, x: 0 }}
+                    key={`${milestone.year}-${milestone.event}`}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 }}
-                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
                     className={
-                      // Desktop: alternate left/right, Mobile: center
-                      `relative flex flex-col md:flex-row items-center mb-4 md:mb-12 ` +
+                      `relative flex flex-col md:flex-row items-center ` +
                       (index % 2 === 0 ? 'md:justify-start' : 'md:justify-end')
                     }
                   >
-                    {/* Timeline event card */}
-                    <div
-                      className={
-                        // Desktop: alternate left/right, Mobile: full width and centered
-                        `w-full md:w-5/12 ` +
-                        (index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8') +
-                        ' flex justify-center md:block'
-                      }
-                    >
-                      <div className="bg-gray-800/50 rounded-lg p-4 md:p-6 border border-gray-700 max-w-md w-full">
-                        <h3 className="text-lg md:text-2xl font-bold text-cyan-400 mb-1 md:mb-2">{milestone.year}</h3>
-                        <h4 className="text-base md:text-xl font-semibold text-white mb-2 md:mb-3">{milestone.event}</h4>
-                        <p className="text-gray-300 text-xs md:text-base">{milestone.description}</p>
-                      </div>
+                    {/* Horizontal Branch Line (Desktop only) */}
+                    <div className={
+                      `hidden md:block absolute top-1/2 -translate-y-1/2 h-1 w-8 lg:w-16 bg-gradient-to-r ` +
+                      (index % 2 === 0 
+                        ? 'right-1/2 from-cyan-400/50 to-transparent rotate-180' 
+                        : 'left-1/2 from-blue-500/50 to-transparent')
+                    }></div>
+
+                    {/* Timeline Node (The perfection node) */}
+                    <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 items-center justify-center z-10">
+                      <div className="w-4 h-4 bg-gray-900 rounded-full border-4 border-cyan-400 shadow-[0_0_10px_#22d3ee]"></div>
+                      <div className="absolute w-8 h-8 rounded-full bg-cyan-400/20 animate-ping"></div>
                     </div>
-                    {/* Timeline dot: show on desktop only */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-400 rounded-full border-4 border-gray-900"></div>
+
+                    {/* Event Card */}
+                    <div className={
+                      `w-full md:w-[45%] lg:w-[42%] ` +
+                      (index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12')
+                    }>
+                      <motion.div 
+                        whileHover={{ scale: 1.03 }}
+                        className="bg-gray-800/40 backdrop-blur-xl rounded-2xl p-6 border-2 border-gray-700/50 hover:border-cyan-400/50 shadow-2xl transition-colors duration-300 relative overflow-hidden group"
+                      >
+                        {/* Decorative background glow */}
+                        <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all"></div>
+                        
+                        <span className="inline-block text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">
+                          {milestone.year}
+                        </span>
+                        <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                          {milestone.event}
+                        </h3>
+                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+                          {milestone.description}
+                        </p>
+                        
+                        {/* Corner Accent */}
+                        <div className={
+                          `absolute bottom-0 w-12 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 ` +
+                          (index % 2 === 0 ? 'right-0' : 'left-0')
+                        }></div>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 ))}
               </div>

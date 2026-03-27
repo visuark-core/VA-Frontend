@@ -66,7 +66,7 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>visuark.info@gmail.com</li>
+              <li>contact@visuark.com</li>
               <li>+91 78785-39633</li>
               <li>Rajasthan , IND</li>
             </ul>
