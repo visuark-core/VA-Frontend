@@ -27,7 +27,7 @@ const Header = () => {
     { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'Blog', path: '/blog' },
-    { name: 'Referral', path: '/referral' }, // <-- ADDED THIS LINE
+    { name: 'Community', path: '/student-community' },
     { name: 'Contact', path: '/contact' }
   ];
   // ----------------------------------------------------

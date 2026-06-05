@@ -36,7 +36,7 @@ const StudentCommunity: React.FC = () => {
 
               <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center lg:justify-start">
                 <Link
-                  to="/referral"
+                  to="/student-community"
                   className="inline-flex items-center justify-center bg-cyan-400 text-gray-900 px-6 py-3 rounded-full font-semibold shadow hover:scale-105 transform transition-all duration-200"
                   aria-label="Join the student community"
                 >

@@ -6,25 +6,25 @@ const Stats = () => {
   const stats = [
     {
       icon: <Users className="h-8 w-8 text-cyan-400" />,
-      number: '500+',
+      number: '50+',
       label: 'Happy Clients',
       description: 'Satisfied customers worldwide'
     },
     {
       icon: <Award className="h-8 w-8 text-orange-400" />,
-      number: '750+',
+      number: '200+',
       label: 'Projects Completed',
       description: 'Successful deliveries'
     },
     {
       icon: <Coffee className="h-8 w-8 text-green-400" />,
-      number: '10,000+',
+      number: '100+',
       label: 'Cups of Coffee',
       description: 'Fuel for creativity'
     },
     {
       icon: <Clock className="h-8 w-8 text-purple-400" />,
-      number: '6+',
+      number: '2+',
       label: 'Years Experience',
       description: 'In digital excellence'
     }

@@ -114,11 +114,11 @@ const About = () => {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-8 backdrop-blur-sm border border-gray-700">
+                <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-8 backdrop-blur-sm border border-gray-700 min-h-[24rem] md:min-h-[30rem]">
                   <img
                     src="/img/Visuark Team.png"
                     alt="Team collaboration"
-                    className="rounded-lg shadow-2xl w-full h-auto max-h-64 md:max-h-96 object-cover"
+                    className="rounded-lg shadow-2xl w-full h-full object-contain"
                   />
                 </div>
               </motion.div>

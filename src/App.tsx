@@ -20,7 +20,7 @@ import TermsOfService from './pages/TermsOfService';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
-import Referral from './pages/Referral';
+import StudentCommunity from './pages/StudentCommunity';
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -55,7 +55,7 @@ function App() {
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/referral" element={<Referral />} />
+                <Route path="/student-community" element={<StudentCommunity />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AnimatePresence>
