@@ -1,93 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowRight, Search, Tag } from 'lucide-react';
+import { Calendar, User, ArrowRight, Search, Tag, Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const blogPosts = [
-    {
-      id: 1,
-      slug: 'future-of-web-development',
-      title: 'The Future of Web Development: Trends to Watch in 2024',
-      excerpt: 'Explore the latest trends shaping the web development landscape, from AI integration to progressive web apps.',
-      content: 'Full blog post content would go here...',
-      author: 'Sarah Johnson',
-      date: '2024-01-15',
-      category: 'Web Development',
-      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '5 min read',
-      tags: ['Web Development', 'Trends', 'AI', 'PWA']
-    },
-    {
-      id: 2,
-      slug: 'design-systems-guide',
-      title: 'Building Scalable Design Systems: A Complete Guide',
-      excerpt: 'Learn how to create and maintain design systems that scale with your organization and improve consistency.',
-      content: 'Full blog post content would go here...',
-      author: 'Emily Rodriguez',
-      date: '2024-01-10',
-      category: 'Design',
-      image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '8 min read',
-      tags: ['Design Systems', 'UI/UX', 'Scalability']
-    },
-    {
-      id: 3,
-      slug: 'video-marketing-strategies',
-      title: 'Video Marketing Strategies That Convert in 2024',
-      excerpt: 'Discover proven video marketing techniques that drive engagement and boost conversions for your business.',
-      content: 'Full blog post content would go here...',
-      author: 'David Kim',
-      date: '2024-01-05',
-      category: 'Marketing',
-      image: 'https://images.unsplash.com/photo-1574717024621-6becaaa0d4b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '6 min read',
-      tags: ['Video Marketing', 'Conversion', 'Strategy']
-    },
-    {
-      id: 4,
-      slug: 'ux-research-methods',
-      title: 'Essential UX Research Methods Every Designer Should Know',
-      excerpt: 'A comprehensive overview of user research methods and when to use them for maximum impact.',
-      content: 'Full blog post content would go here...',
-      author: 'Michael Chen',
-      date: '2023-12-28',
-      category: 'UX Research',
-      image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '7 min read',
-      tags: ['UX Research', 'User Testing', 'Design Process']
-    },
-    {
-      id: 5,
-      slug: 'brand-identity-essentials',
-      title: 'Brand Identity Essentials: Creating Memorable Visual Brands',
-      excerpt: 'Learn the fundamental principles of creating strong brand identities that resonate with your target audience.',
-      content: 'Full blog post content would go here...',
-      author: 'Sarah Johnson',
-      date: '2023-12-20',
-      category: 'Branding',
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '9 min read',
-      tags: ['Branding', 'Visual Identity', 'Logo Design']
-    },
-    {
-      id: 6,
-      slug: 'performance-optimization-tips',
-      title: 'Web Performance Optimization: Speed Up Your Site',
-      excerpt: 'Practical tips and techniques to improve your website\'s loading speed and overall performance.',
-      content: 'Full blog post content would go here...',
-      author: 'Michael Chen',
-      date: '2023-12-15',
-      category: 'Web Development',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      readTime: '10 min read',
-      tags: ['Performance', 'Optimization', 'Web Development']
-    }
-  ];
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/blogs');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to fetch blogs');
+        }
+        const data = await response.json();
+        
+        if (data.success) {
+          // Map backend data to frontend structure
+          const mapped = data.blogs.map((b: any) => ({
+            id: b.id,
+            slug: b.id,
+            title: b.title,
+            excerpt: b.summary,
+            author: b.author,
+            date: b.publishedAt,
+            category: 'Article',
+            image: b.images && b.images.length > 0 ? b.images[0] : 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            readTime: '5 min read',
+            tags: [],
+            content: b.content
+          }));
+          // Sort by date descending
+          mapped.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          setBlogPosts(mapped);
+        }
+      } catch (err) {
+        console.error('Error fetching blogs:', err);
+        setError('Unable to load blog posts. Please make sure the backend is running.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
 
   const categories = [
     'all',
@@ -105,8 +67,21 @@ const Blog = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const featuredPost = blogPosts[0];
+  const featuredPost = filteredPosts[0];
   const regularPosts = filteredPosts.slice(1);
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="pt-20 min-h-screen flex items-center justify-center bg-gray-900">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-cyan-400 animate-spin mx-auto mb-4" />
+            <p className="text-gray-400 text-lg">Loading articles...</p>
+          </div>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
@@ -163,11 +138,17 @@ const Blog = () => {
                 ))}
               </div>
             </div>
+
+            {error && (
+              <div className="text-center p-8 bg-red-900/20 border border-red-500/30 rounded-lg mb-12">
+                <p className="text-red-400">{error}</p>
+              </div>
+            )}
           </div>
         </section>
 
         {/* Featured Post */}
-        {selectedCategory === 'all' && !searchTerm && (
+        {selectedCategory === 'all' && !searchTerm && featuredPost && (
           <section className="py-12 bg-gray-900">
             <div className="container mx-auto px-4">
               <motion.div
@@ -216,7 +197,7 @@ const Blog = () => {
                       </p>
                       
                       <div className="flex flex-wrap gap-2 mb-6">
-                        {featuredPost.tags?.map((tag) => (
+                        {featuredPost.tags?.map((tag: string) => (
                           <span
                             key={tag}
                             className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm flex items-center"
@@ -306,7 +287,7 @@ const Blog = () => {
               ))}
             </div>
 
-            {filteredPosts.length === 0 && (
+            {filteredPosts.length === 0 && !loading && (
               <div className="text-center py-16">
                 <h3 className="text-2xl font-bold text-white mb-4">No articles found</h3>
                 <p className="text-gray-400">Try adjusting your search or filter criteria.</p>

@@ -45,7 +45,7 @@ const Services = () => {
       ],
       technologies: ['Adobe Creative Suite', 'Figma', 'Sketch', 'Procreate'],
       color: 'orange',
-      image: 'https://images.unsplash.com/photo-1626785773968-3e52ea351b6a?auto=format&fit=crop&w=1200&q=80'
+      image: 'https://metropolitan.hu/_next/image?url=https%3A%2F%2Fgephaz.metropolitan.hu%2Fstorage%2Fcontents%2F1200x800%20(5)-1733215548.png%3Fv%3D1764162419&w=1080&q=100'
     },
     {
       id: 'video-editing',
@@ -65,7 +65,7 @@ const Services = () => {
       ],
       technologies: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Cinema 4D'],
       color: 'green',
-      image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf6d44d?auto=format&fit=crop&w=1200&q=80'
+      image: 'https://blog.stockmusic.net/wp-content/uploads/2024/01/sanjeev-nagaraj-u4bvBOOpZB4-unsplash.jpg'
     },
     {
       id: 'ui-ux-design',

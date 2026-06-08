@@ -1,259 +1,211 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Calendar, User, ArrowLeft, Share2, Tag, Clock } from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { 
+  Calendar, 
+  User, 
+  ArrowLeft, 
+  Clock, 
+  Loader2, 
+  ChevronRight
+} from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 const BlogPost = () => {
   const { slug } = useParams();
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // This would typically come from an API or CMS
-  const blogPost = {
-    id: 1,
-    slug: 'future-of-web-development',
-    title: 'The Future of Web Development: Trends to Watch in 2024',
-    excerpt: 'Explore the latest trends shaping the web development landscape, from AI integration to progressive web apps.',
-    author: 'Sarah Johnson',
-    date: '2024-01-15',
-    category: 'Web Development',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    tags: ['Web Development', 'Trends', 'AI', 'PWA'],
-    content: `
-      <p>The web development landscape is constantly evolving, and 2024 promises to bring exciting new trends and technologies that will shape how we build and interact with web applications. As we move forward, developers need to stay ahead of the curve to create engaging, performant, and accessible digital experiences.</p>
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/blogs/${slug}`);
+        if (!response.ok) throw new Error('Article not found');
+        const data = await response.json();
+        
+        if (data.success) {
+          const b = data.blog;
+          
+          // Calculate read time based on real content
+          const wordsPerMinute = 200;
+          const textLength = (b.content || '').split(/\s+/).length;
+          const readTime = Math.ceil(textLength / wordsPerMinute);
 
-      <h2>1. AI-Powered Development Tools</h2>
-      <p>Artificial Intelligence is revolutionizing the way we write code. From GitHub Copilot to ChatGPT, AI-powered tools are becoming indispensable for developers. These tools can help with:</p>
-      <ul>
-        <li>Code generation and completion</li>
-        <li>Bug detection and fixing</li>
-        <li>Code optimization suggestions</li>
-        <li>Documentation generation</li>
-      </ul>
+          setPost({
+            id: b.id,
+            title: b.title,
+            summary: b.summary,
+            author: b.author,
+            date: b.publishedAt,
+            image: b.images && b.images.length > 0 ? b.images[0] : null,
+            readTime: `${readTime} min read`,
+            content: b.content,
+            images: b.images || []
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching post:', err);
+        setError('Article not found or server is offline.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      <h2>2. Progressive Web Apps (PWAs)</h2>
-      <p>PWAs continue to gain traction as they bridge the gap between web and native applications. They offer:</p>
-      <ul>
-        <li>Offline functionality</li>
-        <li>Push notifications</li>
-        <li>App-like user experience</li>
-        <li>Improved performance</li>
-      </ul>
+    fetchPost();
+    window.scrollTo(0, 0);
+  }, [slug]);
 
-      <h2>3. WebAssembly (WASM)</h2>
-      <p>WebAssembly is enabling high-performance applications in the browser by allowing developers to run code written in languages like C++, Rust, and Go at near-native speed.</p>
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="min-h-screen flex items-center justify-center bg-[#030712]">
+          <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
+        </div>
+      </PageTransition>
+    );
+  }
 
-      <h2>4. Micro-Frontends Architecture</h2>
-      <p>As applications grow in complexity, micro-frontends are becoming a popular approach to break down large applications into smaller, manageable pieces that can be developed and deployed independently.</p>
-
-      <h2>5. Enhanced Developer Experience</h2>
-      <p>Tools like Vite, Next.js 13+, and improved TypeScript support are making development faster and more enjoyable. The focus on developer experience continues to drive innovation in build tools and frameworks.</p>
-
-      <h2>Conclusion</h2>
-      <p>The future of web development is bright, with new technologies and approaches making it easier to build better applications. Staying informed about these trends and experimenting with new tools will help developers create more engaging and performant web experiences.</p>
-    `
-  };
-
-  const relatedPosts = [
-    {
-      id: 2,
-      slug: 'design-systems-guide',
-      title: 'Building Scalable Design Systems',
-      image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      id: 3,
-      slug: 'performance-optimization-tips',
-      title: 'Web Performance Optimization Tips',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    }
-  ];
+  if (error || !post) {
+    return (
+      <PageTransition>
+        <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Post Not Found</h2>
+            <Link to="/blog" className="text-cyan-500 hover:text-cyan-400 font-medium inline-flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" /> Back to Blog
+            </Link>
+          </div>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
-      <div className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Link
-                to="/blog"
-                className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-8"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span>Back to Blog</span>
-              </Link>
+      <div className="bg-[#030712] min-h-screen pb-20">
+        {/* Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-cyan-500 z-[100] origin-left"
+          style={{ scaleX }}
+        />
 
-              <div className="max-w-4xl mx-auto text-center">
-                <div className="flex items-center justify-center space-x-4 text-sm text-gray-400 mb-6">
-                  <span className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {new Date(blogPost.date).toLocaleDateString()}
-                  </span>
-                  <span className="flex items-center">
-                    <User className="h-4 w-4 mr-1" />
-                    {blogPost.author}
-                  </span>
-                  <span className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1" />
-                    {blogPost.readTime}
-                  </span>
-                </div>
+        {/* Simple Navigation */}
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#030712]/80 backdrop-blur-md border-b border-white/5">
+          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <Link to="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back</span>
+            </Link>
+            <div className="text-gray-500 text-xs font-mono hidden sm:block uppercase tracking-widest text-right">
+              {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}
+            </div>
+          </div>
+        </nav>
 
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                  {blogPost.title}
-                </h1>
-
-                <p className="text-xl text-gray-300 mb-8">
-                  {blogPost.excerpt}
-                </p>
-
-                <div className="flex flex-wrap justify-center gap-2 mb-8">
-                  {blogPost.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm flex items-center"
-                    >
-                      <Tag className="h-3 w-3 mr-1" />
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <button className="inline-flex items-center space-x-2 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                  <Share2 className="h-4 w-4" />
-                  <span>Share Article</span>
-                </button>
+        {/* Content Layout */}
+        <article className="pt-32 px-6">
+          <div className="max-w-3xl mx-auto">
+            
+            {/* Header Metadata */}
+            <header className="mb-12">
+              <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-gray-500 text-sm mb-6 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <User className="w-4 h-4" />
+                  {post.author}
+                </span>
+                <span className="w-1 h-1 bg-gray-700 rounded-full"></span>
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </span>
+                <span className="w-1 h-1 bg-gray-700 rounded-full"></span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4" />
+                  {post.readTime}
+                </span>
               </div>
-            </motion.div>
-          </div>
-        </section>
 
-        {/* Featured Image */}
-        <section className="py-12 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="max-w-4xl mx-auto"
-            >
-              <img
-                src={blogPost.image}
-                alt={blogPost.title}
-                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-2xl"
-              />
-            </motion.div>
-          </div>
-        </section>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-8 tracking-tight">
+                {post.title}
+              </h1>
 
-        {/* Article Content */}
-        <section className="py-12 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="prose prose-lg prose-invert max-w-none"
-              >
-                <div 
-                  className="text-gray-300 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: blogPost.content }}
+              {post.summary && (
+                <p className="text-xl md:text-2xl text-gray-400 leading-relaxed font-light border-l-2 border-cyan-500/30 pl-6 py-2 italic">
+                  {post.summary}
+                </p>
+              )}
+            </header>
+
+            {/* Main Featured Image */}
+            {post.image && (
+              <div className="mb-16 rounded-2xl overflow-hidden shadow-2xl bg-gray-900/50 aspect-video">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
                 />
-              </motion.div>
+              </div>
+            )}
+
+            {/* Article Body */}
+            <div className="prose prose-invert prose-lg max-w-none">
+              <div 
+                className="text-gray-300 whitespace-pre-wrap leading-relaxed text-lg font-light"
+                dangerouslySetInnerHTML={{ 
+                  __html: post.content
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br/>')
+                }}
+              />
             </div>
-          </div>
-        </section>
 
-        {/* Author Bio */}
-        <section className="py-12 bg-gradient-to-br from-gray-800 to-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="bg-gray-800/50 rounded-lg p-8 border border-gray-700"
-              >
-                <div className="flex items-center space-x-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
-                    alt={blogPost.author}
-                    className="w-20 h-20 rounded-full"
-                  />
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{blogPost.author}</h3>
-                    <p className="text-cyan-400 font-semibold mb-3">Creative Director</p>
-                    <p className="text-gray-300">
-                      Sarah is a creative director with over 10 years of experience in web development 
-                      and design. She's passionate about creating user-centered digital experiences 
-                      and staying ahead of industry trends.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Related Posts */}
-        <section className="py-20 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-3xl font-bold text-white mb-8 text-center">
-                  Related <span className="text-cyan-400">Articles</span>
-                </h2>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                  {relatedPosts.map((post, index) => (
+            {/* Gallery Section - Only if more images exist */}
+            {post.images.length > 1 && (
+              <div className="mt-20 pt-16 border-t border-white/5">
+                <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-10 text-center opacity-50">
+                  Visuals
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {post.images.slice(1).map((img: string, idx: number) => (
                     <motion.div
-                      key={post.id}
-                      initial={{ opacity: 0, y: 30 }}
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700 hover:border-cyan-400 transition-all duration-300 hover:transform hover:scale-105"
+                      className="rounded-xl overflow-hidden bg-gray-900 group"
                     >
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-48 object-cover"
+                      <img 
+                        src={img} 
+                        alt={`Supporting visual ${idx + 1}`} 
+                        className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-3 hover:text-cyan-400 transition-colors">
-                          <Link to={`/blog/${post.slug}`}>
-                            {post.title}
-                          </Link>
-                        </h3>
-                        <Link
-                          to={`/blog/${post.slug}`}
-                          className="text-cyan-400 font-semibold hover:text-cyan-300 transition-colors flex items-center space-x-1"
-                        >
-                          <span>Read Article</span>
-                          <ArrowLeft className="h-4 w-4 rotate-180" />
-                        </Link>
-                      </div>
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            )}
+
+            {/* Footer Navigation */}
+            <footer className="mt-24 pt-12 border-t border-white/5 flex flex-col items-center">
+              <Link 
+                to="/blog" 
+                className="group flex items-center gap-3 text-cyan-500 font-bold text-lg hover:text-cyan-400 transition-colors"
+              >
+                More Articles
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </footer>
+
           </div>
-        </section>
+        </article>
       </div>
     </PageTransition>
   );
