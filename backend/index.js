@@ -34,7 +34,14 @@ if (!SERVICE_ACCOUNT_PATH && !SERVICE_ACCOUNT_JSON) {
 let auth;
 try {
   if (SERVICE_ACCOUNT_JSON) {
-    const credentials = JSON.parse(SERVICE_ACCOUNT_JSON);
+    let jsonStr = SERVICE_ACCOUNT_JSON.trim();
+    // Remove wrapping single/double quotes if they were added accidentally in env
+    if ((jsonStr.startsWith("'") && jsonStr.endsWith("'")) || 
+        (jsonStr.startsWith('"') && jsonStr.endsWith('"'))) {
+      jsonStr = jsonStr.substring(1, jsonStr.length - 1);
+    }
+    
+    const credentials = JSON.parse(jsonStr);
     
     // CRITICAL FIX for Vercel: ensure private key newlines are handled correctly
     if (credentials.private_key && typeof credentials.private_key === 'string') {
