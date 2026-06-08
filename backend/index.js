@@ -276,7 +276,6 @@ router.get('/', (req, res) => {
 });
 
 app.use('/api', router);
-app.use('/', router);
 
 ensureBlogsSheet().catch(err => console.error('Startup error:', err));
 
