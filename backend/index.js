@@ -22,16 +22,9 @@ cloudinary.v2.config({
 // Configure multer for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Validate environment variables early with descriptive errors
-if (!SHEET_ID) {
-  console.error('ERROR: GOOGLE_SHEETS_BLOG_SHEET_ID is missing.');
-}
-
-if (!SERVICE_ACCOUNT_PATH && !SERVICE_ACCOUNT_JSON) {
-  console.error('ERROR: Google service account credentials are missing (JSON or PATH).');
-}
-
 let auth;
+let authError = null;
+
 try {
   if (SERVICE_ACCOUNT_JSON) {
     let jsonStr = SERVICE_ACCOUNT_JSON.trim();
@@ -52,17 +45,16 @@ try {
       credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
-    console.log('Google Auth initialized using GOOGLE_SERVICE_ACCOUNT_JSON env variable.');
   } else if (SERVICE_ACCOUNT_PATH) {
     auth = new google.auth.GoogleAuth({
       keyFile: SERVICE_ACCOUNT_PATH,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
-    console.log('Google Auth initialized using file path:', SERVICE_ACCOUNT_PATH);
   } else {
-    console.error('ERROR: No Google service account credentials provided (JSON or PATH).');
+    authError = 'No credentials provided (GOOGLE_SERVICE_ACCOUNT_JSON is empty)';
   }
 } catch (err) {
+  authError = `Auth Init Failed: ${err.message}`;
   console.error('ERROR: Failed to initialize Google Auth:', err.message);
 }
 
@@ -131,7 +123,6 @@ function formatBlogRow(row) {
       images: row[6] ? JSON.parse(row[6]) : [],
     };
   } catch (e) {
-    // Fallback if images are not valid JSON
     return {
       id: row[0],
       title: row[1],
@@ -148,7 +139,13 @@ const router = express.Router();
 
 router.get('/blogs', async (req, res) => {
   try {
-    if (!sheets) throw new Error('Google Sheets API not initialized');
+    if (!sheets) {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Google Sheets API not initialized',
+        details: authError 
+      });
+    }
     
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -167,7 +164,7 @@ router.get('/blogs', async (req, res) => {
 });
 
 router.get('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
   const { id } = req.params;
 
   try {
@@ -193,7 +190,7 @@ router.get('/blogs/:id', async (req, res) => {
 });
 
 router.post('/blogs', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
   if (!title || !summary || !author || !publishedAt) {
@@ -225,7 +222,7 @@ router.post('/blogs', async (req, res) => {
 });
 
 router.put('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
   const { id } = req.params;
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
@@ -262,7 +259,7 @@ router.put('/blogs/:id', async (req, res) => {
 });
 
 router.delete('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
   const { id } = req.params;
 
   try {
@@ -382,7 +379,8 @@ router.get('/', (req, res) => {
     status: {
       sheets: !!sheets,
       sheetId: !!SHEET_ID,
-      cloudinary: !!process.env.CLOUDINARY_CLOUD_NAME
+      cloudinary: !!process.env.CLOUDINARY_CLOUD_NAME,
+      authError: authError
     }
   });
 });
