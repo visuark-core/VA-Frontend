@@ -257,14 +257,13 @@ router.delete('/blogs/:id', async (req, res) => {
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/status', (req, res) => {
   res.json({ 
     success: true, 
-    message: 'Backend is running',
+    message: 'Backend is healthy',
     config: {
       GOOGLE_SHEETS_BLOG_SHEET_ID: !!SHEET_ID,
       GOOGLE_SERVICE_ACCOUNT_JSON: !!SERVICE_ACCOUNT_JSON,
-      GOOGLE_SERVICE_ACCOUNT_JSON_PATH: SERVICE_ACCOUNT_PATH || 'not_set',
       CLOUDINARY_READY: !!process.env.CLOUDINARY_CLOUD_NAME
     },
     auth: {
