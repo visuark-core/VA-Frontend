@@ -27,7 +27,7 @@ const BlogPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/blogs/${slug}`);
+        const response = await fetch(`/api/blogs/${slug}`);
         if (!response.ok) throw new Error('Article not found');
         const data = await response.json();
         

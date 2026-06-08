@@ -84,7 +84,10 @@ async function ensureBlogsSheet() {
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://visuark.vercel.app', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 function formatBlogRow(row) {
@@ -112,7 +115,9 @@ function formatBlogRow(row) {
   }
 }
 
-app.get('/blogs', async (req, res) => {
+const router = express.Router();
+
+router.get('/blogs', async (req, res) => {
   try {
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -130,7 +135,7 @@ app.get('/blogs', async (req, res) => {
   }
 });
 
-app.get('/blogs/:id', async (req, res) => {
+router.get('/blogs/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -155,7 +160,7 @@ app.get('/blogs/:id', async (req, res) => {
   }
 });
 
-app.post('/blogs', async (req, res) => {
+router.post('/blogs', async (req, res) => {
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
   if (!title || !summary || !author || !publishedAt) {
@@ -187,7 +192,7 @@ app.post('/blogs', async (req, res) => {
   }
 });
 
-app.put('/blogs/:id', async (req, res) => {
+router.put('/blogs/:id', async (req, res) => {
   const { id } = req.params;
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
@@ -225,7 +230,7 @@ app.put('/blogs/:id', async (req, res) => {
   }
 });
 
-app.delete('/blogs/:id', async (req, res) => {
+router.delete('/blogs/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -277,7 +282,7 @@ app.delete('/blogs/:id', async (req, res) => {
 });
 
 // Image upload endpoint
-app.post('/upload-image', upload.single('file'), async (req, res) => {
+router.post('/upload-image', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, error: 'No file provided' });
@@ -308,7 +313,7 @@ app.post('/upload-image', upload.single('file'), async (req, res) => {
 });
 
 // Multiple images upload endpoint
-app.post('/upload-images', upload.array('files'), async (req, res) => {
+router.post('/upload-images', upload.array('files'), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ success: false, error: 'No files provided' });
@@ -342,17 +347,31 @@ app.post('/upload-images', upload.array('files'), async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, async () => {
-  console.log(`Blog backend started on http://localhost:${PORT}`);
-  await ensureBlogsSheet();
+router.get('/', (req, res) => {
+  res.json({ success: true, message: 'Vagwiin Backend API is running' });
 });
 
-server.on('error', (e) => {
-  if (e.code === 'EADDRINUSE') {
-    console.error(`Error: Port ${PORT} is already in use.`);
-    console.error(`Please run: 'fuser -k ${PORT}/tcp' to free up the port and then try again.`);
-    process.exit(1);
-  } else {
-    console.error('Server error:', e);
-  }
-});
+// Use the router for both / and /api (to handle local proxy and Vercel routing)
+app.use('/api', router);
+app.use('/', router);
+
+// Ensure the sheet exists on startup
+ensureBlogsSheet().catch(err => console.error('Startup error:', err));
+
+if (process.env.NODE_ENV !== 'production') {
+  const server = app.listen(PORT, async () => {
+    console.log(`Blog backend started on http://localhost:${PORT}`);
+  });
+
+  server.on('error', (e) => {
+    if (e.code === 'EADDRINUSE') {
+      console.error(`Error: Port ${PORT} is already in use.`);
+      console.error(`Please run: 'fuser -k ${PORT}/tcp' to free up the port and then try again.`);
+      process.exit(1);
+    } else {
+      console.error('Server error:', e);
+    }
+  });
+}
+
+export default app;

@@ -8,7 +8,14 @@ export default defineConfig({
     host: true, // Allow access from local network
     hmr: {
       overlay: true
-    }
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
   optimizeDeps: {
     exclude: ['lucide-react'],

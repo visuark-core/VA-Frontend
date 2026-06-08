@@ -57,7 +57,7 @@ const Admin = () => {
   const fetchBlogs = async () => {
     setFetchingBlogs(true);
     try {
-      const response = await fetch('http://localhost:4000/blogs');
+      const response = await fetch('/api/blogs');
       const data = await response.json();
       if (data.success) {
         setBlogs(data.blogs);
@@ -111,7 +111,7 @@ const Admin = () => {
         imageFormData.append('files', file);
       });
 
-      const response = await fetch('http://localhost:4000/upload-images', {
+      const response = await fetch('/api/upload-images', {
         method: 'POST',
         body: imageFormData,
       });
@@ -175,8 +175,8 @@ const Admin = () => {
     setStatus({ type: null, message: '' });
 
     const url = isEditing 
-      ? `http://localhost:4000/blogs/${editingId}` 
-      : 'http://localhost:4000/blogs';
+      ? `/api/blogs/${editingId}` 
+      : '/api/blogs';
     
     const method = isEditing ? 'PUT' : 'POST';
 
@@ -236,7 +236,7 @@ const Admin = () => {
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/blogs/${id}`, {
+      const response = await fetch(`/api/blogs/${id}`, {
         method: 'DELETE',
       });
 
