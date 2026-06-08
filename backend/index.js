@@ -33,11 +33,23 @@ if (!SERVICE_ACCOUNT_PATH && !SERVICE_ACCOUNT_JSON) {
 
 let auth;
 try {
-  auth = new google.auth.GoogleAuth({
-    credentials: SERVICE_ACCOUNT_JSON ? JSON.parse(SERVICE_ACCOUNT_JSON) : undefined,
-    keyFile: SERVICE_ACCOUNT_PATH,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
+  if (SERVICE_ACCOUNT_JSON) {
+    // If JSON string is provided in env, use it directly
+    auth = new google.auth.GoogleAuth({
+      credentials: JSON.parse(SERVICE_ACCOUNT_JSON),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+    console.log('Google Auth initialized using GOOGLE_SERVICE_ACCOUNT_JSON env variable.');
+  } else if (SERVICE_ACCOUNT_PATH) {
+    // Fallback to file path only if it exists (local dev)
+    auth = new google.auth.GoogleAuth({
+      keyFile: SERVICE_ACCOUNT_PATH,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+    console.log('Google Auth initialized using file path:', SERVICE_ACCOUNT_PATH);
+  } else {
+    console.error('ERROR: No Google service account credentials provided (JSON or PATH).');
+  }
 } catch (err) {
   console.error('ERROR: Failed to initialize Google Auth:', err.message);
 }
