@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import { google } from 'googleapis';
 import cloudinary from 'cloudinary';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -24,19 +26,18 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 let auth;
 let authError = null;
+let authMethod = 'none';
 
 try {
   if (SERVICE_ACCOUNT_JSON) {
+    authMethod = 'env_variable';
     let jsonStr = SERVICE_ACCOUNT_JSON.trim();
-    // Remove wrapping single/double quotes if they were added accidentally in env
     if ((jsonStr.startsWith("'") && jsonStr.endsWith("'")) || 
         (jsonStr.startsWith('"') && jsonStr.endsWith('"'))) {
       jsonStr = jsonStr.substring(1, jsonStr.length - 1);
     }
     
     const credentials = JSON.parse(jsonStr);
-    
-    // CRITICAL FIX for Vercel: ensure private key newlines are handled correctly
     if (credentials.private_key && typeof credentials.private_key === 'string') {
       credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
     }
@@ -45,17 +46,19 @@ try {
       credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
-  } else if (SERVICE_ACCOUNT_PATH) {
+  } else if (SERVICE_ACCOUNT_PATH && fs.existsSync(SERVICE_ACCOUNT_PATH)) {
+    authMethod = 'file_path';
     auth = new google.auth.GoogleAuth({
       keyFile: SERVICE_ACCOUNT_PATH,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
   } else {
-    authError = 'No credentials provided (GOOGLE_SERVICE_ACCOUNT_JSON is empty)';
+    authError = SERVICE_ACCOUNT_PATH 
+      ? `File not found at path: ${path.resolve(SERVICE_ACCOUNT_PATH)}` 
+      : 'No credentials found (GOOGLE_SERVICE_ACCOUNT_JSON is missing)';
   }
 } catch (err) {
   authError = `Auth Init Failed: ${err.message}`;
-  console.error('ERROR: Failed to initialize Google Auth:', err.message);
 }
 
 const sheets = auth ? google.sheets({ version: 'v4', auth }) : null;
@@ -72,23 +75,13 @@ async function ensureBlogsSheet() {
     );
 
     if (!sheetExists) {
-      console.log('Blogs sheet not found. Creating it...');
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: SHEET_ID,
         requestBody: {
-          requests: [
-            {
-              addSheet: {
-                properties: {
-                  title: 'Blogs',
-                },
-              },
-            },
-          ],
+          requests: [{ addSheet: { properties: { title: 'Blogs' } } }],
         },
       });
 
-      // Add headers
       const headers = [['ID', 'Title', 'Summary', 'Author', 'PublishedAt', 'Content', 'Images']];
       await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
@@ -96,7 +89,6 @@ async function ensureBlogsSheet() {
         valueInputOption: 'RAW',
         requestBody: { values: headers },
       });
-      console.log('Blogs sheet created with headers.');
     }
   } catch (error) {
     console.error('Failed to ensure Blogs sheet exists:', error.message);
@@ -139,13 +131,7 @@ const router = express.Router();
 
 router.get('/blogs', async (req, res) => {
   try {
-    if (!sheets) {
-      return res.status(500).json({ 
-        success: false, 
-        error: 'Google Sheets API not initialized',
-        details: authError 
-      });
-    }
+    if (!sheets) throw new Error(authError || 'Google Sheets API not initialized');
     
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -156,15 +142,13 @@ router.get('/blogs', async (req, res) => {
     const blogs = rows.map(formatBlogRow);
     res.json({ success: true, blogs });
   } catch (error) {
-    console.error('Failed to load blog posts from Google Sheets:', error);
     const status = (typeof error.code === 'number') ? error.code : 500;
-    const message = error.response?.data?.error?.message || error.errors?.[0]?.message || error.message || 'Unable to fetch blogs';
-    res.status(status).json({ success: false, error: message });
+    res.status(status).json({ success: false, error: error.message || 'Unable to fetch blogs' });
   }
 });
 
 router.get('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
+  if (!sheets) return res.status(500).json({ success: false, error: authError || 'Google Sheets API not initialized' });
   const { id } = req.params;
 
   try {
@@ -182,27 +166,21 @@ router.get('/blogs/:id', async (req, res) => {
 
     res.json({ success: true, blog });
   } catch (error) {
-    console.error(`Failed to load blog ${id} from Google Sheets:`, error);
     const status = (typeof error.code === 'number') ? error.code : 500;
-    const message = error.response?.data?.error?.message || error.errors?.[0]?.message || 'Unable to fetch blog post';
-    res.status(status).json({ success: false, error: message });
+    res.status(status).json({ success: false, error: error.message });
   }
 });
 
 router.post('/blogs', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
+  if (!sheets) return res.status(500).json({ success: false, error: authError || 'Google Sheets API not initialized' });
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
   if (!title || !summary || !author || !publishedAt) {
-    return res.status(400).json({
-      success: false,
-      error: 'title, summary, author, and publishedAt are required',
-    });
+    return res.status(400).json({ success: false, error: 'Required fields missing' });
   }
 
   const id = `blog-${Date.now()}`;
-  const imagesString = JSON.stringify(images);
-  const values = [[id, title, summary, author, publishedAt, content || '', imagesString]];
+  const values = [[id, title, summary, author, publishedAt, content || '', JSON.stringify(images)]];
 
   try {
     await sheets.spreadsheets.values.append({
@@ -211,18 +189,14 @@ router.post('/blogs', async (req, res) => {
       valueInputOption: 'RAW',
       requestBody: { values },
     });
-
     res.status(201).json({ success: true, blog: { id, title, summary, author, publishedAt, content, images } });
   } catch (error) {
-    console.error('Failed to append blog post to Google Sheets:', error);
-    const status = (typeof error.code === 'number') ? error.code : 500;
-    const message = error.response?.data?.error?.message || error.errors?.[0]?.message || 'Unable to save blog post';
-    res.status(status).json({ success: false, error: message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 router.put('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
+  if (!sheets) return res.status(500).json({ success: false, error: authError || 'Google Sheets API not initialized' });
   const { id } = req.params;
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
@@ -235,152 +209,68 @@ router.put('/blogs/:id', async (req, res) => {
     const rows = result.data.values || [];
     const rowIndex = rows.findIndex(row => row[0] === id);
 
-    if (rowIndex === -1) {
-      return res.status(404).json({ success: false, error: 'Blog post not found' });
-    }
+    if (rowIndex === -1) return res.status(404).json({ success: false, error: 'Not found' });
 
-    const sheetRowNumber = rowIndex + 1;
-    const imagesString = JSON.stringify(images);
-    const values = [[id, title, summary, author, publishedAt, content || '', imagesString]];
-
+    const values = [[id, title, summary, author, publishedAt, content || '', JSON.stringify(images)]];
     await sheets.spreadsheets.values.update({
       spreadsheetId: SHEET_ID,
-      range: `Blogs!A${sheetRowNumber}:G${sheetRowNumber}`,
+      range: `Blogs!A${rowIndex + 1}:G${rowIndex + 1}`,
       valueInputOption: 'RAW',
       requestBody: { values },
     });
 
     res.json({ success: true, blog: { id, title, summary, author, publishedAt, content, images } });
   } catch (error) {
-    console.error('Failed to update blog post:', error);
-    const status = (typeof error.code === 'number') ? error.code : 500;
-    res.status(status).json({ success: false, error: 'Unable to update blog post' });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 router.delete('/blogs/:id', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized', details: authError });
+  if (!sheets) return res.status(500).json({ success: false, error: authError || 'Google Sheets API not initialized' });
   const { id } = req.params;
 
   try {
-    const spreadsheet = await sheets.spreadsheets.get({
-      spreadsheetId: SHEET_ID,
-    });
+    const spreadsheet = await sheets.spreadsheets.get({ spreadsheetId: SHEET_ID });
     const sheet = spreadsheet.data.sheets.find(s => s.properties.title === 'Blogs');
     if (!sheet) throw new Error('Blogs sheet not found');
-    const sheetId = sheet.properties.sheetId;
 
-    const result = await sheets.spreadsheets.values.get({
-      spreadsheetId: SHEET_ID,
-      range: 'Blogs!A:A',
-    });
-
+    const result = await sheets.spreadsheets.values.get({ spreadsheetId: SHEET_ID, range: 'Blogs!A:A' });
     const rows = result.data.values || [];
     const rowIndex = rows.findIndex(row => row[0] === id);
 
-    if (rowIndex === -1) {
-      return res.status(404).json({ success: false, error: 'Blog post not found' });
-    }
+    if (rowIndex === -1) return res.status(404).json({ success: false, error: 'Not found' });
 
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId: SHEET_ID,
       requestBody: {
-        requests: [
-          {
-            deleteDimension: {
-              range: {
-                sheetId: sheetId,
-                dimension: 'ROWS',
-                startIndex: rowIndex,
-                endIndex: rowIndex + 1,
-              },
-            },
-          },
-        ],
-      },
-    });
-
-    res.json({ success: true, message: 'Blog post deleted successfully' });
-  } catch (error) {
-    console.error('Failed to delete blog post:', error);
-    const status = (typeof error.code === 'number') ? error.code : 500;
-    res.status(status).json({ success: false, error: 'Unable to delete blog post' });
-  }
-});
-
-// Image upload endpoints
-router.post('/upload-image', upload.single('file'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ success: false, error: 'No file provided' });
-    }
-
-    const uploadStream = cloudinary.v2.uploader.upload_stream(
-      { folder: 'blog-posts', resource_type: 'auto' },
-      (error, result) => {
-        if (error) {
-          console.error('Cloudinary upload error:', error);
-          return res.status(500).json({ success: false, error: 'Failed to upload image' });
-        }
-
-        res.json({
-          success: true,
-          url: result.secure_url,
-          publicId: result.public_id,
-        });
-      }
-    );
-
-    uploadStream.end(req.file.buffer);
-  } catch (error) {
-    console.error('Image upload error:', error);
-    res.status(500).json({ success: false, error: 'Failed to process image upload' });
-  }
-});
-
-router.post('/upload-images', upload.array('files'), async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, error: 'No files provided' });
-    }
-
-    const uploadPromises = req.files.map((file) => {
-      return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.v2.uploader.upload_stream(
-          { folder: 'blog-posts', resource_type: 'auto' },
-          (error, result) => {
-            if (error) {
-              console.error('Cloudinary upload error:', error);
-              reject(error);
-            } else {
-              resolve({
-                url: result.secure_url,
-                publicId: result.public_id,
-              });
-            }
+        requests: [{
+          deleteDimension: {
+            range: { sheetId: sheet.properties.sheetId, dimension: 'ROWS', startIndex: rowIndex, endIndex: rowIndex + 1 }
           }
-        );
-        uploadStream.end(file.buffer);
-      });
+        }]
+      }
     });
 
-    const results = await Promise.all(uploadPromises);
-    res.json({ success: true, images: results });
+    res.json({ success: true, message: 'Deleted' });
   } catch (error) {
-    console.error('Images upload error:', error);
-    res.status(500).json({ success: false, error: 'Failed to process image uploads' });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 router.get('/', (req, res) => {
   res.json({ 
     success: true, 
-    message: 'Vagwiin Backend API is running',
-    status: {
-      sheets: !!sheets,
-      sheetId: !!SHEET_ID,
-      cloudinary: !!process.env.CLOUDINARY_CLOUD_NAME,
-      authError: authError
+    message: 'Backend is running',
+    config: {
+      GOOGLE_SHEETS_BLOG_SHEET_ID: !!SHEET_ID,
+      GOOGLE_SERVICE_ACCOUNT_JSON: !!SERVICE_ACCOUNT_JSON,
+      GOOGLE_SERVICE_ACCOUNT_JSON_PATH: SERVICE_ACCOUNT_PATH || 'not_set',
+      CLOUDINARY_READY: !!process.env.CLOUDINARY_CLOUD_NAME
+    },
+    auth: {
+      initialized: !!sheets,
+      method: authMethod,
+      error: authError
     }
   });
 });
@@ -391,9 +281,7 @@ app.use('/', router);
 ensureBlogsSheet().catch(err => console.error('Startup error:', err));
 
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Blog backend started on http://localhost:${PORT}`);
-  });
+  app.listen(PORT, () => console.log(`Local: http://localhost:${PORT}`));
 }
 
 export default app;
