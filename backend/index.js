@@ -34,14 +34,19 @@ if (!SERVICE_ACCOUNT_PATH && !SERVICE_ACCOUNT_JSON) {
 let auth;
 try {
   if (SERVICE_ACCOUNT_JSON) {
-    // If JSON string is provided in env, use it directly
+    const credentials = JSON.parse(SERVICE_ACCOUNT_JSON);
+    
+    // CRITICAL FIX for Vercel: ensure private key newlines are handled correctly
+    if (credentials.private_key && typeof credentials.private_key === 'string') {
+      credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+    }
+
     auth = new google.auth.GoogleAuth({
-      credentials: JSON.parse(SERVICE_ACCOUNT_JSON),
+      credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
     console.log('Google Auth initialized using GOOGLE_SERVICE_ACCOUNT_JSON env variable.');
   } else if (SERVICE_ACCOUNT_PATH) {
-    // Fallback to file path only if it exists (local dev)
     auth = new google.auth.GoogleAuth({
       keyFile: SERVICE_ACCOUNT_PATH,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
@@ -102,7 +107,7 @@ async function ensureBlogsSheet() {
 const app = express();
 
 app.use(cors({
-  origin: ['https://visuark.vercel.app', 'https://www.visuark.com', 'http://localhost:5173'],
+  origin: ['https://visuark.vercel.app', 'https://www.visuark.com', 'https://visuark.com', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
@@ -135,8 +140,9 @@ function formatBlogRow(row) {
 const router = express.Router();
 
 router.get('/blogs', async (req, res) => {
-  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   try {
+    if (!sheets) throw new Error('Google Sheets API not initialized');
+    
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
       range: 'Blogs!A2:G',
@@ -148,7 +154,7 @@ router.get('/blogs', async (req, res) => {
   } catch (error) {
     console.error('Failed to load blog posts from Google Sheets:', error);
     const status = (typeof error.code === 'number') ? error.code : 500;
-    const message = error.response?.data?.error?.message || error.errors?.[0]?.message || 'Unable to fetch blogs';
+    const message = error.response?.data?.error?.message || error.errors?.[0]?.message || error.message || 'Unable to fetch blogs';
     res.status(status).json({ success: false, error: message });
   }
 });
