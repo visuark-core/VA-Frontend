@@ -22,25 +22,30 @@ cloudinary.v2.config({
 // Configure multer for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
+// Validate environment variables early with descriptive errors
 if (!SHEET_ID) {
-  console.error('Missing GOOGLE_SHEETS_BLOG_SHEET_ID in backend/.env');
-  process.exit(1);
+  console.error('ERROR: GOOGLE_SHEETS_BLOG_SHEET_ID is missing.');
 }
 
 if (!SERVICE_ACCOUNT_PATH && !SERVICE_ACCOUNT_JSON) {
-  console.error('Missing Google service account credentials. Set GOOGLE_SERVICE_ACCOUNT_JSON_PATH or GOOGLE_SERVICE_ACCOUNT_JSON');
-  process.exit(1);
+  console.error('ERROR: Google service account credentials are missing (JSON or PATH).');
 }
 
-const auth = new google.auth.GoogleAuth({
-  credentials: SERVICE_ACCOUNT_JSON ? JSON.parse(SERVICE_ACCOUNT_JSON) : undefined,
-  keyFile: SERVICE_ACCOUNT_PATH,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
+let auth;
+try {
+  auth = new google.auth.GoogleAuth({
+    credentials: SERVICE_ACCOUNT_JSON ? JSON.parse(SERVICE_ACCOUNT_JSON) : undefined,
+    keyFile: SERVICE_ACCOUNT_PATH,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+} catch (err) {
+  console.error('ERROR: Failed to initialize Google Auth:', err.message);
+}
 
-const sheets = google.sheets({ version: 'v4', auth });
+const sheets = auth ? google.sheets({ version: 'v4', auth }) : null;
 
 async function ensureBlogsSheet() {
+  if (!sheets || !SHEET_ID) return;
   try {
     const spreadsheet = await sheets.spreadsheets.get({
       spreadsheetId: SHEET_ID,
@@ -85,7 +90,7 @@ async function ensureBlogsSheet() {
 const app = express();
 
 app.use(cors({
-  origin: ['https://visuark.vercel.app', 'http://localhost:5173'],
+  origin: ['https://visuark.vercel.app', 'https://www.visuark.com', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
@@ -118,6 +123,7 @@ function formatBlogRow(row) {
 const router = express.Router();
 
 router.get('/blogs', async (req, res) => {
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   try {
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -136,6 +142,7 @@ router.get('/blogs', async (req, res) => {
 });
 
 router.get('/blogs/:id', async (req, res) => {
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   const { id } = req.params;
 
   try {
@@ -161,6 +168,7 @@ router.get('/blogs/:id', async (req, res) => {
 });
 
 router.post('/blogs', async (req, res) => {
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
   if (!title || !summary || !author || !publishedAt) {
@@ -171,7 +179,6 @@ router.post('/blogs', async (req, res) => {
   }
 
   const id = `blog-${Date.now()}`;
-  // Store images as a comma-separated string or JSON
   const imagesString = JSON.stringify(images);
   const values = [[id, title, summary, author, publishedAt, content || '', imagesString]];
 
@@ -193,11 +200,11 @@ router.post('/blogs', async (req, res) => {
 });
 
 router.put('/blogs/:id', async (req, res) => {
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   const { id } = req.params;
   const { title, summary, author, publishedAt, content, images = [] } = req.body;
 
   try {
-    // 1. Find the row index
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
       range: 'Blogs!A:A',
@@ -210,7 +217,6 @@ router.put('/blogs/:id', async (req, res) => {
       return res.status(404).json({ success: false, error: 'Blog post not found' });
     }
 
-    // Google Sheets is 1-indexed, and index 0 is row 1
     const sheetRowNumber = rowIndex + 1;
     const imagesString = JSON.stringify(images);
     const values = [[id, title, summary, author, publishedAt, content || '', imagesString]];
@@ -231,10 +237,10 @@ router.put('/blogs/:id', async (req, res) => {
 });
 
 router.delete('/blogs/:id', async (req, res) => {
+  if (!sheets) return res.status(500).json({ success: false, error: 'Google Sheets API not initialized' });
   const { id } = req.params;
 
   try {
-    // 1. Get all data to find the row index and sheet metadata
     const spreadsheet = await sheets.spreadsheets.get({
       spreadsheetId: SHEET_ID,
     });
@@ -254,7 +260,6 @@ router.delete('/blogs/:id', async (req, res) => {
       return res.status(404).json({ success: false, error: 'Blog post not found' });
     }
 
-    // 2. Delete the row using batchUpdate (this shifts rows up)
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId: SHEET_ID,
       requestBody: {
@@ -281,14 +286,13 @@ router.delete('/blogs/:id', async (req, res) => {
   }
 });
 
-// Image upload endpoint
+// Image upload endpoints
 router.post('/upload-image', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, error: 'No file provided' });
     }
 
-    // Upload to Cloudinary using buffer
     const uploadStream = cloudinary.v2.uploader.upload_stream(
       { folder: 'blog-posts', resource_type: 'auto' },
       (error, result) => {
@@ -312,7 +316,6 @@ router.post('/upload-image', upload.single('file'), async (req, res) => {
   }
 });
 
-// Multiple images upload endpoint
 router.post('/upload-images', upload.array('files'), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
@@ -348,29 +351,25 @@ router.post('/upload-images', upload.array('files'), async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.json({ success: true, message: 'Vagwiin Backend API is running' });
+  res.json({ 
+    success: true, 
+    message: 'Vagwiin Backend API is running',
+    status: {
+      sheets: !!sheets,
+      sheetId: !!SHEET_ID,
+      cloudinary: !!process.env.CLOUDINARY_CLOUD_NAME
+    }
+  });
 });
 
-// Use the router for both / and /api (to handle local proxy and Vercel routing)
 app.use('/api', router);
 app.use('/', router);
 
-// Ensure the sheet exists on startup
 ensureBlogsSheet().catch(err => console.error('Startup error:', err));
 
 if (process.env.NODE_ENV !== 'production') {
-  const server = app.listen(PORT, async () => {
+  app.listen(PORT, () => {
     console.log(`Blog backend started on http://localhost:${PORT}`);
-  });
-
-  server.on('error', (e) => {
-    if (e.code === 'EADDRINUSE') {
-      console.error(`Error: Port ${PORT} is already in use.`);
-      console.error(`Please run: 'fuser -k ${PORT}/tcp' to free up the port and then try again.`);
-      process.exit(1);
-    } else {
-      console.error('Server error:', e);
-    }
   });
 }
 
