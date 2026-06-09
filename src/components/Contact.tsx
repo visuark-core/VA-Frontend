@@ -39,7 +39,7 @@ const Contact = () => {
     {
       icon: <MapPin className="h-6 w-6 text-green-400" />,
       title: 'Location',
-      details: 'iStart Nest Jodhpur, IT Park, IND',
+      details: 'iStart Nest Incubation Center, Vikramaditya Nagar, Surya Colony, Jodhpur, Rajasthan 342011',
       link: 'https://maps.app.goo.gl/YV9XzU5P3Y5X3X3X3' // Placeholder link if needed, but the iframe is main
     }
   ];
