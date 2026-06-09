@@ -39,8 +39,8 @@ const Contact = () => {
     {
       icon: <MapPin className="h-6 w-6 text-green-400" />,
       title: 'Location',
-      details: 'Rajasthan, IND',
-      link: '#'
+      details: 'iStart Nest Jodhpur, IT Park, IND',
+      link: 'https://maps.app.goo.gl/YV9XzU5P3Y5X3X3X3' // Placeholder link if needed, but the iframe is main
     }
   ];
 
@@ -171,9 +171,17 @@ const Contact = () => {
             {/* Map */}
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700">
               <h3 className="text-2xl font-bold text-white mb-6">Our Location</h3>
-              <div className="h-48 bg-gray-700 rounded-lg flex items-center justify-center">
-                <MapPin className="h-12 w-12 text-gray-400" />
-                <span className="ml-2 text-gray-400">Interactive Map Coming Soon</span>
+              <div className="h-64 w-full rounded-lg overflow-hidden border border-gray-700">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.47271810486!2d72.8797444!3d26.2464117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418933b49e1e7f%3A0xc392176214b62059!2siStart%20Nest%20Jodhpur!5e0!3m2!1sen!2sin!4v1717926173491!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="iStart Nest Jodhpur Location"
+                ></iframe>
               </div>
             </div>
           </div>
