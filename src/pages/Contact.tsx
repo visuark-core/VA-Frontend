@@ -79,9 +79,9 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: <Facebook className="h-6 w-6" />, link: '#', color: 'hover:text-blue-400', name: 'Facebook' },
-    { icon: <Twitter className="h-6 w-6" />, link: '#', color: 'hover:text-cyan-400', name: 'Twitter' },
-    { icon: <Instagram className="h-6 w-6" />, link: 'https://www.instagram.com/visuarkofficial/', color: 'hover:text-pink-400', name: 'Instagram' },
+    // { icon: <Facebook className="h-6 w-6" />, link: '#', color: 'hover:text-blue-400', name: 'Facebook' },
+    // { icon: <Twitter className="h-6 w-6" />, link: '#', color: 'hover:text-cyan-400', name: 'Twitter' },
+    { icon: <Instagram className="h-6 w-6" />, link: 'https://www.instagram.com/visuark.io/', color: 'hover:text-pink-400', name: 'Instagram' },
     { icon: <Linkedin className="h-6 w-6" />, link: 'https://www.linkedin.com/company/visuark/', color: 'hover:text-blue-500', name: 'LinkedIn' }
   ];
 
