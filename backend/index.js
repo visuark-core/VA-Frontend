@@ -6,8 +6,12 @@ import { google } from 'googleapis';
 import cloudinary from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const PORT = process.env.PORT || 4000;
 const SHEET_ID = process.env.GOOGLE_SHEETS_BLOG_SHEET_ID;
