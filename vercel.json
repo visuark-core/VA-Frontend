@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "backend/generated/client/**"
-    }
-  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/(.*)", "destination": "/" }
