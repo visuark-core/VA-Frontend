@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "prisma generate --schema=backend/prisma/schema.prisma && vite build",
+    "postinstall": "prisma generate --schema=backend/prisma/schema.prisma",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -22,6 +23,7 @@
     "lucide-react": "^0.344.0",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.21.0",
+    "prisma": "^7.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
@@ -40,7 +42,6 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
-    "prisma": "^7.8.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
