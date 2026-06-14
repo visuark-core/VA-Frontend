@@ -1,7 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { createRequire } from 'module';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 import dotenv from 'dotenv';
+
+const require = createRequire(import.meta.url);
+const { PrismaClient } = require('@prisma/client');
 
 dotenv.config();
 
@@ -14,6 +17,7 @@ if (connectionString) {
   const adapter = new PrismaPg(pool);
   prisma = new PrismaClient({ adapter });
 } else {
+  // Fallback for when DATABASE_URL is not set
   prisma = new PrismaClient();
 }
 
