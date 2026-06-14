@@ -27,7 +27,6 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: (origin, callback) => {
-    // Allows any vercel.app domain to fix Cross-Deployment 404s
     if (!origin || origin.endsWith('.vercel.app') || origin.includes('localhost')) {
       callback(null, true);
     } else {
@@ -37,6 +36,10 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// --- FIX: Handle Favicon 404 ---
+// Browsers automatically request this. We return 204 (No Content) to stop the error.
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 const router = express.Router();
 
@@ -89,6 +92,7 @@ router.post('/blogs', async (req, res) => {
     });
     res.status(201).json({ success: true, blog });
   } catch (error) {
+    console.error('Error creating blog:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
