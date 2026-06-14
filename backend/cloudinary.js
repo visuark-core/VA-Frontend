@@ -7,7 +7,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadImageToCloudinary = async (filePath: string, folder = 'blog-posts') => {
+export const uploadImageToCloudinary = async (filePath, folder = 'blog-posts') => {
   try {
     const result = await cloudinary.v2.uploader.upload(filePath, {
       folder,
@@ -22,12 +22,12 @@ export const uploadImageToCloudinary = async (filePath: string, folder = 'blog-p
     console.error('Cloudinary upload error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Upload failed',
+      error: error.message || 'Upload failed',
     };
   }
 };
 
-export const deleteImageFromCloudinary = async (publicId: string) => {
+export const deleteImageFromCloudinary = async (publicId) => {
   try {
     const result = await cloudinary.v2.uploader.destroy(publicId);
     return {
@@ -37,7 +37,7 @@ export const deleteImageFromCloudinary = async (publicId: string) => {
     console.error('Cloudinary delete error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Delete failed',
+      error: error.message || 'Delete failed',
     };
   }
 };

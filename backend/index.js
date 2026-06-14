@@ -109,6 +109,39 @@ router.post('/blogs', async (req, res) => {
   }
 });
 
+// POST upload images
+router.post('/upload-images', upload.array('files'), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, error: 'No files uploaded' });
+    }
+
+    const uploadPromises = req.files.map(file => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.v2.uploader.upload_stream(
+          { folder: 'blog-posts' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        uploadStream.end(file.buffer);
+      });
+    });
+
+    const results = await Promise.all(uploadPromises);
+    const images = results.map(result => ({
+      url: result.secure_url,
+      publicId: result.public_id
+    }));
+
+    res.json({ success: true, images });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // PUT update blog
 router.put('/blogs/:id', async (req, res) => {
   const { id } = req.params;

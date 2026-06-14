@@ -71,7 +71,7 @@ const Portfolio = () => {
             {/* --- TESTIMONIAL 1 --- */}
             <div className="lg:col-span-2 card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex items-center">
               <p className="text-gray-300 italic text-xl">
-                "Hi Neeraj, I really liked the design and pitch deck you made. The way you matched it with my brand identity was great. I loved your work and will surely give you more projects with Visuark."
+                "Hi Neeraj, I really liked the design and pitch deck you made. The way you matched it with my brand identity was great. I loved your work and will surely give you more projects with Visuark."
               </p>
             </div>
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.1s' }}>
