@@ -27,7 +27,20 @@ const upload = multer({ storage: multer.memoryStorage() });
 const app = express();
 
 app.use(cors({
-  origin: ['https://visuark.vercel.app', 'https://www.visuark.com', 'https://visuark.com', 'http://localhost:5173'],
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'https://visuark.vercel.app', 
+      'https://www.visuark.com', 
+      'https://visuark.com', 
+      'http://localhost:5173'
+    ];
+    // Allow Vercel preview URLs
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
@@ -42,7 +55,12 @@ router.get('/blogs', async (req, res) => {
     });
     res.json({ success: true, blogs });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message || 'Unable to fetch blogs' });
+    console.error('Error fetching blogs:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Unable to fetch blogs',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 
@@ -60,6 +78,7 @@ router.get('/blogs/:id', async (req, res) => {
 
     res.json({ success: true, blog });
   } catch (error) {
+    console.error('Error fetching blog by ID:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -85,6 +104,7 @@ router.post('/blogs', async (req, res) => {
     });
     res.status(201).json({ success: true, blog });
   } catch (error) {
+    console.error('Error creating blog:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -109,6 +129,7 @@ router.put('/blogs/:id', async (req, res) => {
 
     res.json({ success: true, blog });
   } catch (error) {
+    console.error('Error updating blog:', error);
     if (error.code === 'P2025') {
       return res.status(404).json({ success: false, error: 'Blog not found' });
     }
@@ -126,6 +147,7 @@ router.delete('/blogs/:id', async (req, res) => {
     });
     res.json({ success: true, message: 'Deleted' });
   } catch (error) {
+    console.error('Error deleting blog:', error);
     if (error.code === 'P2025') {
       return res.status(404).json({ success: false, error: 'Blog not found' });
     }
@@ -139,7 +161,8 @@ router.get('/status', (req, res) => {
     message: 'Backend is healthy',
     config: {
       DATABASE_READY: !!process.env.DATABASE_URL,
-      CLOUDINARY_READY: !!process.env.CLOUDINARY_CLOUD_NAME
+      CLOUDINARY_READY: !!process.env.CLOUDINARY_CLOUD_NAME,
+      NODE_ENV: process.env.NODE_ENV
     }
   });
 });
