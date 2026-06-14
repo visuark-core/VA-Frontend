@@ -38,8 +38,10 @@ app.use(cors({
 app.use(express.json());
 
 // --- FIX: Handle Favicon 404 ---
-// Browsers automatically request this. We return 204 (No Content) to stop the error.
-app.get('/favicon.ico', (req, res) => res.status(204).end());
+// Serve the actual file from the public folder so the browser can display it
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/favicon.ico'));
+});
 
 const router = express.Router();
 
