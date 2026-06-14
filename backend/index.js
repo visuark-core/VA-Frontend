@@ -47,6 +47,11 @@ app.use(express.json());
 
 const router = express.Router();
 
+// Root check route
+router.get('/', (req, res) => {
+  res.json({ success: true, message: 'API is running' });
+});
+
 // GET all blogs
 router.get('/blogs', async (req, res) => {
   try {
