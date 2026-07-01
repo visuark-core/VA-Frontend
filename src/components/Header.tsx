@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Anchor, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
@@ -39,16 +39,12 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <motion.div
-              whileHover={{ rotate: 45, scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Anchor className="h-8 w-8 text-cyan-400" />
-            </motion.div>
-            <span className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-              Visuark
-            </span>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src="/img/logo.png" 
+              alt="Visuark Logo" 
+              className="h-10 sm:h-12 object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -69,7 +65,7 @@ const Header = () => {
           {/* CTA Button */}
           <Link
             to="/contact"
-            className="hidden lg:block bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105 transition-all duration-300"
+            className="hidden lg:block bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-6 py-2 rounded-full font-semibold hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105 transition-all duration-300"
           >
             Get Started
           </Link>
@@ -106,7 +102,7 @@ const Header = () => {
                 ))}
                 <Link
                   to="/contact"
-                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-2 rounded-full font-semibold text-center mt-4"
+                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-6 py-2 rounded-full font-semibold text-center mt-4"
                 >
                   Get Started
                 </Link>

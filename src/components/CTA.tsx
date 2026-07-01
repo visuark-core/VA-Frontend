@@ -30,7 +30,7 @@ const CTA = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="bg-white text-cyan-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+              className="bg-black text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-900 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md"
             >
               <span>Get Started Today</span>
               <ArrowRight className="h-5 w-5" />
@@ -38,7 +38,7 @@ const CTA = () => {
             
             <Link
               to="/portfolio"
-              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-cyan-600 transform hover:scale-105 transition-all duration-300"
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-black transform hover:scale-105 transition-all duration-300"
             >
               View Our Work
             </Link>

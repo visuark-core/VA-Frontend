@@ -175,7 +175,7 @@ const Services = () => {
                 We blend creativity, technology, and strategy to build digital solutions that don't just look good, but drive real business results.
               </p>
               <div className="flex justify-center gap-4">
-                <Link to="/contact" className="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/25 flex items-center transform hover:-translate-y-1">
+                <Link to="/contact" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/25 flex items-center transform hover:-translate-y-1">
                   Start Your Project
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -230,7 +230,7 @@ const Services = () => {
 
                       {/* Get Started Button replacing Investment */}
                       <div className="mt-8">
-                        <Link to="/contact" className={`inline-flex items-center text-white font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg flex items-center transform hover:-translate-y-1 ${getButtonColor(service.color)}`}>
+                        <Link to="/contact" className={`inline-flex items-center text-black font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg flex items-center transform hover:-translate-y-1 ${getButtonColor(service.color)}`}>
                           Get Started
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </Link>
@@ -318,7 +318,7 @@ const Services = () => {
               <p className="text-xl text-gray-300 mb-10">
                 Let's discuss how our services can help you achieve your business objectives.
               </p>
-              <Link to="/contact" className="inline-flex items-center justify-center bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105">
+              <Link to="/contact" className="inline-flex items-center justify-center bg-black text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-900 transition-all transform hover:scale-105">
                 Book a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

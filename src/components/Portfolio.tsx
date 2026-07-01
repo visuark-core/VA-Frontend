@@ -94,7 +94,7 @@ const Portfolio = () => {
                 onClick={() => setActiveFilter(filter.key)}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                   activeFilter === filter.key
-                    ? 'bg-cyan-400 text-gray-900'
+                    ? 'bg-cyan-400 text-black shadow-sm'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
               >
@@ -191,7 +191,7 @@ const Portfolio = () => {
               
               <a
                 href={selectedProject.link}
-                className="inline-flex items-center space-x-2 bg-cyan-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-colors"
+                className="inline-flex items-center space-x-2 bg-cyan-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-colors shadow-sm"
               >
                 <span>View Project</span>
                 <ExternalLink className="h-4 w-4" />

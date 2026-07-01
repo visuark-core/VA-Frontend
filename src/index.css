@@ -63,16 +63,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #111827;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00bcd4;
+  background: #399ed2;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0891b2;
+  background: #0284c7;
 }
 
 /* Fix for potential layout issues */
@@ -84,7 +84,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #030712; 
+  background-color: #f8fafc; 
 }
 
 /* Prose styles for blog content */
@@ -93,7 +93,7 @@ body {
 }
 
 .prose h3 {
-  @apply text-xl font-semibold text-cyan-400 mt-6 mb-3;
+  @apply text-xl font-semibold text-cyan-500 mt-6 mb-3;
 }
 
 .prose p {
@@ -110,7 +110,7 @@ body {
 
 .prose li::before {
   content: "•";
-  @apply text-cyan-400 font-bold mr-3 mt-1;
+  @apply text-cyan-500 font-bold mr-3 mt-1;
 }
 
 /* Loading animation */
@@ -126,7 +126,7 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(45deg, #00bcd4, #ff6b35);
+  background: linear-gradient(45deg, #399ed2, #0284c7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -143,13 +143,13 @@ body {
 
 /* Backdrop blur support */
 .backdrop-blur-fallback {
-  background-color: rgba(17, 24, 39, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 @supports (backdrop-filter: blur(10px)) {
   .backdrop-blur-fallback {
     backdrop-filter: blur(10px);
-    background-color: rgba(17, 24, 39, 0.6);
+    background-color: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -181,12 +181,12 @@ body {
   top: -50%;
   width: 200%;
   height: 200%;
-  background-color: #1a202c; /* A slightly lighter dark color */
+  background-color: #f1f5f9; /* A slightly lighter dark color */
   background-repeat: no-repeat;
   background-size: 50% 50%, 50% 50%;
   background-position: 0 0, 100% 0, 100% 100%, 0 100%;
   /* This creates the conic gradient for the 'chase' effect */
-  background-image: conic-gradient(#00bcd4, #ff6b35, #0891b2, #00bcd4);
+  background-image: conic-gradient(#399ed2, #0284c7, #7dd3fc, #399ed2);
   
   /* Animate the rotation */
   animation: rotate 4s linear infinite;
@@ -205,7 +205,7 @@ body {
   top: 3px;
   width: calc(100% - 6px);
   height: calc(100% - 6px);
-  background: #111827; /* Match your card background color */
+  background: #ffffff; /* Match your card background color */
   border-radius: 12px; /* Should be slightly less than the parent's border-radius */
 }
 
@@ -214,7 +214,7 @@ body {
 .card-hover:hover {
   /* This is the strong POP-UP effect you requested */
   transform: translateY(-12px) scale(1.05);
-  box-shadow: 0 25px 50px -12px rgba(0, 188, 212, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(57, 158, 210, 0.15);
   
   /* Make the original border transparent to let the glow show through */
   border-color: transparent !important;

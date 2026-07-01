@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Anchor, Heart, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Heart, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const socialLinks = [
@@ -16,9 +16,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <Anchor className="h-8 w-8 text-cyan-400 transform rotate-45" />
-              <span className="text-2xl font-bold text-white">Visuark</span>
+            <Link to="/" className="flex items-center mb-4">
+              <img 
+                src="/img/logo.png" 
+                alt="Visuark Logo" 
+                className="h-10 sm:h-12 object-contain"
+              />
             </Link>
             <p className="text-gray-400 mb-4">
               Anchoring your digital dreams to reality through innovative design and development.
