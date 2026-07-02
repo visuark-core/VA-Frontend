@@ -1,111 +1,209 @@
-import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Code, Palette, Video, Smartphone } from 'lucide-react';
 
 const Services = () => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setScrollProgress(latest);
+  });
+
+  // Calculate organization factor from 0 (scattered) to 1 (neatly aligned/organized)
+  // Transition occurs between scroll progress 0.15 and 0.55
+  const startScroll = 0.15;
+  const endScroll = 0.55;
+  const factor = Math.min(Math.max((scrollProgress - startScroll) / (endScroll - startScroll), 0), 1);
+
   const services = [
     {
-      icon: <Code className="h-10 w-10 text-cyan-400" />,
+      id: 0,
+      icon: <Code className="h-7 w-7 text-cyan-400" />,
+      company: 'VISUARK DEV',
       title: 'Web Development',
-      description: 'Custom websites and web applications built with modern technologies. From responsive designs to complex web platforms.',
-      features: ['React & Next.js', 'E-commerce Solutions', 'CMS Integration', 'Performance Optimization'],
-      color: 'cyan',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80'
+      subtitle: 'Scalable & High Performance',
+      tags: ['React & Next.js', 'E-commerce', 'SEO Friendly'],
+      activeProjects: 'Active Projects: 12',
+      colorClass: 'text-cyan-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.25)]',
+      bgBacking: 'bg-cyan-500',
+      borderClass: 'border-cyan-500/30'
     },
     {
-      icon: <Palette className="h-10 w-10 text-orange-400" />,
+      id: 1,
+      icon: <Palette className="h-7 w-7 text-orange-400" />,
+      company: 'VISUARK BRANDING',
       title: 'Graphic Design',
-      description: 'Creative visual solutions that communicate your brand story effectively. From logos to complete brand identities.',
-      features: ['Brand Identity', 'Print Design', 'Digital Graphics', 'Packaging Design'],
-      color: 'orange',
-      image: 'https://metropolitan.hu/_next/image?url=https%3A%2F%2Fgephaz.metropolitan.hu%2Fstorage%2Fcontents%2F1200x800%20(5)-1733215548.png%3Fv%3D1764162419&w=1080&q=100'
+      subtitle: 'Brand Story & Identities',
+      tags: ['Brand Identity', 'Print & Digital', 'Packaging'],
+      activeProjects: 'Completed: 45+',
+      colorClass: 'text-orange-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]',
+      bgBacking: 'bg-orange-500',
+      borderClass: 'border-orange-500/30'
     },
     {
-      icon: <Video className="h-10 w-10 text-green-400" />,
+      id: 2,
+      icon: <Video className="h-7 w-7 text-green-400" />,
+      company: 'VISUARK MEDIA',
       title: 'Video Editing',
-      description: 'Professional video production and editing services. Transform raw footage into compelling visual stories.',
-      features: ['Commercial Videos', 'Social Media Content', 'Motion Graphics', 'Color Grading'],
-      color: 'green',
-      image: 'https://blog.stockmusic.net/wp-content/uploads/2024/01/sanjeev-nagaraj-u4bvBOOpZB4-unsplash.jpg'
+      subtitle: 'Cinematic Storytelling',
+      tags: ['Commercial Videos', 'Social Media', 'Color Grading'],
+      activeProjects: '180+ Produced',
+      colorClass: 'text-green-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(34,197,94,0.25)]',
+      bgBacking: 'bg-green-500',
+      borderClass: 'border-green-500/30'
     },
     {
-      icon: <Smartphone className="h-10 w-10 text-purple-400" />,
+      id: 3,
+      icon: <Smartphone className="h-7 w-7 text-purple-400" />,
+      company: 'VISUARK DESIGN',
       title: 'UI/UX Design',
-      description: 'User-centered design that creates intuitive and engaging digital experiences. Research-driven design solutions.',
-      features: ['User Research', 'Wireframing', 'Prototyping', 'Usability Testing'],
-      color: 'purple',
-      image: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=800&q=80'
+      subtitle: 'User Centered Journeys',
+      tags: ['User Research', 'Wireframes', 'Prototyping'],
+      activeProjects: 'Active Projects: 8',
+      colorClass: 'text-purple-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(168,85,247,0.25)]',
+      bgBacking: 'bg-purple-500',
+      borderClass: 'border-purple-500/30'
     }
   ];
 
-  const getColorClasses = (color: string) => {
-    const colorMap: Record<string, string> = {
-      cyan: 'border-cyan-400 hover:shadow-cyan-400/25',
-      orange: 'border-orange-400 hover:shadow-orange-400/25',
-      green: 'border-green-400 hover:shadow-green-400/25',
-      purple: 'border-purple-400 hover:shadow-purple-400/25'
-    };
-    return colorMap[color] || colorMap.cyan;
+  // Coordinates mapping
+  const getTargets = (id: number) => {
+    if (isMobile) {
+      // Mobile targets: scattered overlapping stack -> organized vertical stack
+      const scatterCoords = [
+        { rotate: 10, x: 15, y: -20 },
+        { rotate: -12, x: -20, y: 0 },
+        { rotate: 8, x: 18, y: 15 },
+        { rotate: -9, x: -12, y: -10 }
+      ];
+      const organizeCoords = [
+        { rotate: 0, x: 0, y: -270 },
+        { rotate: 0, x: 0, y: -90 },
+        { rotate: 0, x: 0, y: 90 },
+        { rotate: 0, x: 0, y: 270 }
+      ];
+      return { scatter: scatterCoords[id], organize: organizeCoords[id] };
+    } else {
+      // Desktop targets: scattered overlapping stack -> organized horizontal layout
+      const scatterCoords = [
+        { rotate: 12, x: 26, y: -16 },
+        { rotate: -16, x: -30, y: 12 },
+        { rotate: 10, x: 18, y: 22 },
+        { rotate: -12, x: -16, y: -22 }
+      ];
+      const organizeCoords = [
+        { rotate: 0, x: -460, y: 0 },
+        { rotate: 0, x: -150, y: 0 },
+        { rotate: 0, x: 150, y: 0 },
+        { rotate: 0, x: 460, y: 0 }
+      ];
+      return { scatter: scatterCoords[id], organize: organizeCoords[id] };
+    }
   };
 
   return (
-    <section id="services" className="py-20 bg-gradient-to-br from-gray-800 to-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+    <section 
+      id="services" 
+      ref={containerRef} 
+      className="py-24 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden"
+    >
+      {/* Background glowing decorations */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Header Container */}
+      <div className="container mx-auto px-4 relative z-10 mb-16 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
             Our <span className="text-cyan-400">Services</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            We offer comprehensive digital solutions to help your business thrive in the modern world.
+          <p className="text-lg text-gray-300 leading-relaxed">
+            We design and build premium digital products that scale your business. Watch the cards organize as you scroll down.
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className={`flex flex-col h-full bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border-2 border-gray-700 hover:${getColorClasses(service.color)} transition-all duration-300 hover:transform hover:-translate-y-2 group`}
-            >
-              {/* Cover Image Area */}
-              <div className="relative h-56 overflow-hidden">
-                <div className="absolute inset-0 bg-gray-900/40 z-10 group-hover:bg-transparent transition-all duration-500"></div>
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute bottom-4 left-6 z-20 bg-gray-900/80 p-3 rounded-xl backdrop-blur-sm border border-gray-700">
-                  {service.icon}
-                </div>
-              </div>
+      {/* Cards Canvas Container */}
+      <div className="relative w-full z-10 flex items-center justify-center h-[760px] lg:h-[450px]">
+        <div className="relative w-full max-w-6xl h-full flex items-center justify-center">
+          {services.map((service) => {
+            const targets = getTargets(service.id);
+            const currentRotate = targets.scatter.rotate + (targets.organize.rotate - targets.scatter.rotate) * factor;
+            const currentX = targets.scatter.x + (targets.organize.x - targets.scatter.x) * factor;
+            const currentY = targets.scatter.y + (targets.organize.y - targets.scatter.y) * factor;
 
-              {/* Card Content Area */}
-              <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-white transition-colors mt-2">
-                  {service.title}
-                </h3>
-                
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  {service.description}
-                </p>
-                
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {service.features?.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="text-gray-400 flex items-center">
-                      <ArrowRight className={`h-4 w-4 mr-3 text-${service.color}-400`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <div className="mt-auto">
-                  <Link to="/services" className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-4 rounded-xl font-bold hover:from-cyan-300 hover:to-blue-400 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 flex items-center justify-center">
-                    Get Started
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+            return (
+              <motion.div
+                key={service.id}
+                style={{
+                  x: currentX,
+                  y: currentY,
+                  rotate: currentRotate,
+                  zIndex: 10 + service.id
+                }}
+                className={`absolute cursor-pointer rounded-[28px] transition-shadow duration-300 ${service.bgGlow}`}
+                whileHover={{ scale: 1.04, zIndex: 50 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+              >
+                {/* Colored Layer Behind */}
+                <div className={`absolute inset-0 rounded-[28px] ${service.bgBacking} translate-y-3.5 translate-x-1.5 flex items-end justify-center pb-2.5 text-[10px] font-extrabold uppercase tracking-widest text-gray-900 shadow-md`}>
+                  {service.activeProjects}
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {/* Front Card Panel */}
+                <div className={`relative bg-gray-800 border border-gray-700 rounded-[28px] p-6 flex flex-col justify-between h-[240px] w-[280px] sm:w-[320px] z-10 transition-all duration-300`}>
+                  {/* Header logo row */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-gray-500 uppercase">
+                      {service.company}
+                    </span>
+                    <div className={`p-2.5 rounded-xl bg-gray-900 border border-gray-700 shadow-inner ${service.colorClass}`}>
+                      {service.icon}
+                    </div>
+                  </div>
+
+                  {/* Title Info */}
+                  <div className="my-3 text-left">
+                    <h4 className="text-xl font-extrabold text-white leading-tight">
+                      {service.title}
+                    </h4>
+                    <p className="text-gray-400 text-xs mt-1 leading-relaxed">
+                      {service.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Bottom Tag Pills */}
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {service.tags.map((tag) => (
+                      <span key={tag} className="text-[9px] font-mono font-bold px-2.5 py-0.5 bg-gray-900/80 border border-gray-700 text-gray-300 rounded-full shadow-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

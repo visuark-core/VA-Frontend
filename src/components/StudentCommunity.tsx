@@ -1,7 +1,151 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Users } from 'lucide-react';
+import { Users, Terminal } from 'lucide-react';
+
+const InteractiveCommunityWidget: React.FC = () => {
+  const [activeTab, setActiveTab] = React.useState<'editor' | 'terminal' | 'members'>('editor');
+  const [terminalLogs, setTerminalLogs] = React.useState<string[]>([
+    'Initializing visuark-hub...',
+    'Fetching team repository metadata...',
+    'Connected to channel #main-project-room',
+  ]);
+
+  React.useEffect(() => {
+    const logs = [
+      'NK committed f3b9a2: "Fix overlapping node layout"',
+      'SS pushed changes to branch origin/main',
+      'System: Auto-deploy triggered for frontend-hub',
+      'Live reload: page refreshed successfully',
+      'VisuarkBot: 4 developers active right now',
+      'JD initialized dev-server on port:3000',
+    ];
+    let index = 0;
+    const interval = setInterval(() => {
+      setTerminalLogs(prev => {
+        const nextLogs = [...prev, logs[index]];
+        if (nextLogs.length > 5) {
+          nextLogs.shift();
+        }
+        return nextLogs;
+      });
+      index = (index + 1) % logs.length;
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-full max-w-md mx-auto bg-gray-950/85 backdrop-blur-md border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden group">
+      {/* Background soft glow blobs */}
+      <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-cyan-500/10 blur-[80px] group-hover:bg-cyan-500/15 transition-colors duration-500 pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-orange-500/10 blur-[80px] group-hover:bg-orange-500/15 transition-colors duration-500 pointer-events-none" />
+
+      {/* Header Bar */}
+      <div className="flex items-center justify-between border-b border-gray-800/80 pb-4 mb-4">
+        <div className="flex items-center space-x-2">
+          <div className="w-3 h-3 rounded-full bg-red-500/80" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+          <div className="w-3 h-3 rounded-full bg-green-500/80" />
+          <span className="text-[10px] font-mono text-gray-500 ml-2">visuark-collaborator // v1.2</span>
+        </div>
+        <div className="flex bg-gray-900 border border-gray-800 p-0.5 rounded-lg">
+          {(['editor', 'terminal', 'members'] as const).map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-2.5 py-1 text-[9px] font-bold font-mono uppercase rounded-md transition-all duration-200 ${
+                activeTab === tab 
+                  ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' 
+                  : 'text-gray-400 border border-transparent hover:text-white'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="h-48 flex flex-col justify-between font-mono text-[11px] leading-relaxed">
+        {activeTab === 'editor' && (
+          <div className="flex-1 flex flex-col justify-start text-left text-gray-400 bg-gray-900/40 p-3 rounded-xl border border-gray-900 overflow-hidden relative">
+            <div className="text-cyan-400/80 mb-1">// Visuark Student Project</div>
+            <div><span className="text-purple-400">import</span> React <span className="text-purple-400">from</span> <span className="text-green-400">'react'</span>;</div>
+            <div><span className="text-purple-400">const</span> <span className="text-blue-400">CommunityProject</span> = () =&gt; &#123;</div>
+            <div className="pl-4">
+              <span className="text-purple-400">const</span> [status, setStatus] = React.useState(<span className="text-green-400">'Building'</span>);
+            </div>
+            <div className="pl-4">
+              React.useEffect(() =&gt; &#123;
+            </div>
+            <div className="pl-8 text-orange-400/90">
+              console.log(<span className="text-green-400">`Status is: $&#123;status&#125;`</span>);
+            </div>
+            <div className="pl-4">
+              &#125;, []);
+            </div>
+            <div className="pl-4">
+              <span className="text-purple-400">return</span> &lt;<span className="text-cyan-400">div</span>&gt;Interactive Sandbox&lt;/<span className="text-cyan-400">div</span>&gt;;
+            </div>
+            <div>&#125;;</div>
+            <div className="absolute right-3 bottom-3 flex items-center space-x-1.5 bg-cyan-950 border border-cyan-800 text-cyan-400 px-2 py-0.5 rounded text-[8px] font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+              <span>LIVE EDITOR</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'terminal' && (
+          <div className="flex-1 text-left bg-gray-950 p-3 rounded-xl border border-gray-900/80 overflow-y-auto space-y-1">
+            {terminalLogs.map((log, index) => (
+              <div key={index} className="text-gray-400 flex items-start space-x-2">
+                <span className="text-cyan-500 font-bold shrink-0">&gt;</span>
+                <span className={log.startsWith('System') || log.startsWith('Visuark') ? 'text-cyan-400' : log.includes('committed') ? 'text-orange-400' : 'text-gray-400'}>{log}</span>
+              </div>
+            ))}
+            <div className="text-gray-500 animate-pulse">&gt; waiting for workspace actions...</div>
+          </div>
+        )}
+
+        {activeTab === 'members' && (
+          <div className="flex-1 flex flex-col justify-center space-y-3 bg-gray-900/40 p-3 rounded-xl border border-gray-900">
+            <span className="text-[10px] text-gray-500 uppercase tracking-widest mb-1 text-center font-bold block">Active Contributors</span>
+            <div className="flex items-center justify-center -space-x-2">
+              {[
+                { name: 'Neeraj K.', initials: 'NK', bg: 'from-cyan-500 to-blue-500' },
+                { name: 'Sunil S.', initials: 'SS', bg: 'from-orange-500 to-amber-500' },
+                { name: 'Jane D.', initials: 'JD', bg: 'from-emerald-500 to-teal-500' },
+                { name: 'Alex M.', initials: 'AM', bg: 'from-purple-500 to-pink-500' }
+              ].map((member, i) => (
+                <div 
+                  key={i} 
+                  className={`w-9 h-9 rounded-full border-2 border-gray-950 bg-gradient-to-tr ${member.bg} flex items-center justify-center text-[10px] font-bold text-white shadow-lg relative group/avatar cursor-pointer`}
+                >
+                  {member.initials}
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border border-gray-950 rounded-full animate-pulse" />
+                  
+                  {/* Avatar Tooltip */}
+                  <div className="absolute bottom-11 left-1/2 -translate-x-1/2 bg-gray-950 border border-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-xl pointer-events-none uppercase">
+                    {member.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-[9px] text-center text-gray-400 font-bold uppercase tracking-widest mt-1 animate-pulse">
+              Collaborating on 3 active projects
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer Info */}
+      <div className="mt-4 pt-3 border-t border-gray-900 flex items-center justify-between text-[10px] text-gray-500 font-mono">
+        <div>workspace // active-session-1</div>
+        <div className="text-cyan-400 font-bold uppercase tracking-wide">reveal soon</div>
+      </div>
+    </div>
+  );
+};
 
 const StudentCommunity: React.FC = () => {
   return (
@@ -72,24 +216,9 @@ const StudentCommunity: React.FC = () => {
               </ul>
             </div>
 
-            {/* Right: mock illustration / cards */}
+            {/* Right: Interactive Dev Sandbox Widget */}
             <div className="relative flex items-center justify-center">
-              <div className="w-full max-w-md mx-auto">
-                <div className="rounded-2xl p-4 bg-gradient-to-b from-white/5 to-white/2 border border-gray-700 shadow-2xl">
-                  <img
-                    src="img/livesoon.png"
-                    alt="Students collaborating"
-                    className="rounded-xl w-full h-56 object-cover"
-                  />
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      <h4 className="text-white font-semibold">Project: Reveal Soon</h4>
-                      <p className="text-gray-400 text-sm">Techstack reveal soon • 4 members</p>
-                    </div>
-                    <div className="text-sm text-gray-300">Live Soon</div>
-                  </div>
-                </div>
-              </div>
+              <InteractiveCommunityWidget />
             </div>
           </div>
 
