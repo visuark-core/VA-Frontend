@@ -89,7 +89,7 @@ const Services = () => {
   // Coordinates mapping
   const getTargets = (id: number) => {
     if (isMobile) {
-      // Mobile targets: scattered overlapping stack -> organized vertical stack
+      // Mobile targets: scattered overlapping stack -> organized vertical stack with ample vertical spacing
       const scatterCoords = [
         { rotate: 10, x: 15, y: -20 },
         { rotate: -12, x: -20, y: 0 },
@@ -97,14 +97,14 @@ const Services = () => {
         { rotate: -9, x: -12, y: -10 }
       ];
       const organizeCoords = [
-        { rotate: 0, x: 0, y: -270 },
-        { rotate: 0, x: 0, y: -90 },
-        { rotate: 0, x: 0, y: 90 },
-        { rotate: 0, x: 0, y: 270 }
+        { rotate: 0, x: 0, y: -405 },
+        { rotate: 0, x: 0, y: -135 },
+        { rotate: 0, x: 0, y: 135 },
+        { rotate: 0, x: 0, y: 405 }
       ];
       return { scatter: scatterCoords[id], organize: organizeCoords[id] };
     } else {
-      // Desktop targets: scattered overlapping stack -> organized horizontal layout
+      // Desktop targets: scattered overlapping stack -> organized horizontal layout with clear gaps
       const scatterCoords = [
         { rotate: 12, x: 26, y: -16 },
         { rotate: -16, x: -30, y: 12 },
@@ -112,10 +112,10 @@ const Services = () => {
         { rotate: -12, x: -16, y: -22 }
       ];
       const organizeCoords = [
-        { rotate: 0, x: -460, y: 0 },
-        { rotate: 0, x: -150, y: 0 },
-        { rotate: 0, x: 150, y: 0 },
-        { rotate: 0, x: 460, y: 0 }
+        { rotate: 0, x: -540, y: 0 },
+        { rotate: 0, x: -180, y: 0 },
+        { rotate: 0, x: 180, y: 0 },
+        { rotate: 0, x: 540, y: 0 }
       ];
       return { scatter: scatterCoords[id], organize: organizeCoords[id] };
     }
@@ -144,7 +144,7 @@ const Services = () => {
       </div>
 
       {/* Cards Canvas Container */}
-      <div className="relative w-full z-10 flex items-center justify-center h-[760px] lg:h-[450px]">
+      <div className="relative w-full z-10 flex items-center justify-center h-[1050px] lg:h-[480px]">
         <div className="relative w-full max-w-6xl h-full flex items-center justify-center">
           {services.map((service) => {
             const targets = getTargets(service.id);
