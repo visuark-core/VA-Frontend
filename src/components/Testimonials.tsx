@@ -219,7 +219,7 @@ const Testimonials = () => {
                         />
                         <div className="text-left">
                           <h4 className="text-white font-bold text-xs sm:text-sm">{testimonial.name}</h4>
-                          <p className="text-gray-400 text-[10px] sm:text-xs">{testimonial.role}</p>
+                          <p className="text-gray-400 text-[10px] sm:text-xs">{testimonial.role} at {testimonial.company}</p>
                         </div>
                       </div>
                     </div>
