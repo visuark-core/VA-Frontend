@@ -82,7 +82,7 @@ const Contact = () => {
     // { icon: <Facebook className="h-6 w-6" />, link: '#', color: 'hover:text-blue-400', name: 'Facebook' },
     // { icon: <Twitter className="h-6 w-6" />, link: '#', color: 'hover:text-cyan-400', name: 'Twitter' },
     { icon: <Instagram className="h-6 w-6" />, link: 'https://www.instagram.com/visuark.io/', color: 'hover:text-pink-400', name: 'Instagram' },
-    { icon: <Linkedin className="h-6 w-6" />, link: 'https://www.linkedin.com/company/visuark/', color: 'hover:text-blue-500', name: 'LinkedIn' }
+    { icon: <Linkedin className="h-6 w-6" />, link: 'https://www.linkedin.com/company/visuark-media', color: 'hover:text-blue-500', name: 'LinkedIn' }
   ];
 
   const faqs = [
@@ -343,14 +343,14 @@ const Contact = () => {
                   <h3 className="text-2xl font-bold text-white mb-6">Our Location</h3>
                   <div className="h-64 w-full rounded-lg overflow-hidden border border-gray-700">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.47271810486!2d72.8797444!3d26.2464117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418933b49e1e7f%3A0xc392176214b62059!2siStart%20Nest%20Jodhpur!5e0!3m2!1sen!2sin!4v1717926173491!5m2!1sen!2sin"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d228975.034891228!2d72.86573214273422!3d26.27026532078311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x894c3263980d756f%3A0xc28f8cbeca99e60!2sVISUARK!5e0!3m2!1sen!2sin!4v1782976620551!5m2!1sen!2sin"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
-                      title="iStart Nest Jodhpur Location"
+                      title="Visuark Location"
                     ></iframe>
                   </div>
                 </div>

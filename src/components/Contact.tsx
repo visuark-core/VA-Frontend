@@ -51,7 +51,7 @@ const Contact = () => {
     },
     { 
       icon: <Linkedin className="h-5 w-5" />, 
-      link: 'https://www.linkedin.com/company/visuark/', 
+      link: 'https://www.linkedin.com/company/visuark-media', 
       color: 'text-blue-400 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/60 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]' 
     }
   ];
@@ -218,14 +218,14 @@ const Contact = () => {
               <div className="rounded-2xl overflow-hidden border border-gray-800 h-52 relative group">
                 <div className="absolute inset-0 bg-cyan-500/5 mix-blend-color pointer-events-none" />
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.47271810486!2d72.8797444!3d26.2464117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418933b49e1e7f%3A0xc392176214b62059!2siStart%20Nest%20Jodhpur!5e0!3m2!1sen!2sin!4v1717926173491!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d228975.034891228!2d72.86573214273422!3d26.27026532078311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x894c3263980d756f%3A0xc28f8cbeca99e60!2sVISUARK!5e0!3m2!1sen!2sin!4v1782976620551!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="iStart Nest Jodhpur Location"
+                  title="Visuark Location"
                 ></iframe>
               </div>
             </motion.div>
