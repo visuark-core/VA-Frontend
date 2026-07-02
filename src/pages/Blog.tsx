@@ -86,7 +86,7 @@ const Blog = () => {
         {/* Search and Filter Panel */}
         <section className="py-6 relative z-10">
           <div className="container mx-auto px-4 max-w-6xl">
-            <div className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row gap-6 items-center justify-between">
+            <div className="bg-gray-800/80 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row gap-6 items-center justify-between">
               {/* Search */}
               <div className="relative flex-1 max-w-md w-full">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -95,7 +95,7 @@ const Blog = () => {
                   placeholder="Search articles by title or keyword..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300 shadow-inner"
+                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-gray-800 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300 shadow-inner"
                 />
               </div>
 
@@ -107,7 +107,7 @@ const Blog = () => {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4.5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 ${
                       selectedCategory === category
-                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25 scale-[1.02]'
+                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-black shadow-lg shadow-cyan-500/25 scale-[1.02]'
                         : 'bg-slate-50 text-slate-600 border border-slate-200/60 hover:bg-slate-100 hover:text-slate-900 shadow-sm'
                     }`}
                   >
@@ -140,7 +140,7 @@ const Blog = () => {
                   <h2 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-[0.2em]">Featured Release</h2>
                 </div>
 
-                <div className="group bg-white rounded-[32px] overflow-hidden border border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_70px_rgba(6,182,212,0.08)] hover:border-cyan-400/40 transition-all duration-500">
+                <div className="group bg-gray-800 rounded-[32px] overflow-hidden border border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_70px_rgba(6,182,212,0.08)] hover:border-cyan-400/40 transition-all duration-500">
                   <div className="grid lg:grid-cols-12 gap-0">
                     {/* Image block */}
                     <div className="lg:col-span-7 relative overflow-hidden aspect-video lg:aspect-auto min-h-[320px] lg:min-h-[460px]">
@@ -151,14 +151,14 @@ const Blog = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
                       <div className="absolute top-6 left-6">
-                        <span className="px-4 py-2 bg-cyan-600/90 backdrop-blur-md text-white rounded-full text-xs font-extrabold uppercase tracking-widest border border-cyan-400/25 shadow-md">
+                        <span className="px-4 py-2 bg-cyan-600/90 backdrop-blur-md text-black rounded-full text-xs font-extrabold uppercase tracking-widest border border-cyan-400/25 shadow-md">
                           Featured
                         </span>
                       </div>
                     </div>
 
                     {/* Content block */}
-                    <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between bg-white relative">
+                    <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between bg-gray-800 relative">
                       <div>
                         <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-400 mb-6">
                           <span className="flex items-center gap-1.5">
@@ -237,7 +237,7 @@ const Blog = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="group bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-cyan-400/40 transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                  className="group bg-gray-800 rounded-3xl overflow-hidden border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-cyan-400/40 transition-all duration-500 hover:-translate-y-2 flex flex-col"
                 >
                   {/* Image section */}
                   <div className="relative overflow-hidden aspect-[16/10]">
@@ -247,46 +247,49 @@ const Blog = () => {
                       className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute top-4 right-4">
-                      <span className="px-3.5 py-1.5 bg-white/95 backdrop-blur-sm text-cyan-600 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-sm border border-slate-100/50">
+                      <span className="px-3.5 py-1.5 bg-gray-800/95 backdrop-blur-sm text-cyan-600 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-sm border border-slate-100/50">
                         {post.category}
                       </span>
                     </div>
                   </div>
                   
                   {/* Content section */}
-                  <div className="p-6.5 flex flex-col flex-1">
-                    <div className="flex items-center space-x-4 text-[11px] font-bold text-slate-400 mb-3">
+                  <div className="p-6.5 sm:p-8 flex flex-col flex-1">
+                    <div className="flex items-center space-x-4 text-xs font-semibold text-slate-400 mb-3">
                       <span className="flex items-center">
-                        <Calendar className="h-3.5 w-3.5 mr-1.5 text-cyan-600" />
+                        <Calendar className="h-4 w-4 mr-1.5 text-cyan-600" />
                         {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
-                      <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                      <span>{post.readTime}</span>
+                      <span className="w-1.5 h-1.5 bg-slate-200 rounded-full" />
+                      <span className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1.5 text-cyan-600" />
+                        {post.readTime}
+                      </span>
                     </div>
                     
-                    <h3 className="text-xl font-extrabold text-slate-900 mb-3 hover:text-cyan-600 transition-colors text-left leading-snug">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4 hover:text-cyan-600 transition-colors text-left leading-snug">
                       <Link to={`/blog/${post.slug}`} className="relative inline-block group/grid-title">
                         <span className="relative z-10">{post.title}</span>
                         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover/grid-title:w-full transition-all duration-300" />
                       </Link>
                     </h3>
                     
-                    <p className="text-slate-500 mb-6 line-clamp-3 text-left font-light text-sm leading-relaxed">
+                    <p className="text-slate-500 mb-6 line-clamp-3 text-left font-normal text-sm sm:text-base leading-relaxed">
                       {post.excerpt}
                     </p>
                     
-                    <div className="flex items-center justify-between mt-auto border-t border-slate-100 pt-4.5">
-                      <div className="flex items-center space-x-2 text-xs text-slate-600 font-bold">
-                        <User className="h-3.5 w-3.5 text-slate-400" />
+                    <div className="flex items-center justify-between mt-auto border-t border-slate-100 pt-5">
+                      <div className="flex items-center space-x-2 text-sm text-slate-600 font-bold">
+                        <User className="h-4 w-4 text-slate-400" />
                         <span>{post.author}</span>
                       </div>
                       
                       <Link
                         to={`/blog/${post.slug}`}
-                        className="text-cyan-600 font-extrabold hover:text-cyan-700 transition-colors flex items-center space-x-1 text-xs uppercase tracking-wider group/read-link"
+                        className="text-cyan-600 font-extrabold hover:text-cyan-700 transition-colors flex items-center space-x-1 text-sm uppercase tracking-wider group/read-link"
                       >
                         <span>Read</span>
-                        <ArrowRight className="h-3.5 w-3.5 group-hover/read-link:translate-x-1 transition-transform" />
+                        <ArrowRight className="h-4 w-4 group-hover/read-link:translate-x-1 transition-transform" />
                       </Link>
                     </div>
                   </div>
@@ -295,7 +298,7 @@ const Blog = () => {
             </div>
 
             {filteredPosts.length === 0 && !loading && (
-              <div className="text-center py-24 bg-white rounded-[32px] border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] mt-12">
+              <div className="text-center py-24 bg-gray-800 rounded-[32px] border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] mt-12">
                 <h3 className="text-2xl font-bold text-slate-800 mb-2">No articles found</h3>
                 <p className="text-slate-500 font-light">Try adjusting your search query or choosing another topic category.</p>
               </div>
