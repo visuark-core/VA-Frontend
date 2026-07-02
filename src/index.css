@@ -113,6 +113,24 @@ body {
   @apply text-cyan-500 font-bold mr-3 mt-1;
 }
 
+/* Light theme blog article styling */
+.blog-body-content p {
+  @apply text-slate-700 leading-relaxed mb-6 text-lg font-normal;
+}
+
+.blog-body-content ul {
+  @apply text-slate-700 space-y-3 mb-6;
+}
+
+.blog-body-content li {
+  @apply flex items-start text-lg font-normal;
+}
+
+.blog-body-content li::before {
+  content: "•";
+  @apply text-cyan-600 font-bold mr-3 mt-1;
+}
+
 /* Loading animation */
 @keyframes spin {
   to {

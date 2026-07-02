@@ -50,8 +50,8 @@ const BlogPost = () => {
   if (loading) {
     return (
       <PageTransition>
-        <div className="min-h-screen flex items-center justify-center bg-[#030712]">
-          <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
+        <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
+          <Loader2 className="w-8 h-8 text-cyan-600 animate-spin" />
         </div>
       </PageTransition>
     );
@@ -60,10 +60,10 @@ const BlogPost = () => {
   if (error || !post) {
     return (
       <PageTransition>
-        <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4">
+        <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] px-4">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Post Not Found</h2>
-            <Link to="/blog" className="text-cyan-500 hover:text-cyan-400 font-medium inline-flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">Post Not Found</h2>
+            <Link to="/blog" className="text-cyan-600 hover:text-cyan-500 font-medium inline-flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" /> Back to Blog
             </Link>
           </div>
@@ -74,7 +74,7 @@ const BlogPost = () => {
 
   return (
     <PageTransition>
-      <div className="bg-[#030712] min-h-screen pb-20">
+      <div className="bg-[#f8fafc] min-h-screen pb-20">
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-cyan-500 z-[100] origin-left"
@@ -82,13 +82,13 @@ const BlogPost = () => {
         />
 
         {/* Simple Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#030712]/80 backdrop-blur-md border-b border-white/5">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
           <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-            <Link to="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium">
+            <Link to="/blog" className="text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-2 text-sm font-medium">
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
             </Link>
-            <div className="text-gray-500 text-xs font-mono hidden sm:block uppercase tracking-widest text-right">
+            <div className="text-slate-500 text-xs font-mono hidden sm:block uppercase tracking-widest text-right">
               {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}
             </div>
           </div>
@@ -100,29 +100,29 @@ const BlogPost = () => {
             
             {/* Header Metadata */}
             <header className="mb-12">
-              <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-gray-500 text-sm mb-6 font-medium">
+              <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-slate-500 text-sm mb-6 font-medium">
                 <span className="flex items-center gap-1.5">
                   <User className="w-4 h-4" />
                   {post.author}
                 </span>
-                <span className="w-1 h-1 bg-gray-700 rounded-full"></span>
+                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                 </span>
-                <span className="w-1 h-1 bg-gray-700 rounded-full"></span>
+                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4" />
                   {post.readTime}
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-8 tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] mb-8 tracking-tight">
                 {post.title}
               </h1>
 
               {post.summary && (
-                <p className="text-xl md:text-2xl text-gray-400 leading-relaxed font-light border-l-2 border-cyan-500/30 pl-6 py-2 italic">
+                <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-light border-l-2 border-cyan-500 pl-6 py-2 italic">
                   {post.summary}
                 </p>
               )}
@@ -130,7 +130,7 @@ const BlogPost = () => {
 
             {/* Main Featured Image */}
             {post.image && (
-              <div className="mb-16 rounded-2xl overflow-hidden shadow-2xl bg-gray-900/50 aspect-video">
+              <div className="mb-16 rounded-2xl overflow-hidden shadow-xl bg-slate-100 aspect-video">
                 <img
                   src={post.image}
                   alt={post.title}
@@ -140,9 +140,9 @@ const BlogPost = () => {
             )}
 
             {/* Article Body */}
-            <div className="prose prose-invert prose-lg max-w-none">
+            <div className="max-w-none">
               <div 
-                className="text-gray-300 whitespace-pre-wrap leading-relaxed text-lg font-light"
+                className="whitespace-pre-wrap leading-relaxed blog-body-content"
                 dangerouslySetInnerHTML={{ 
                   __html: post.content
                     .replace(/\n\n/g, '</p><p>')
@@ -153,8 +153,8 @@ const BlogPost = () => {
 
             {/* Gallery Section - Only if more images exist */}
             {post.images.length > 1 && (
-              <div className="mt-20 pt-16 border-t border-white/5">
-                <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-10 text-center opacity-50">
+              <div className="mt-20 pt-16 border-t border-slate-200">
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-[0.2em] mb-10 text-center opacity-50">
                   Visuals
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,7 +164,7 @@ const BlogPost = () => {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="rounded-xl overflow-hidden bg-gray-900 group"
+                      className="rounded-xl overflow-hidden bg-slate-100 group shadow-md"
                     >
                       <img 
                         src={img} 
@@ -178,10 +178,10 @@ const BlogPost = () => {
             )}
 
             {/* Footer Navigation */}
-            <footer className="mt-24 pt-12 border-t border-white/5 flex flex-col items-center">
+            <footer className="mt-24 pt-12 border-t border-slate-200 flex flex-col items-center">
               <Link 
                 to="/blog" 
-                className="group flex items-center gap-3 text-cyan-500 font-bold text-lg hover:text-cyan-400 transition-colors"
+                className="group flex items-center gap-3 text-cyan-600 font-bold text-lg hover:text-cyan-500 transition-colors"
               >
                 More Articles
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

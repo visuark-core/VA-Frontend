@@ -61,7 +61,7 @@ const Testimonials = () => {
       name: 'Shrutika Sharma',
       role: 'Founder',
       company: 'Sumanglam Tea',
-      image: 'public/img/Shrutika Sharma.jpg',
+      image: '/img/Shrutika Sharma.jpg',
       content: 'The visuark team for my startup, Tea Brand created a fantastic video the work was truly professional, and the team was incredibly helpful And they completed my work in a short time. Thank you team From Sumanglam tea.',
       rating: 5,
       bgBacking: 'bg-green-500',

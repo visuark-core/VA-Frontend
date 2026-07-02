@@ -99,7 +99,7 @@ const Portfolio = () => {
               </p>
             </div>
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.5s' }}>
-              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="public/img/Shrutika Sharma.jpg" alt="Client Photo" />
+              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="/img/Shrutika Sharma.jpg" alt="Client Photo" />
               <h3 className="font-semibold text-lg text-cyan-400">Shrutika Sharma</h3>
               <p className="text-gray-400">Founder</p>
               <p className="text-gray-500 text-sm">Sumanglam Tea</p>
