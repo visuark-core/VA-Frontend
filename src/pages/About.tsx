@@ -1,8 +1,79 @@
-import { motion } from 'framer-motion';
-import { Target, Users, Award, Zap, Heart, Globe, Lightbulb, Shield } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Target, Users, Award, Zap, Heart, Globe, Lightbulb, Shield, Eye } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 const About = () => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 65%", "end 65%"]
+  });
+
+  const valuesRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: valuesScrollProgress } = useScroll({
+    target: valuesRef,
+    offset: ["start end", "end start"]
+  });
+
+  const [factor, setFactor] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useMotionValueEvent(valuesScrollProgress, "change", (latest) => {
+    const min = 0.2;
+    const max = 0.6;
+    const current = Math.min(Math.max((latest - min) / (max - min), 0), 1);
+    setFactor(current);
+  });
+
+  const scatterCoords = [
+    { x: -30, y: -20, rotate: -12 },
+    { x: 25, y: -45, rotate: 8 },
+    { x: -45, y: 15, rotate: -6 },
+    { x: 35, y: 30, rotate: 15 },
+    { x: -15, y: -60, rotate: -8 },
+    { x: 50, y: -10, rotate: 12 },
+    { x: -60, y: -30, rotate: -15 },
+    { x: 10, y: 45, rotate: 5 }
+  ];
+
+  const getCardStyle = (index: number) => {
+    const scatter = scatterCoords[index] || { x: 0, y: 0, rotate: 0 };
+    
+    let targetX = 0;
+    let targetY = 0;
+
+    if (isMobile) {
+      targetX = 0;
+      targetY = (index - 3.5) * 210;
+    } else {
+      const row = Math.floor(index / 4);
+      const col = index % 4;
+      targetX = (col - 1.5) * 280;
+      targetY = (row - 0.5) * 240;
+    }
+
+    const currentX = scatter.x + (targetX - scatter.x) * factor;
+    const currentY = scatter.y + (targetY - scatter.y) * factor;
+    const currentRotate = scatter.rotate * (1 - factor);
+
+    return {
+      x: currentX,
+      y: currentY,
+      rotate: currentRotate,
+      zIndex: Math.floor(10 + (1 - factor) * (8 - index))
+    };
+  };
+
   const values = [
     {
       icon: <Target className="h-8 w-8 text-cyan-400" />,
@@ -102,56 +173,102 @@ const About = () => {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-16 md:py-20 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+        <section className="py-24 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+          {/* Background glow effects */}
+          <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto">
+              {/* Left Column - Mission & Vision Cards */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
+                className="lg:col-span-7 space-y-6"
               >
-                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 md:mb-8">Our Mission</h2>
-                <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
-                  At Visuark, we anchor your digital dreams to reality through innovative design
-                  and development solutions. Our mission is to help businesses navigate the digital
-                  landscape with confidence and creativity.
-                </p>
-                <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-6 md:mb-8">
-                  We combine technical expertise with artistic vision to create digital experiences
-                  that not only look amazing but also drive results. From concept to launch, we're
-                  your trusted partner in digital transformation.
-                </p>
-                <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-6 border border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-3">Our Vision</h3>
-                  <p className="text-gray-300">
+                {/* Mission Card */}
+                <div className="bg-gray-900/40 backdrop-blur-md border border-gray-800 rounded-3xl p-6 sm:p-8 hover:border-cyan-500/30 hover:bg-gray-900/60 transition-all duration-300 relative group overflow-hidden shadow-xl">
+                  <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-all duration-300" />
+                  
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl text-cyan-400">
+                      <Target className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white">Our Mission</h3>
+                  </div>
+                  
+                  <div className="space-y-4 text-gray-300 text-sm sm:text-base leading-relaxed">
+                    <p>
+                      At Visuark, we anchor your digital dreams to reality through innovative design
+                      and development solutions. Our mission is to help businesses navigate the digital
+                      landscape with confidence and creativity.
+                    </p>
+                    <p>
+                      We combine technical expertise with artistic vision to create digital experiences
+                      that not only look amazing but also drive results. From concept to launch, we're
+                      your trusted partner in digital transformation.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Vision Card */}
+                <div className="bg-gray-900/40 backdrop-blur-md border border-gray-800 rounded-3xl p-6 sm:p-8 hover:border-orange-500/30 hover:bg-gray-900/60 transition-all duration-300 relative group overflow-hidden shadow-xl">
+                  <div className="absolute -top-24 -right-24 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl group-hover:bg-orange-500/10 transition-all duration-300" />
+
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded-2xl text-orange-400">
+                      <Eye className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white">Our Vision</h3>
+                  </div>
+
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                     To be the world's most trusted digital agency, known for creating
-                    transformative digital experiences that inspire, engage, and deliver results.
+                    transformative digital experiences that inspire, engage, and deliver results. We aspire to set the standard for quality, precision, and performance globally.
                   </p>
                 </div>
               </motion.div>
 
+              {/* Right Column - Premium Styled Image Frame */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="relative"
+                className="lg:col-span-5 relative"
               >
-                <div className="bg-gradient-to-r from-cyan-400/20 to-orange-400/20 rounded-lg p-4 md:p-8 backdrop-blur-sm border border-gray-700 min-h-[24rem] md:min-h-[30rem]">
-                  <img
-                    src="/img/Visuark Team.png"
-                    alt="Team collaboration"
-                    className="rounded-lg shadow-2xl w-full h-full object-contain"
-                  />
-                </div>
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-800 rounded-[32px] p-4 shadow-2xl relative group overflow-hidden"
+                >
+                  {/* Decorative neon gradient glow */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-orange-500/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Founders Badge */}
+                  <div className="absolute top-8 left-8 z-10 px-3.5 py-1.5 bg-gray-950/80 border border-gray-800/80 text-cyan-400 text-xs font-mono font-bold tracking-widest uppercase rounded-full backdrop-blur-md shadow-lg">
+                    THE FOUNDERS
+                  </div>
+
+                  <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-950 shadow-inner group-hover:border-cyan-500/50 transition-all duration-500">
+                    {/* Color overlay to blend/cool image */}
+                    <div className="absolute inset-0 bg-cyan-500/5 mix-blend-color pointer-events-none" />
+                    <img
+                      src="/img/Visuark Team.png"
+                      alt="Neeraj and Sunil - Visuark Team"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* Values */}
-        <section className="py-16 md:py-20 bg-gradient-to-br from-gray-800 to-gray-900">
+        <section ref={valuesRef} className="py-24 bg-gradient-to-br from-gray-950 to-gray-900 overflow-hidden relative">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -168,21 +285,27 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-              {values.map((value, index) => (
-                <motion.div
-                  key={value.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-gray-800/50 rounded-lg p-4 md:p-6 border border-gray-700 hover:border-cyan-400 transition-all duration-300 hover:transform hover:scale-105 text-center"
-                >
-                  <div className="mb-2 md:mb-4 flex justify-center">{value.icon}</div>
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">{value.title}</h3>
-                  <p className="text-gray-300 text-sm md:text-base">{value.description}</p>
-                </motion.div>
-              ))}
+            {/* Scroll-organizing Cards Deck */}
+            <div className="relative w-full flex items-center justify-center h-[1750px] lg:h-[560px] overflow-visible">
+              {values.map((value, index) => {
+                const style = getCardStyle(index);
+                return (
+                  <motion.div
+                    key={value.title}
+                    style={{
+                      x: style.x,
+                      y: style.y,
+                      rotate: style.rotate,
+                      zIndex: style.zIndex,
+                    }}
+                    className="absolute w-[260px] h-[190px] bg-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-800 hover:border-cyan-400/50 shadow-2xl transition-colors duration-300 flex flex-col items-center text-center justify-center cursor-pointer"
+                  >
+                    <div className="mb-3 flex justify-center text-cyan-400">{value.icon}</div>
+                    <h3 className="text-base md:text-lg font-bold text-white mb-2">{value.title}</h3>
+                    <p className="text-gray-400 text-xs md:text-sm leading-relaxed">{value.description}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -257,36 +380,51 @@ const About = () => {
               </p>
             </motion.div>
 
-            <div className="relative">
-              {/* Central vertical line (The Tree Trunk) */}
-              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_15px_rgba(34,211,238,0.5)]"></div>
+            <div ref={timelineRef} className="relative">
+              {/* Gray vertical track line */}
+              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full bg-gray-800/60" />
+              
+              {/* Active vertical line drawing itself with scroll */}
+              <motion.div 
+                style={{ scaleY: scrollYProgress }}
+                className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_15px_rgba(34,211,238,0.5)] origin-top"
+              />
               
               <div className="flex flex-col gap-12 md:gap-24">
                 {milestones.map((milestone, index) => (
-                  <motion.div
+                  <div
                     key={`${milestone.year}-${milestone.event}`}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
                     className={
                       `relative flex flex-col md:flex-row items-center ` +
                       (index % 2 === 0 ? 'md:justify-start' : 'md:justify-end')
                     }
                   >
                     {/* Horizontal Branch Line (Desktop only) */}
-                    <div className={
-                      `hidden md:block absolute top-1/2 -translate-y-1/2 h-1 w-8 lg:w-16 bg-gradient-to-r ` +
-                      (index % 2 === 0 
-                        ? 'right-1/2 from-cyan-400/50 to-transparent rotate-180' 
-                        : 'left-1/2 from-blue-500/50 to-transparent')
-                    }></div>
+                    <motion.div 
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.5, delay: 0.1 }}
+                      style={{ originX: index % 2 === 0 ? 1 : 0 }}
+                      className={
+                        `hidden md:block absolute top-1/2 -translate-y-1/2 h-1 w-8 lg:w-16 bg-gradient-to-r ` +
+                        (index % 2 === 0 
+                          ? 'right-1/2 from-cyan-400/50 to-transparent rotate-180' 
+                          : 'left-1/2 from-blue-500/50 to-transparent')
+                      }
+                    />
 
                     {/* Timeline Node (The perfection node) */}
-                    <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 items-center justify-center z-10">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.2 }}
+                      className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 items-center justify-center z-10"
+                    >
                       <div className="w-4 h-4 bg-gray-900 rounded-full border-4 border-cyan-400 shadow-[0_0_10px_#22d3ee]"></div>
                       <div className="absolute w-8 h-8 rounded-full bg-cyan-400/20 animate-ping"></div>
-                    </div>
+                    </motion.div>
 
                     {/* Event Card */}
                     <div className={
@@ -294,6 +432,10 @@ const About = () => {
                       (index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12')
                     }>
                       <motion.div 
+                        initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 15 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.3 }}
                         whileHover={{ scale: 1.03 }}
                         className="bg-gray-800/40 backdrop-blur-xl rounded-2xl p-6 border-2 border-gray-700/50 hover:border-cyan-400/50 shadow-2xl transition-colors duration-300 relative overflow-hidden group"
                       >
@@ -317,7 +459,7 @@ const About = () => {
                         }></div>
                       </motion.div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
