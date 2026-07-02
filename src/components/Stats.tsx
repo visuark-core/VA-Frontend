@@ -1,148 +1,105 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Award, Coffee, Clock } from 'lucide-react';
-
-interface CounterProps {
-  value: string;
-  trigger: boolean;
-}
-
-const Counter = ({ value, trigger }: CounterProps) => {
-  const numericValue = parseInt(value.replace(/\D/g, ''), 10);
-  const suffix = value.replace(/[0-9]/g, '');
-  const [count, setCount] = useState(0);
-  const animationRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (!trigger) return;
-    const duration = 2000; // 2 seconds
-    const startTime = performance.now();
-    const end = numericValue;
-
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Smooth ease-out quad curve
-      const easeProgress = progress * (2 - progress);
-      const currentCount = Math.round(easeProgress * end);
-
-      setCount(currentCount);
-
-      if (progress < 1) {
-        animationRef.current = requestAnimationFrame(step);
-      } else {
-        if (animationRef.current) cancelAnimationFrame(animationRef.current);
-      }
-    };
-
-    animationRef.current = requestAnimationFrame(step);
-
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [trigger, numericValue]);
-
-  return (
-    <span>
-      {trigger ? count : 0}
-      {suffix}
-    </span>
-  );
-};
+import { Layers, Lightbulb, BookOpen, Bell, Briefcase, Files } from 'lucide-react';
 
 const Stats = () => {
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  const stats = [
+  const items = [
     {
-      icon: <Users className="h-7 w-7 text-cyan-500" />,
-      number: '50+',
-      label: 'Happy Clients',
-      description: 'Satisfied customers worldwide',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] hover:border-cyan-400/60',
-      iconBg: 'bg-cyan-500/10 group-hover:bg-cyan-500/20',
-      labelColor: 'text-cyan-500',
-      glowColor: 'bg-cyan-400/5'
+      icon: <Layers className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'High-Impact Development',
+      description: 'Scalable, high-performance web development utilizing React, Next.js, and modern SEO-friendly frameworks to drive business growth.'
     },
     {
-      icon: <Award className="h-7 w-7 text-orange-500" />,
-      number: '150+',
-      label: 'Projects Completed',
-      description: 'Successful deliveries',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(249,115,22,0.15)] hover:border-orange-400/60',
-      iconBg: 'bg-orange-500/10 group-hover:bg-orange-500/20',
-      labelColor: 'text-orange-500',
-      glowColor: 'bg-orange-400/5'
+      icon: <Lightbulb className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'Cinematic Media Production',
+      description: 'Professional, cinematic video editing, color grading, and commercial video production that brings your brand story to life.'
     },
     {
-      icon: <Coffee className="h-7 w-7 text-green-500" />,
-      number: '100+',
-      label: 'Cups of Coffee',
-      description: 'Fuel for creativity',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(34,197,94,0.15)] hover:border-green-400/60',
-      iconBg: 'bg-green-500/10 group-hover:bg-green-500/20',
-      labelColor: 'text-green-500',
-      glowColor: 'bg-green-400/5'
+      icon: <BookOpen className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'Strategic Brand Identity',
+      description: 'Cohesive brand strategy, logo design, corporate kits, and graphic design that establishes market authority and client trust.'
     },
     {
-      icon: <Clock className="h-7 w-7 text-purple-500" />,
-      number: '2+',
-      label: 'Years Experience',
-      description: 'In digital excellence',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(168,85,247,0.15)] hover:border-purple-400/60',
-      iconBg: 'bg-purple-500/10 group-hover:bg-purple-500/20',
-      labelColor: 'text-purple-500',
-      glowColor: 'bg-purple-400/5'
+      icon: <Bell className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'User-Centered Design',
+      description: 'UI/UX design featuring user research, clickable high-fidelity wireframes, and intuitive interfaces that boost customer engagement.'
+    },
+    {
+      icon: <Briefcase className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'Global Technical Solutions',
+      description: 'Advanced tech infrastructure integration, including international secure payment gateways, e-commerce checkout systems, and custom APIs.'
+    },
+    {
+      icon: <Files className="h-10 w-10 text-cyan-500 stroke-[1.5]" />,
+      title: 'Optimized Digital Content',
+      description: 'Optimized delivery of files, digital assets, documents, and media resources designed for seamless cross-platform sharing.'
     }
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-gray-900 via-gray-950 to-gray-900 border-y border-gray-700/30 relative overflow-hidden">
-      {/* Subtle Background Highlights */}
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2"></div>
-      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              onViewportEnter={() => setHasAnimated(true)}
-              transition={{ duration: 0.6, delay: index * 0.12 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -8 }}
-              className={`text-center bg-gray-800/80 backdrop-blur-md rounded-2xl p-8 border border-gray-700/70 transition-all duration-500 group cursor-pointer relative overflow-hidden ${stat.colorClass}`}
-            >
-              {/* Inner subtle glow blob */}
-              <div className={`absolute -top-12 -left-12 w-24 h-24 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100 ${stat.glowColor}`} />
-
-              {/* Icon Container with custom bg */}
-              <div className="flex justify-center mb-6">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 transform group-hover:scale-110 shadow-inner ${stat.iconBg}`}>
-                  {stat.icon}
-                </div>
-              </div>
-
-              {/* Stat Number */}
-              <h3 className="text-4xl xs:text-5xl font-extrabold text-white mb-2 tracking-tight">
-                <Counter value={stat.number} trigger={hasAnimated} />
-              </h3>
-
-              {/* Stat Label */}
-              <h4 className={`text-lg font-bold uppercase tracking-wider mb-2 ${stat.labelColor}`}>
-                {stat.label}
-              </h4>
-
-              {/* Stat Description */}
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {stat.description}
-              </p>
-            </motion.div>
-          ))}
+    <section className="py-20 sm:py-28 bg-gray-800 relative overflow-hidden border-t border-gray-700">
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+        
+        {/* Header Section */}
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl font-bold text-white tracking-tight"
+          >
+            Our Core Objectives
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-4 text-base sm:text-lg text-gray-300 font-medium"
+          >
+            Driving innovation, premium design, and scalable technology for your brand.
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 h-[1.5px] w-16 bg-cyan-500 mx-auto"
+          />
         </div>
+
+        {/* 3-Column Grid with Inside Borders */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-gray-700/40"
+        >
+          {items.map((item) => (
+            <div
+              key={item.title}
+              className="flex items-start gap-5 group bg-gray-800 p-8 sm:p-10 transition-colors duration-300 hover:bg-gray-900/10"
+            >
+              {/* Left Outline Icon */}
+              <div className="shrink-0 text-[#f05a3f] transition-transform duration-300 group-hover:scale-105">
+                {item.icon}
+              </div>
+              
+              {/* Right content */}
+              <div>
+                <h3 className="text-lg font-bold text-white mb-2 leading-snug">
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 text-sm sm:text-[14.5px] leading-relaxed font-normal">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   );

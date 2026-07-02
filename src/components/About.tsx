@@ -10,7 +10,8 @@ import {
   Layers, 
   Terminal, 
   Compass, 
-  Rocket 
+  Rocket,
+  Server
 } from 'lucide-react';
 
 const InteractiveHub = () => {
@@ -326,31 +327,31 @@ const About = () => {
       title: 'Anchored Quality',
       description: 'We maintain strict precision in design alignments and code optimization.',
       icon: <ShieldCheck className="h-5 w-5 text-cyan-400" />,
-      colorClass: 'text-cyan-400 border-cyan-500/30',
+      colorClass: 'text-cyan-400 border-gray-700/30',
       bgGlow: 'bg-cyan-500/[0.04]',
-      hoverBorder: 'hover:border-cyan-400/50 border-cyan-500/20',
+      hoverBorder: 'hover:border-cyan-400/50 border-gray-700/20',
       leftBar: 'bg-cyan-400',
       iconBg: 'bg-cyan-500/10'
     },
     {
       title: 'Agile Implementation',
       description: 'Iterative, collaborative sprints to deliver updates quickly and transparently.',
-      icon: <Zap className="h-5 w-5 text-orange-400" />,
-      colorClass: 'text-orange-400 border-orange-500/30',
-      bgGlow: 'bg-orange-500/[0.04]',
-      hoverBorder: 'hover:border-orange-400/50 border-orange-500/20',
-      leftBar: 'bg-orange-400',
-      iconBg: 'bg-orange-500/10'
+      icon: <Zap className="h-5 w-5 text-cyan-400" />,
+      colorClass: 'text-cyan-400 border-gray-700/30',
+      bgGlow: 'bg-cyan-500/[0.04]',
+      hoverBorder: 'hover:border-cyan-400/50 border-gray-700/20',
+      leftBar: 'bg-cyan-400',
+      iconBg: 'bg-cyan-500/10'
     },
     {
       title: 'Scalable Systems',
       description: 'Clean backend architectures designed to handle growth and custom features.',
-      icon: <Cpu className="h-5 w-5 text-emerald-400" />,
-      colorClass: 'text-emerald-400 border-emerald-500/30',
-      bgGlow: 'bg-emerald-500/[0.04]',
-      hoverBorder: 'hover:border-emerald-400/50 border-emerald-500/20',
-      leftBar: 'bg-emerald-400',
-      iconBg: 'bg-emerald-500/10'
+      icon: <Server className="h-5 w-5 text-cyan-400" />,
+      colorClass: 'text-cyan-400 border-gray-700/30',
+      bgGlow: 'bg-cyan-500/[0.04]',
+      hoverBorder: 'hover:border-cyan-400/50 border-gray-700/20',
+      leftBar: 'bg-cyan-400',
+      iconBg: 'bg-cyan-500/10'
     }
   ];
 
