@@ -15,19 +15,24 @@ const Counter = ({ value, trigger }: CounterProps) => {
 
   useEffect(() => {
     if (!trigger) return;
-    let start = 0;
+    const duration = 2000; // 2 seconds
+    const startTime = performance.now();
     const end = numericValue;
 
-    const step = () => {
-      // Smooth ease-out increment
-      const increment = Math.ceil((end - start) * 0.12);
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        if (animationRef.current) cancelAnimationFrame(animationRef.current);
-      } else {
-        setCount(start);
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Smooth ease-out quad curve
+      const easeProgress = progress * (2 - progress);
+      const currentCount = Math.round(easeProgress * end);
+
+      setCount(currentCount);
+
+      if (progress < 1) {
         animationRef.current = requestAnimationFrame(step);
+      } else {
+        if (animationRef.current) cancelAnimationFrame(animationRef.current);
       }
     };
 
