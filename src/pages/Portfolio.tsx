@@ -25,20 +25,21 @@ const Portfolio = () => {
               {/* Note: Replace these src URLs with your actual logos */}
               {/* First Set */}
               <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://satlaa.com/_next/image?url=https%3A%2F%2Fapi.satlaa.com%2Fimages%2Fuploads%2Fcustom%2Flogo.png&w=384&q=75" alt="Satlaa Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/satlaa.png" alt="Satlaa Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="/img/Graphic Line.png" alt="Monster Detailing Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/nirdesham.png" alt="Nirdesham Media Logo" />
+              <img className="h-10 sm:h-12 object-contain brightness-0" src="/img/Graphic Line.png" alt="Graphic Line Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
               <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="Techfrigate Logo" />
 
               {/* Duplicate Set for seamless loop */}
               <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://satlaa.com/_next/image?url=https%3A%2F%2Fapi.satlaa.com%2Fimages%2Fuploads%2Fcustom%2Flogo.png&w=384&q=75" alt="Satlaa Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/satlaa.png" alt="Satlaa Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
-              <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
+              <img className="h-10 sm:h-12 object-contain" src="/img/nirdesham.png" alt="Nirdesham Media Logo" />
+              <img className="h-10 sm:h-12 object-contain brightness-0" src="/img/Graphic Line.png" alt="Graphic Line Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="TechFrigate Logo" />
+              <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="Techfrigate Logo" />
             </div>
           </div>
           {/* Endless scroll animation keyframes */}
