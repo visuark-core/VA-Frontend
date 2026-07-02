@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,17 +10,17 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location]);
-
-  // --- THIS IS THE ONLY SECTION THAT HAS BEEN MODIFIED ---
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
@@ -30,11 +30,12 @@ const Header = () => {
     { name: 'Community', path: '/student-community' },
     { name: 'Contact', path: '/contact' }
   ];
-  // ----------------------------------------------------
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent lg:bg-transparent bg-gray-900/95 backdrop-blur-md shadow-lg'
+      isScrolled 
+        ? 'bg-gray-900/95 backdrop-blur-md shadow-md border-b border-gray-700' 
+        : 'bg-gray-950/90 backdrop-blur-sm border-b border-gray-700/50'
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -53,8 +54,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-300 hover:text-cyan-400 transition-colors duration-200 font-medium ${
-                  location.pathname === item.path ? 'text-cyan-400' : ''
+                className={`transition-colors duration-200 font-bold ${
+                  location.pathname === item.path
+                    ? 'text-cyan-400'
+                    : 'text-gray-300 hover:text-cyan-400'
                 }`}
               >
                 {item.name}
@@ -65,7 +68,7 @@ const Header = () => {
           {/* CTA Button */}
           <Link
             to="/contact"
-            className="hidden lg:block bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-6 py-2 rounded-full font-semibold hover:from-cyan-300 hover:to-blue-400 transform hover:scale-105 transition-all duration-300"
+            className="hidden lg:block px-6 py-2 rounded-full font-bold transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-md shadow-cyan-400/20"
           >
             Get Started
           </Link>
@@ -73,7 +76,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden text-white hover:text-cyan-400 transition-colors"
+            className="lg:hidden transition-colors text-white hover:text-cyan-400"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -88,13 +91,15 @@ const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden mt-4 pb-4 border-t border-gray-700"
             >
-              <div className="flex flex-col space-y-4 pt-4 px-4 rounded-xl shadow-xl backdrop-blur-md bg-gray-900/70">
+              <div className="flex flex-col space-y-4 pt-4 px-4 rounded-xl shadow-xl backdrop-blur-md bg-gray-800/95 border border-gray-700">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`text-gray-300 hover:text-cyan-400 transition-colors duration-200 font-medium ${
-                      location.pathname === item.path ? 'text-cyan-400' : ''
+                    className={`transition-colors duration-200 font-bold ${
+                      location.pathname === item.path
+                        ? 'text-cyan-400'
+                        : 'text-gray-300 hover:text-cyan-400'
                     }`}
                   >
                     {item.name}
@@ -102,7 +107,7 @@ const Header = () => {
                 ))}
                 <Link
                   to="/contact"
-                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-6 py-2 rounded-full font-semibold text-center mt-4"
+                  className="px-6 py-2 rounded-full font-bold text-center mt-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black"
                 >
                   Get Started
                 </Link>

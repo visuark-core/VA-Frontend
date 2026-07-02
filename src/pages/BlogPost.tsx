@@ -81,23 +81,17 @@ const BlogPost = () => {
           style={{ scaleX }}
         />
 
-        {/* Simple Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
-          <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-            <Link to="/blog" className="text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-2 text-sm font-medium">
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back</span>
-            </Link>
-            <div className="text-slate-500 text-xs font-mono hidden sm:block uppercase tracking-widest text-right">
-              {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}
-            </div>
-          </div>
-        </nav>
 
         {/* Content Layout */}
         <article className="pt-32 px-6">
           <div className="max-w-3xl mx-auto">
             
+            {/* Back Button */}
+            <Link to="/blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-cyan-600 transition-colors mb-8 font-medium group">
+              <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" />
+              <span>Back to Blog</span>
+            </Link>
+
             {/* Header Metadata */}
             <header className="mb-12">
               <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-slate-500 text-sm mb-6 font-medium">
