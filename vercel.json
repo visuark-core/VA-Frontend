@@ -1,22 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["backend/generated/**"]
-      }
-    }
-  ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "api/index.js" },
-    { "source": "/favicon.ico", "destination": "api/index.js" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

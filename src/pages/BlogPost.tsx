@@ -10,6 +10,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import { blogPosts as localBlogPosts } from '../data/blogs';
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -25,41 +26,24 @@ const BlogPost = () => {
   });
 
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(`/api/blogs/${slug}`);
-        if (!response.ok) throw new Error('Article not found');
-        const data = await response.json();
-        
-        if (data.success) {
-          const b = data.blog;
-          
-          // Calculate read time based on real content
-          const wordsPerMinute = 200;
-          const textLength = (b.content || '').split(/\s+/).length;
-          const readTime = Math.ceil(textLength / wordsPerMinute);
-
-          setPost({
-            id: b.id,
-            title: b.title,
-            summary: b.summary,
-            author: b.author,
-            date: b.publishedAt,
-            image: b.images && b.images.length > 0 ? b.images[0] : null,
-            readTime: `${readTime} min read`,
-            content: b.content,
-            images: b.images || []
-          });
-        }
-      } catch (err) {
-        console.error('Error fetching post:', err);
-        setError('Article not found or server is offline.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
+    const b = localBlogPosts.find((p) => p.slug === slug || p.id === slug);
+    if (b) {
+      setPost({
+        id: b.id,
+        title: b.title,
+        summary: b.excerpt,
+        author: b.author,
+        date: b.date,
+        image: b.image,
+        readTime: b.readTime,
+        content: b.content,
+        images: b.images || []
+      });
+      setError('');
+    } else {
+      setError('Article not found');
+    }
+    setLoading(false);
     window.scrollTo(0, 0);
   }, [slug]);
 

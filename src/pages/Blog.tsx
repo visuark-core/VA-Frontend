@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Search, Tag, Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import { blogPosts as localBlogPosts } from '../data/blogs';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,43 +13,9 @@ const Blog = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch('/api/blogs');
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.error || 'Failed to fetch blogs');
-        }
-        const data = await response.json();
-        
-        if (data.success) {
-          // Map backend data to frontend structure
-          const mapped = data.blogs.map((b: any) => ({
-            id: b.id,
-            slug: b.id,
-            title: b.title,
-            excerpt: b.summary,
-            author: b.author,
-            date: b.publishedAt,
-            category: 'Article',
-            image: b.images && b.images.length > 0 ? b.images[0] : 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            readTime: '5 min read',
-            tags: [],
-            content: b.content
-          }));
-          // Sort by date descending
-          mapped.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
-          setBlogPosts(mapped);
-        }
-      } catch (err) {
-        console.error('Error fetching blogs:', err);
-        setError('Unable to load blog posts. Please make sure the backend is running.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
+    const sorted = [...localBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    setBlogPosts(sorted);
+    setLoading(false);
   }, []);
 
   const categories = [
