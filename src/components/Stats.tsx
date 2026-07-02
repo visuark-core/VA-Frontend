@@ -62,7 +62,7 @@ const Stats = () => {
     },
     {
       icon: <Award className="h-7 w-7 text-orange-500" />,
-      number: '200+',
+      number: '150+',
       label: 'Projects Completed',
       description: 'Successful deliveries',
       colorClass: 'hover:shadow-[0_20px_40px_rgba(249,115,22,0.15)] hover:border-orange-400/60',
