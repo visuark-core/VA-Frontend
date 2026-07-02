@@ -58,11 +58,11 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      name: 'Vikash Vaishnav',
-      role: 'Chief Executive Officer',
-      company: 'Vagwiin IT Solutions',
-      image: '/img/Vikash.jpg',
-      content: 'From graphic design to the final video edit, the attention to detail was impeccable. Visuark is not just a digital agency; they are true partners in success. I highly recommend them to anyone looking for top-tier digital services.',
+      name: 'Shrutika Sharma',
+      role: 'Founder',
+      company: 'Sumanglam Tea',
+      image: 'public/img/Shrutika Sharma.jpg',
+      content: 'The visuark team for my startup, Tea Brand created a fantastic video the work was truly professional, and the team was incredibly helpful And they completed my work in a short time. Thank you team From Sumanglam tea.',
       rating: 5,
       bgBacking: 'bg-green-500',
       bgGlow: 'hover:shadow-[0_0_40px_rgba(34,197,94,0.25)]',
@@ -120,7 +120,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section 
+    <section
       id="testimonials"
       ref={containerRef}
       className="py-24 bg-gray-950 relative overflow-hidden"
@@ -131,7 +131,7 @@ const Testimonials = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 items-center max-w-6xl mx-auto">
-          
+
           {/* Left Column - Heading & Trust Metrics */}
           <div className="w-full lg:w-5/12 text-left">
             <span className="text-cyan-400 text-xs font-mono font-bold uppercase tracking-widest bg-cyan-400/10 px-3 py-1 rounded-full">
@@ -150,8 +150,8 @@ const Testimonials = () => {
             {/* Metrics cards grid */}
             <div className="space-y-4">
               {metrics.map((metric, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="flex items-center space-x-4 p-4 rounded-2xl bg-gray-900/60 border border-gray-800/80 shadow-md transition-all duration-300 hover:border-gray-700/80 hover:bg-gray-900"
                 >
                   <div className="p-3 rounded-xl bg-gray-950 border border-gray-800 shadow-inner">

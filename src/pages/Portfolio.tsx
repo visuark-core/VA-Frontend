@@ -17,11 +17,11 @@ const Portfolio = () => {
             </p>
           </div>
 
-            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-              <div
-                className="scroller-inner flex items-center gap-16 w-max animate-scroll-x"
-                style={{ animation: 'scrollX 30s linear infinite' }}
-              >
+          <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+            <div
+              className="scroller-inner flex items-center gap-16 w-max animate-scroll-x"
+              style={{ animation: 'scrollX 30s linear infinite' }}
+            >
               {/* Note: Replace these src URLs with your actual logos */}
               {/* First Set */}
               <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
@@ -29,29 +29,27 @@ const Portfolio = () => {
               <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
               <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/Graphic Line.png" alt="Monster Detailing Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="/img/Vagwiinlogo.png" alt="Vagwiin Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
               <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="Techfrigate Logo" />
-              
+
               {/* Duplicate Set for seamless loop */}
               <img className="h-10 sm:h-12 object-contain" src="/img/CRC GLOBAL.png" alt="crc Global Logo" />
               <img className="h-10 sm:h-12 object-contain" src="https://satlaa.com/_next/image?url=https%3A%2F%2Fapi.satlaa.com%2Fimages%2Fuploads%2Fcustom%2Flogo.png&w=384&q=75" alt="Satlaa Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/MonsterDetailing.png" alt="Monster Detailing Logo" />
               <img className="h-10 sm:h-12 object-contain" src="https://nirdesham.com/_next/image?url=%2Fimages%2Flogo.png&w=640&q=100" alt="Nirdesham Media Logo" />
-              <img className="h-12 sm:h-14 object-contain" src="/img/Vagwiinlogo.png" alt="Vagwiin Logo" />
               <img className="h-10 sm:h-12 object-contain" src="/img/AND Offset.png" alt="And Offset Logo" />
               <img className="h-12 sm:h-14 object-contain" src="/img/TechfrigateLogo.png" alt="TechFrigate Logo" />
             </div>
           </div>
-            {/* Endless scroll animation keyframes */}
-            <style>
-              {`
+          {/* Endless scroll animation keyframes */}
+          <style>
+            {`
                 @keyframes scrollX {
                   0% { transform: translateX(0); }
                   100% { transform: translateX(-50%); }
                 }
               `}
-            </style>
+          </style>
         </section>
 
         {/* ============== TESTIMONIALS SECTION ============== */}
@@ -93,18 +91,18 @@ const Portfolio = () => {
                 "The UI/UX design process was incredibly collaborative and insightful. Visuark transformed our complex requirements into an intuitive and beautiful interface that our users love. We saw a 40% increase in user engagement."
               </p>
             </div>
-            
+
             {/* --- TESTIMONIAL 3 --- */}
             <div className="lg:col-span-2 card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex items-center" style={{ animationDelay: '0.4s' }}>
               <p className="text-gray-300 italic text-xl">
-                "From graphic design to the final video edit, the attention to detail was impeccable. Visuark is not just a digital agency; they are true partners in success. I highly recommend them to anyone looking for top-tier digital services."
+                "The visuark team for my startup, Tea Brand created a fantastic video the work was truly professional, and the team was incredibly helpful And they completed my work in a short time. Thank you team From Sumanglam tea."
               </p>
             </div>
             <div className="card-hover backdrop-blur-fallback rounded-xl p-8 border border-gray-700/50 animate-fadeInUp flex flex-col justify-center items-center text-center" style={{ animationDelay: '0.5s' }}>
-              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="/img/Vikash.jpg" alt="Client Photo" />
-              <h3 className="font-semibold text-lg text-cyan-400">Vikash Vaishnav</h3>
-              <p className="text-gray-400">Chief Executive Officer</p>
-              <p className="text-gray-500 text-sm">Vagwiin IT Solutions</p>
+              <img className="w-24 h-24 rounded-full mb-4 border-2 border-cyan-400" src="public/img/Shrutika Sharma.jpg" alt="Client Photo" />
+              <h3 className="font-semibold text-lg text-cyan-400">Shrutika Sharma</h3>
+              <p className="text-gray-400">Founder</p>
+              <p className="text-gray-500 text-sm">Sumanglam Tea</p>
             </div>
 
           </div>
