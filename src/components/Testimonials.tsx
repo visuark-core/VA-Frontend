@@ -40,8 +40,7 @@ const Testimonials = () => {
       image: '/img/Sunil.png',
       content: 'Hi Neeraj, I really liked the design and pitch deck you made. The way you matched it with my brand identity was great. I loved your work and will surely give you more projects with Visuark.',
       rating: 5,
-      bgBacking: 'bg-cyan-500',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.25)]',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]',
       colorClass: 'text-cyan-400'
     },
     {
@@ -52,9 +51,8 @@ const Testimonials = () => {
       image: '/img/Dipanshu.png',
       content: 'The UI/UX design process was incredibly collaborative and insightful. Visuark transformed our complex requirements into an intuitive and beautiful interface that our users love. We saw a 40% increase in user engagement.',
       rating: 5,
-      bgBacking: 'bg-orange-500',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]',
-      colorClass: 'text-orange-400'
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]',
+      colorClass: 'text-cyan-400'
     },
     {
       id: 2,
@@ -64,9 +62,8 @@ const Testimonials = () => {
       image: '/img/Shrutika Sharma.jpg',
       content: 'The visuark team for my startup, Tea Brand created a fantastic video the work was truly professional, and the team was incredibly helpful And they completed my work in a short time. Thank you team From Sumanglam tea.',
       rating: 5,
-      bgBacking: 'bg-green-500',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(34,197,94,0.25)]',
-      colorClass: 'text-green-400'
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]',
+      colorClass: 'text-cyan-400'
     }
   ];
 
@@ -77,12 +74,12 @@ const Testimonials = () => {
       label: 'Client Satisfaction Rate'
     },
     {
-      icon: <Award className="h-5 w-5 text-orange-400" />,
+      icon: <Award className="h-5 w-5 text-cyan-400" />,
       value: '150+',
       label: 'Projects Delivered Globally'
     },
     {
-      icon: <CheckCircle className="h-5 w-5 text-green-400" />,
+      icon: <CheckCircle className="h-5 w-5 text-cyan-400" />,
       value: '5.0★',
       label: 'Average Client Rating'
     }
@@ -126,7 +123,7 @@ const Testimonials = () => {
       className="py-24 bg-gray-950 relative overflow-hidden"
     >
       {/* Background glowing decorations */}
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -152,9 +149,9 @@ const Testimonials = () => {
               {metrics.map((metric, i) => (
                 <div
                   key={i}
-                  className="flex items-center space-x-4 p-4 rounded-2xl bg-gray-900/60 border border-gray-800/80 shadow-md transition-all duration-300 hover:border-gray-700/80 hover:bg-gray-900"
+                  className="flex items-center space-x-4 p-4 rounded-2xl bg-gray-800 border border-gray-700 shadow-sm transition-all duration-300 hover:border-cyan-400"
                 >
-                  <div className="p-3 rounded-xl bg-gray-950 border border-gray-800 shadow-inner">
+                  <div className="p-3 rounded-xl bg-gray-900 border border-gray-700">
                     {metric.icon}
                   </div>
                   <div>
@@ -188,11 +185,6 @@ const Testimonials = () => {
                     whileHover={{ scale: 1.04, zIndex: 50 }}
                     transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                   >
-                    {/* Colored Layer Behind */}
-                    <div className={`absolute inset-0 rounded-[28px] ${testimonial.bgBacking} translate-y-3.5 translate-x-1.5 flex items-end justify-center pb-2.5 text-[10px] font-extrabold uppercase tracking-widest text-gray-900 shadow-md`}>
-                      {testimonial.company}
-                    </div>
-
                     {/* Front Card Panel */}
                     <div className={`relative bg-gray-800 border border-gray-700 rounded-[28px] p-6 flex flex-col justify-between h-[290px] w-[290px] sm:w-[330px] z-10 transition-all duration-300`}>
                       {/* Top Quote */}
