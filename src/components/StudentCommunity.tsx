@@ -151,7 +151,7 @@ const StudentCommunity: React.FC = () => {
   return (
     <section
       aria-labelledby="student-community"
-      className="py-12 sm:py-20 bg-gradient-to-b from-gray-900 to-gray-800"
+      className="py-12 sm:py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"
     >
       <div className="container mx-auto px-4">
         <motion.div

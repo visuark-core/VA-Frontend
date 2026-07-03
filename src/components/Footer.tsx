@@ -13,7 +13,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer className={`transition-colors duration-300 ${isBlogPage ? 'bg-slate-100 border-t border-slate-200/80' : 'bg-gray-950 border-t border-gray-800'}`}>
+    <footer 
+      className={`transition-colors duration-300 ${isBlogPage ? 'bg-slate-100 border-t border-slate-200/80' : 'bg-gray-950 border-t border-gray-700'}`}
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}

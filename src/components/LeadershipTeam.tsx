@@ -26,7 +26,7 @@ const LeadershipTeam: React.FC = () => {
   ];
 
   return (
-    <section className="pt-10 pb-20 sm:pt-14 sm:pb-28 bg-gray-950 border-t border-gray-700">
+    <section className="pt-10 pb-20 sm:pt-14 sm:pb-28 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 border-t border-gray-700">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

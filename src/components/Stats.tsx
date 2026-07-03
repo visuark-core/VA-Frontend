@@ -37,7 +37,7 @@ const Stats = () => {
   ];
 
   return (
-    <section className="py-20 sm:py-28 bg-gray-800 relative overflow-hidden border-t border-gray-700">
+    <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden border-t border-gray-700">
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Header Section */}
