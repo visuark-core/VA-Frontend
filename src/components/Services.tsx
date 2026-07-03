@@ -39,50 +39,38 @@ const Services = () => {
       title: 'Web Development',
       subtitle: 'Scalable & High Performance',
       tags: ['React & Next.js', 'E-commerce', 'SEO Friendly'],
-      activeProjects: 'Active Projects: 12',
       colorClass: 'text-cyan-400',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.25)]',
-      bgBacking: 'bg-cyan-500',
-      borderClass: 'border-cyan-500/30'
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]'
     },
     {
       id: 1,
-      icon: <Palette className="h-7 w-7 text-orange-400" />,
+      icon: <Palette className="h-7 w-7 text-cyan-400" />,
       company: 'VISUARK BRANDING',
       title: 'Graphic Design',
       subtitle: 'Brand Story & Identities',
       tags: ['Brand Identity', 'Print & Digital', 'Packaging'],
-      activeProjects: 'Completed: 45+',
-      colorClass: 'text-orange-400',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]',
-      bgBacking: 'bg-orange-500',
-      borderClass: 'border-orange-500/30'
+      colorClass: 'text-cyan-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]'
     },
     {
       id: 2,
-      icon: <Video className="h-7 w-7 text-green-400" />,
+      icon: <Video className="h-7 w-7 text-cyan-400" />,
       company: 'VISUARK MEDIA',
       title: 'Video Editing',
       subtitle: 'Cinematic Storytelling',
       tags: ['Commercial Videos', 'Social Media', 'Color Grading'],
-      activeProjects: '180+ Produced',
-      colorClass: 'text-green-400',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(34,197,94,0.25)]',
-      bgBacking: 'bg-green-500',
-      borderClass: 'border-green-500/30'
+      colorClass: 'text-cyan-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]'
     },
     {
       id: 3,
-      icon: <Smartphone className="h-7 w-7 text-purple-400" />,
+      icon: <Smartphone className="h-7 w-7 text-cyan-400" />,
       company: 'VISUARK DESIGN',
       title: 'UI/UX Design',
       subtitle: 'User Centered Journeys',
       tags: ['User Research', 'Wireframes', 'Prototyping'],
-      activeProjects: 'Active Projects: 8',
-      colorClass: 'text-purple-400',
-      bgGlow: 'hover:shadow-[0_0_40px_rgba(168,85,247,0.25)]',
-      bgBacking: 'bg-purple-500',
-      borderClass: 'border-purple-500/30'
+      colorClass: 'text-cyan-400',
+      bgGlow: 'hover:shadow-[0_0_40px_rgba(57,158,210,0.25)]'
     }
   ];
 
@@ -129,7 +117,7 @@ const Services = () => {
     >
       {/* Background glowing decorations */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Header Container */}
       <div className="container mx-auto px-4 relative z-10 mb-16 text-center">
@@ -165,11 +153,6 @@ const Services = () => {
                 whileHover={{ scale: 1.04, zIndex: 50 }}
                 transition={{ type: 'spring', stiffness: 350, damping: 25 }}
               >
-                {/* Colored Layer Behind */}
-                <div className={`absolute inset-0 rounded-[28px] ${service.bgBacking} translate-y-3.5 translate-x-1.5 flex items-end justify-center pb-2.5 text-[10px] font-extrabold uppercase tracking-widest text-gray-900 shadow-md`}>
-                  {service.activeProjects}
-                </div>
-
                 {/* Front Card Panel */}
                 <div className={`relative bg-gray-800 border border-gray-700 rounded-[28px] p-6 flex flex-col justify-between h-[240px] w-[280px] sm:w-[320px] z-10 transition-all duration-300`}>
                   {/* Header logo row */}
