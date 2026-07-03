@@ -2,6 +2,7 @@ import React from 'react';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import LeadershipTeam from '../components/LeadershipTeam';
 import StudentCommunity from '../components/StudentCommunity';
 import Services from '../components/Services';
 import Contact from '../components/Contact';
@@ -15,7 +16,8 @@ const Home = () => {
       <Hero />
       <Stats />
       <About />
-  <StudentCommunity />
+      <LeadershipTeam />
+      <StudentCommunity />
       <Services />
       <Testimonials />
       <CTA />

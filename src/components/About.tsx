@@ -1,9 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Target, 
   Users, 
-  Award, 
   Zap, 
   ShieldCheck, 
   Cpu, 
@@ -275,52 +273,6 @@ const InteractiveHub = () => {
 };
 
 const About = () => {
-  const values = [
-    {
-      num: '01',
-      icon: <Target className="h-6 w-6 text-cyan-400" />,
-      title: 'Precision',
-      description: 'Every pixel matters, every line of code counts',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] hover:border-cyan-400/60 border-cyan-500/20',
-      iconBg: 'bg-cyan-500/10 group-hover:bg-cyan-500/20',
-      labelColor: 'text-cyan-400',
-      glowColor: 'bg-cyan-400/5',
-      barColor: 'bg-cyan-400'
-    },
-    {
-      num: '02',
-      icon: <Users className="h-6 w-6 text-orange-400" />,
-      title: 'Collaboration',
-      description: 'We work closely with clients to bring visions to life',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(249,115,22,0.15)] hover:border-orange-400/60 border-orange-500/20',
-      iconBg: 'bg-orange-500/10 group-hover:bg-orange-500/20',
-      labelColor: 'text-orange-400',
-      glowColor: 'bg-orange-400/5',
-      barColor: 'bg-orange-400'
-    },
-    {
-      num: '03',
-      icon: <Award className="h-6 w-6 text-green-400" />,
-      title: 'Excellence',
-      description: 'Delivering exceptional quality in every project',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(34,197,94,0.15)] hover:border-green-400/60 border-emerald-500/20',
-      iconBg: 'bg-green-500/10 group-hover:bg-green-500/20',
-      labelColor: 'text-green-400',
-      glowColor: 'bg-green-400/5',
-      barColor: 'bg-green-400'
-    },
-    {
-      num: '04',
-      icon: <Zap className="h-6 w-6 text-yellow-400" />,
-      title: 'Innovation',
-      description: 'Staying ahead with cutting-edge technologies',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(234,179,8,0.15)] hover:border-yellow-400/60 border-yellow-500/20',
-      iconBg: 'bg-yellow-500/10 group-hover:bg-yellow-500/20',
-      labelColor: 'text-yellow-400',
-      glowColor: 'bg-yellow-400/5',
-      barColor: 'bg-yellow-400'
-    }
-  ];
 
   const missionPoints = [
     {
@@ -355,35 +307,8 @@ const About = () => {
     }
   ];
 
-  const leaders = [
-    {
-      name: 'Neeraj Kumhar',
-      role: 'Founder',
-      initials: 'NK',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] hover:border-cyan-400/60 border-cyan-500/20',
-      glowColor: 'bg-cyan-400/5',
-      iconBg: 'bg-cyan-500/10 group-hover:bg-cyan-500/20',
-      labelColor: 'text-cyan-400',
-      borderColor: 'border-cyan-500/30',
-      avatarGradient: 'from-cyan-500/20 to-blue-500/20 text-cyan-400 border-cyan-500/30 group-hover:border-cyan-400/80',
-      description: "Visionary strategist defining Visuark's core direction and aesthetic design standards."
-    },
-    {
-      name: 'Sunil Sharma',
-      role: 'CEO',
-      initials: 'SS',
-      colorClass: 'hover:shadow-[0_20px_40px_rgba(249,115,22,0.15)] hover:border-orange-400/60 border-orange-500/20',
-      glowColor: 'bg-orange-400/5',
-      iconBg: 'bg-orange-500/10 group-hover:bg-orange-500/20',
-      labelColor: 'text-orange-400',
-      borderColor: 'border-orange-500/30',
-      avatarGradient: 'from-orange-500/20 to-amber-500/20 text-orange-400 border-orange-500/30 group-hover:border-orange-400/80',
-      description: 'Operations driver scaling engineering teams and executing client transformation goals.'
-    }
-  ];
-
   return (
-    <section id="about" className="py-20 sm:py-28 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+    <section id="about" className="pt-20 pb-10 sm:pt-28 sm:pb-14 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
       {/* Background Graphic Accents */}
       <div className="absolute top-1/3 left-10 w-80 h-80 bg-[#399ed2]/3 rounded-full blur-[90px] pointer-events-none"></div>
       <div className="absolute bottom-1/3 right-10 w-96 h-96 bg-orange-400/3 rounded-full blur-[110px] pointer-events-none"></div>
@@ -408,7 +333,7 @@ const About = () => {
         </motion.div>
 
         {/* Mission and Interactive Dashboard Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20 sm:mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left: Text Content & Structured List */}
           <motion.div
@@ -462,92 +387,6 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Leadership Team Section */}
-        <div className="mb-20 sm:mb-24">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-3xl font-extrabold text-white mb-4">Leadership Team</h3>
-            <p className="text-gray-400 text-sm max-w-xl mx-auto">
-              Meet the minds driving innovation, engineering excellence, and digital transformation.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {leaders.map((leader, index) => (
-              <motion.div
-                key={leader.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className={`bg-gray-800/80 backdrop-blur-md rounded-3xl p-6 border border-gray-700/70 transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 ${leader.colorClass}`}
-              >
-                {/* Subtle background glow */}
-                <div className={`absolute -top-12 -left-12 w-24 h-24 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100 ${leader.glowColor}`} />
-
-                {/* Avatar Placeholder */}
-                <div className={`w-20 h-20 rounded-2xl flex items-center justify-center font-mono text-2xl font-bold tracking-wider border-2 transition-all duration-500 shadow-inner shrink-0 bg-gray-950 ${leader.avatarGradient}`}>
-                  {leader.initials}
-                </div>
-
-                <div className="text-center md:text-left relative z-10 flex-1">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                    <h4 className="text-xl font-bold text-white tracking-wide group-hover:text-white transition-colors">{leader.name}</h4>
-                    <span className={`inline-block text-xs font-mono font-bold tracking-widest uppercase border px-2 py-0.5 rounded-full mt-1 md:mt-0 max-w-fit mx-auto md:mx-0 ${leader.borderColor} ${leader.labelColor}`}>
-                      {leader.role}
-                    </span>
-                  </div>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    {leader.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Value Cards Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mt-12">
-          {values.map((value, index) => (
-            <motion.div
-              key={value.title}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.12 }}
-              viewport={{ once: true, margin: "-30px" }}
-              whileHover={{ y: -8 }}
-              className={`bg-gray-800/80 backdrop-blur-md rounded-2xl p-7 border border-gray-700/70 transition-all duration-500 group cursor-pointer relative overflow-hidden ${value.colorClass}`}
-            >
-              {/* Futuristic Number Badge */}
-              <span className="absolute top-4 right-4 text-xs font-mono font-bold text-gray-600/40 select-none group-hover:text-gray-500/70 transition-colors duration-300">
-                {value.num}
-              </span>
-
-              {/* Inner subtle glow blob */}
-              <div className={`absolute -top-12 -left-12 w-24 h-24 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100 ${value.glowColor}`} />
-
-              <div className="flex justify-center mb-5">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 transform group-hover:scale-110 shadow-inner ${value.iconBg}`}>
-                  {value.icon}
-                </div>
-              </div>
-              
-              <h4 className="text-xl font-bold text-white mb-3 tracking-wide group-hover:text-white transition-colors">{value.title}</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">{value.description}</p>
-
-              {/* Expanding Bottom Glow Bar */}
-              <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-transparent flex justify-center">
-                <div className={`h-full w-0 group-hover:w-full transition-all duration-500 ease-out ${value.barColor}`} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );
