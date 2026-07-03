@@ -10,11 +10,11 @@ import {
   ChevronRight
 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import { blogPosts as localBlogPosts } from '../data/blogs';
+import { blogPosts as localBlogPosts, BlogPostData } from '../data/blogs';
 
 const BlogPost = () => {
   const { slug } = useParams();
-  const [post, setPost] = useState<any>(null);
+  const [post, setPost] = useState<BlogPostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   

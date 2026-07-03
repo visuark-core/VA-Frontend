@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { ExternalLink, Play, X } from 'lucide-react';
 
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+  technologies: string[];
+  link: string;
+  isVideo?: boolean;
+}
+
 const Portfolio = () => {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeFilter, setActiveFilter] = useState('all');
 
   const projects = [

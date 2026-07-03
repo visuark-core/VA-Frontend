@@ -1,18 +1,27 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Linkedin, Clock, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Instagram, Linkedin, Clock, MessageCircle } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { submitContactComplete } from '../utils/integrations';
+
+interface ContactFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  company?: string;
+  service?: string;
+  message: string;
+}
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage, setSubmitMessage] = useState('');
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setSubmitMessage('');

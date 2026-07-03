@@ -1,10 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Users, 
   Zap, 
   ShieldCheck, 
-  Cpu, 
   Layers, 
   Terminal, 
   Compass, 

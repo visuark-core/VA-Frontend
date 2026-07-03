@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Users, Terminal } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 const InteractiveCommunityWidget: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'terminal' | 'members'>('editor');

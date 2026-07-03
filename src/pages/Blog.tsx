@@ -3,14 +3,13 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Search, Tag, Loader2, Sparkles, Clock } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import { blogPosts as localBlogPosts } from '../data/blogs';
+import { blogPosts as localBlogPosts, BlogPostData } from '../data/blogs';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPostData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const sorted = [...localBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
