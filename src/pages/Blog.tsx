@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowRight, Search, Tag, Loader2, Sparkles, Clock } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { blogPosts as localBlogPosts, BlogPostData } from '../data/blogs';
 
@@ -39,10 +38,10 @@ const Blog = () => {
   if (loading) {
     return (
       <PageTransition>
-        <div className="pt-20 min-h-screen flex items-center justify-center bg-[#f8fafc]">
+        <div className="pt-20 min-h-screen flex items-center justify-center bg-[#ffffff]">
           <div className="text-center">
-            <Loader2 className="w-12 h-12 text-cyan-600 animate-spin mx-auto mb-4" />
-            <p className="text-slate-600 text-lg font-medium">Loading articles...</p>
+            <Loader2 className="w-12 h-12 text-[#111111] animate-spin mx-auto mb-4" />
+            <p className="text-slate-700 text-lg font-serif italic">Typesetting dispatch...</p>
           </div>
         </div>
       </PageTransition>
@@ -51,259 +50,246 @@ const Blog = () => {
 
   return (
     <PageTransition>
-      <div className="pt-20 bg-[#f8fafc] min-h-screen relative overflow-hidden">
-        {/* Decorative Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
+      <div className="pt-20 lg:pt-24 pb-8 min-h-screen lg:h-screen lg:overflow-hidden bg-[#ffffff] flex items-center justify-center font-newspaper-serif select-text">
+        <style>
+          {`
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&family=Special+Elite&display=swap');
+            .font-newspaper-gothic { font-family: 'UnifrakturMaguntia', serif; }
+            .font-newspaper-serif { font-family: 'Playfair Display', serif; }
+            .font-newspaper-typewriter { font-family: 'Special Elite', monospace; }
+          `}
+        </style>
 
-        {/* Ambient Glow Orbs */}
-        <div className="absolute top-20 left-1/10 w-[500px] h-[500px] bg-cyan-400/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-40 right-1/10 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="container mx-auto px-4 max-w-[1550px] lg:h-[calc(100vh-115px)]">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-stretch lg:h-full">
+            
+            {/* Left/Main Column: The Opened Newspaper (col-span-9) */}
+            <div className="xl:col-span-9 bg-[#ffffff] border border-[#e2e8f0] shadow-[0_20px_50px_rgba(0,0,0,0.06)] rounded-sm grid grid-cols-1 lg:grid-cols-2 relative overflow-hidden lg:h-full animate-fadeInUp">
+              
+              {/* Center Fold Crease Overlay */}
+              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-[4px] bg-gradient-to-r from-black/[0.02] via-black/[0.06] to-black/[0.02] pointer-events-none z-20 transform -translate-x-1/2"></div>
+              
+              {/* Left Page (Page 1) */}
+              <div className="p-6 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-[#e2e8f0] relative flex flex-col justify-between lg:h-full lg:overflow-y-auto scrollbar-none">
+                <div>
+                  {/* Left Page Header */}
+                  <div className="border-b border-[#111111] pb-3 mb-6 flex justify-between items-center text-xs font-mono uppercase tracking-widest text-[#555555] select-none">
+                    <span>Miami, FL</span>
+                    <span className="font-bold font-newspaper-gothic text-2xl lowercase">the visuark chronicle</span>
+                    <span>Page 1</span>
+                  </div>
 
-        {/* Hero Section */}
-        <section className="py-20 relative z-10">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200/60 text-cyan-600 text-xs font-mono font-bold uppercase tracking-widest mb-6">
-                <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-                <span>Our Journal</span>
-              </div>
-              <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-6 tracking-tight leading-none">
-                Insights & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">Stories</span>
-              </h1>
-              <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
-                Deep dives, quick tips, and industry trends curated by the Visuark design and engineering team.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+                  {/* Headline & Featured Article */}
+                  {featuredPost ? (
+                    <>
+                      <h2 className="font-newspaper-serif text-4xl sm:text-5xl md:text-[46px] font-black uppercase tracking-tight leading-[1.03] text-[#111111] mb-6 text-left hover:underline">
+                        <Link to={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link>
+                      </h2>
 
-        {/* Search and Filter Panel */}
-        <section className="py-6 relative z-10">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <div className="bg-gray-800/80 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row gap-6 items-center justify-between">
-              {/* Search */}
-              <div className="relative flex-1 max-w-md w-full">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search articles by title or keyword..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-gray-800 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300 shadow-inner"
-                />
-              </div>
-
-              {/* Categories */}
-              <div className="flex flex-wrap gap-2 justify-center">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4.5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 ${
-                      selectedCategory === category
-                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-black shadow-lg shadow-cyan-500/25 scale-[1.02]'
-                        : 'bg-slate-50 text-slate-600 border border-slate-200/60 hover:bg-slate-100 hover:text-slate-900 shadow-sm'
-                    }`}
-                  >
-                    {category === 'all' ? 'All Topics' : category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {error && (
-              <div className="text-center p-8 bg-red-50 border border-red-200 rounded-3xl mt-6">
-                <p className="text-red-600 font-medium">{error}</p>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Featured Post */}
-        {selectedCategory === 'all' && !searchTerm && featuredPost && (
-          <section className="py-12 relative z-10">
-            <div className="container mx-auto px-4 max-w-6xl">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-ping" />
-                  <h2 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-[0.2em]">Featured Release</h2>
-                </div>
-
-                <div className="group bg-gray-800 rounded-[32px] overflow-hidden border border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_70px_rgba(6,182,212,0.08)] hover:border-cyan-400/40 transition-all duration-500">
-                  <div className="grid lg:grid-cols-12 gap-0">
-                    {/* Image block */}
-                    <div className="lg:col-span-7 relative overflow-hidden aspect-video lg:aspect-auto min-h-[320px] lg:min-h-[460px]">
-                      <img
-                        src={featuredPost.image}
-                        alt={featuredPost.title}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
-                      <div className="absolute top-6 left-6">
-                        <span className="px-4 py-2 bg-cyan-600/90 backdrop-blur-md text-black rounded-full text-xs font-extrabold uppercase tracking-widest border border-cyan-400/25 shadow-md">
-                          Featured
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content block */}
-                    <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between bg-gray-800 relative">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-400 mb-6">
-                          <span className="flex items-center gap-1.5">
-                            <Calendar className="h-4.5 w-4.5 text-cyan-600" />
-                            {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                          </span>
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
-                          <span className="flex items-center gap-1.5">
-                            <Clock className="h-4.5 w-4.5 text-cyan-600" />
-                            {featuredPost.readTime}
-                          </span>
+                      {/* Main Grayscale Graphic with Caption */}
+                      <div className="border border-[#111111] p-3 bg-[#fafafa] shadow-sm mb-6 w-full">
+                        <div className="overflow-hidden aspect-[16/10] border border-[#111111]">
+                          <img
+                            src={featuredPost.image}
+                            alt={featuredPost.title}
+                            className="w-full h-full object-cover grayscale contrast-125 brightness-95"
+                          />
                         </div>
-                        
-                        <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mb-4 hover:text-cyan-600 transition-colors text-left leading-[1.25] tracking-tight">
-                          <Link to={`/blog/${featuredPost.slug}`} className="relative inline-block group/title">
-                            <span className="relative z-10">{featuredPost.title}</span>
-                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:w-full transition-all duration-300" />
-                          </Link>
-                        </h3>
-                        
-                        <p className="text-slate-500 mb-6 leading-relaxed text-left font-light text-base lg:text-lg">
-                          {featuredPost.excerpt}
+                        <p className="mt-2 text-xs italic font-serif text-[#555555] text-center border-t border-[#111111]/10 pt-2 select-none">
+                          Fig. I — Photographic rendering of generative intelligence, Miami, FL.
                         </p>
                       </div>
 
-                      <div>
-                        <div className="flex flex-wrap gap-1.5 mb-8">
-                          {featuredPost.tags?.map((tag: string) => (
-                            <span
-                              key={tag}
-                              className="px-3.5 py-1 bg-slate-50 border border-slate-200/60 text-slate-500 rounded-full text-xs font-bold flex items-center shadow-sm"
-                            >
-                              <Tag className="h-3 w-3 mr-1.5 text-slate-400" />
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        
-                        <div className="flex items-center justify-between border-t border-slate-100 pt-6">
-                          <div className="flex items-center space-x-3 text-sm text-slate-600 font-bold">
-                            <div className="p-1.5 rounded-full bg-cyan-50 border border-cyan-100 text-cyan-600">
-                              <User className="h-4 w-4" />
-                            </div>
-                            <span>{featuredPost.author}</span>
-                          </div>
-
+                      {/* Excerpt with drop cap and metadata */}
+                      <div className="border border-[#111111]/20 p-5 bg-[#fafafa] text-justify">
+                        <p className="font-serif text-[15px] md:text-[16px] leading-relaxed text-[#222222] first-letter:text-5xl first-letter:font-newspaper-gothic first-letter:float-left first-letter:mr-2.5 first-letter:-mt-1 first-letter:text-[#111111]">
+                          {featuredPost.excerpt}
+                        </p>
+                        <div className="mt-5 pt-4 border-t border-dashed border-[#111111]/20 flex items-center justify-between">
+                          <span className="text-xs font-mono uppercase text-[#555555]">By {featuredPost.author}</span>
                           <Link
                             to={`/blog/${featuredPost.slug}`}
-                            className="inline-flex items-center space-x-2 text-cyan-600 hover:text-cyan-700 font-extrabold text-sm uppercase tracking-wider group/link"
+                            className="text-sm font-bold uppercase tracking-wider hover:underline text-[#111111] flex items-center gap-1.5"
                           >
-                            <span>Read Article</span>
-                            <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1.5 transition-transform" />
+                            <span>Read Dispatch</span>
+                            <ArrowRight className="w-4 h-4" />
                           </Link>
                         </div>
                       </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-20 border border-dashed border-[#111111]/20">
+                      <p className="italic text-base text-gray-500">No Featured Article Selected</p>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </motion.div>
-            </div>
-          </section>
-        )}
+              </div>
 
-        {/* Blog Posts Grid */}
-        <section className="py-12 relative z-10">
-          <div className="container mx-auto px-4 max-w-6xl">
-            {selectedCategory === 'all' && !searchTerm && regularPosts.length > 0 && (
-              <h2 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-[0.2em] mb-8 text-left">Recent Stories</h2>
-            )}
+              {/* Right Page (Page 2) */}
+              <div className="p-6 sm:p-8 lg:p-10 relative flex flex-col justify-between lg:h-full lg:overflow-y-auto scrollbar-none">
+                <div>
+                  {/* Right Page Header */}
+                  <div className="border-b border-[#111111] pb-3 mb-4 flex justify-between items-center text-xs font-mono uppercase tracking-widest text-[#555555] select-none">
+                    <span>Saturday, July 4, 2026</span>
+                    <span className="font-bold">EDITORIAL & ARCHIVES</span>
+                    <span>Page 2</span>
+                  </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPosts.map((post, index) => (
-                <motion.article
-                  key={post.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group bg-gray-800 rounded-3xl overflow-hidden border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-cyan-400/40 transition-all duration-500 hover:-translate-y-2 flex flex-col"
-                >
-                  {/* Image section */}
-                  <div className="relative overflow-hidden aspect-[16/10]">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3.5 py-1.5 bg-gray-800/95 backdrop-blur-sm text-cyan-600 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-sm border border-slate-100/50">
-                        {post.category}
-                      </span>
+                  {/* Micro Ticker Line */}
+                  <div className="py-2 border-b border-[#111111] text-center overflow-hidden whitespace-nowrap text-xs font-mono tracking-widest uppercase text-[#555555] mb-4 select-none">
+                    <div className="inline-block animate-marquee">
+                      ★ GLOW & CO OPENING NEAR YOU ★ BUILD THE FUTURE IN 2026 ★ EXPERT DESIGN & CODE ★ LATEST RELEASES ★
                     </div>
                   </div>
-                  
-                  {/* Content section */}
-                  <div className="p-6.5 sm:p-8 flex flex-col flex-1">
-                    <div className="flex items-center space-x-4 text-xs font-semibold text-slate-400 mb-3">
-                      <span className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1.5 text-cyan-600" />
-                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
-                      <span className="w-1.5 h-1.5 bg-slate-200 rounded-full" />
-                      <span className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1.5 text-cyan-600" />
-                        {post.readTime}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4 hover:text-cyan-600 transition-colors text-left leading-snug">
-                      <Link to={`/blog/${post.slug}`} className="relative inline-block group/grid-title">
-                        <span className="relative z-10">{post.title}</span>
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover/grid-title:w-full transition-all duration-300" />
-                      </Link>
-                    </h3>
-                    
-                    <p className="text-slate-500 mb-6 line-clamp-3 text-left font-normal text-sm sm:text-base leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between mt-auto border-t border-slate-100 pt-5">
-                      <div className="flex items-center space-x-2 text-sm text-slate-600 font-bold">
-                        <User className="h-4 w-4 text-slate-400" />
-                        <span>{post.author}</span>
+
+                  {/* Filter and Search Archives (Minimal Pipe Separated Index) */}
+                  <div className="border-b border-[#111111] pb-4 mb-6">
+                    <div className="flex flex-col gap-3">
+                      {/* Search */}
+                      <div className="relative">
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-newspaper-typewriter text-[#555555] uppercase select-none">Search:</span>
+                        <input
+                          type="text"
+                          placeholder="..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="w-full pl-16 pr-2 py-1 bg-transparent border-b border-[#111111]/10 focus:border-[#111111] focus:outline-none font-newspaper-typewriter text-xs text-[#111111] transition-all"
+                        />
                       </div>
                       
-                      <Link
-                        to={`/blog/${post.slug}`}
-                        className="text-cyan-600 font-extrabold hover:text-cyan-700 transition-colors flex items-center space-x-1 text-sm uppercase tracking-wider group/read-link"
-                      >
-                        <span>Read</span>
-                        <ArrowRight className="h-4 w-4 group-hover/read-link:translate-x-1 transition-transform" />
-                      </Link>
+                      {/* Directory Index Links */}
+                      <div className="flex flex-wrap gap-x-3 gap-y-1 items-center text-xs font-mono uppercase tracking-wider text-[#555555]">
+                        <span className="font-bold text-[#111111] select-none">Sections:</span>
+                        {categories.map((category, idx) => (
+                          <span key={category} className="flex items-center gap-3">
+                            {idx > 0 && <span className="text-[#111111]/20 select-none">|</span>}
+                            <button
+                              onClick={() => setSelectedCategory(category)}
+                              className={`hover:underline transition-all ${
+                                selectedCategory === category
+                                  ? 'underline font-bold text-[#111111]'
+                                  : 'text-[#666666]'
+                              }`}
+                            >
+                              {category === 'all' ? 'All' : category.split(' ')[0]}
+                            </button>
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </motion.article>
-              ))}
+
+                  {/* Secondary News Columns list */}
+                  <div className="space-y-8">
+                    {regularPosts.map((post) => (
+                      <article key={post.id} className="border-b border-[#111111]/10 pb-6 last:border-b-0 last:pb-0">
+                        <div className="grid grid-cols-12 gap-4 items-start">
+                          <div className="col-span-8">
+                            <h3 className="font-newspaper-serif text-[19px] font-bold uppercase text-[#111111] leading-tight mb-2 hover:underline text-left">
+                              <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+                            </h3>
+                            <p className="font-serif text-sm text-[#333333] leading-relaxed text-justify mb-3">
+                              {post.excerpt}
+                            </p>
+                            <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-wider text-[#666666]">
+                              <span>By {post.author}</span>
+                              <span>•</span>
+                              <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                            </div>
+                          </div>
+                          <div className="col-span-4">
+                            <div className="border border-[#111111] p-1.5 bg-[#fafafa] aspect-[4/3] overflow-hidden">
+                              <img
+                                src={post.image}
+                                alt={post.title}
+                                className="w-full h-full object-cover grayscale contrast-110 brightness-95"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+
+                  {filteredPosts.length === 0 && !loading && (
+                    <div className="text-center py-16 border border-dashed border-[#111111]/20 bg-[#fafafa] rounded-sm">
+                      <h3 className="font-newspaper-serif text-xl font-bold text-[#111111] uppercase select-none">No Dispatch Found</h3>
+                      <p className="font-serif text-sm text-[#555555] italic">Try adjusting search parameters.</p>
+                    </div>
+                  )}
+
+                  {/* Classified Ad Banner */}
+                  {filteredPosts.length > 0 && (
+                    <div className="mt-8 p-5 border-2 border-double border-[#111111] bg-[#fafafa] text-center relative overflow-hidden shadow-sm">
+                      <div className="absolute top-1 left-3 text-[8px] font-mono tracking-widest text-[#777777] select-none">ADVERTISEMENT</div>
+                      <h4 className="font-newspaper-serif text-sm font-black uppercase text-[#111111] mb-1">
+                        Partner with Visuark Studio
+                      </h4>
+                      <p className="font-serif text-xs text-[#444444] mb-3 italic max-w-sm mx-auto">
+                        "World-class software engineering, custom user interfaces, and brand systems."
+                      </p>
+                      <Link
+                        to="/contact"
+                        className="inline-block px-4 py-1.5 bg-[#111111] text-[#ffffff] font-mono text-[11px] uppercase tracking-wider font-bold hover:bg-[#333333] transition-colors"
+                      >
+                        Consult Editors →
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+
             </div>
 
-            {filteredPosts.length === 0 && !loading && (
-              <div className="text-center py-24 bg-gray-800 rounded-[32px] border border-slate-200/80 shadow-[0_12px_30px_rgba(0,0,0,0.03)] mt-12">
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">No articles found</h3>
-                <p className="text-slate-500 font-light">Try adjusting your search query or choosing another topic category.</p>
+            {/* Right/Secondary Column: Gazette Classifieds & Notices (col-span-3) */}
+            <div className="xl:col-span-3 bg-[#ffffff] border border-[#e2e8f0] shadow-[0_20px_45px_rgba(0,0,0,0.05)] p-6 rounded-sm relative flex flex-col justify-between lg:h-full lg:overflow-y-auto scrollbar-none animate-fadeInUp">
+              <div>
+                {/* Header */}
+                <div className="border-b-2 border-double border-[#111111] pb-2.5 mb-5 text-center select-none">
+                  <h3 className="font-newspaper-serif text-base font-black uppercase tracking-wider text-[#111111]">
+                    Gazette Classifieds
+                  </h3>
+                  <span className="text-[10px] font-mono text-[#555555] tracking-wider">PUBLIC NOTICES & OPPORTUNITIES</span>
+                </div>
+
+                {/* Notices Listings */}
+                <div className="space-y-5">
+                  <div className="border border-dashed border-[#111111]/30 p-4 bg-[#fafafa] text-left text-sm">
+                    <span className="font-mono text-[9px] font-bold text-slate-500 block mb-1">SECTION I: HELP WANTED</span>
+                    <h4 className="font-bold uppercase text-[13px] mb-1">React Developers</h4>
+                    <p className="font-serif leading-relaxed text-[#333333]">
+                      Seeking skilled engineers in React, TypeScript, and modern styling architectures. Inquire directly inside Visuark Engineering.
+                    </p>
+                  </div>
+
+                  <div className="border border-dashed border-[#111111]/30 p-4 bg-[#fafafa] text-left text-sm">
+                    <span className="font-mono text-[9px] font-bold text-slate-500 block mb-1">SECTION II: SERVICES</span>
+                    <h4 className="font-bold uppercase text-[13px] mb-1">Digital Design Systems</h4>
+                    <p className="font-serif leading-relaxed text-[#333333]">
+                      Custom high-fidelity interfaces, brand development kits, cinematic visual design, and API checkout services.
+                    </p>
+                  </div>
+
+                  <div className="border border-dashed border-[#111111]/30 p-4 bg-[#fafafa] text-left text-sm">
+                    <span className="font-mono text-[9px] font-bold text-slate-500 block mb-1">SECTION III: LATEST NEWS</span>
+                    <h4 className="font-bold uppercase text-[13px] mb-1">Visuark 2.0 Architecture</h4>
+                    <p className="font-serif leading-relaxed text-[#333333]">
+                      Visuark's latest digital layout engine is fully online, optimizing static content packaging and client load speeds.
+                    </p>
+                  </div>
+                </div>
               </div>
-            )}
+
+              {/* Bottom Copyright */}
+              <div className="mt-8 pt-4 border-t border-double border-[#111111] text-center select-none">
+                <p className="font-newspaper-typewriter text-xs text-[#666666]">
+                  Visuark Gazette Archives © 2026. All rights reserved.
+                </p>
+              </div>
+            </div>
+
           </div>
-        </section>
+        </div>
       </div>
     </PageTransition>
   );

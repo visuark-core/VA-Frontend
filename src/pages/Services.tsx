@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Palette, Video, Smartphone, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Code, Palette, Video, Smartphone, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const Services = () => {
       ],
       technologies: ['React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'PostgreSQL'],
       color: 'cyan',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80'
+      image: '/img/services_web_dev.png'
     },
     {
       id: 'graphic-design',
@@ -45,7 +45,7 @@ const Services = () => {
       ],
       technologies: ['Adobe Creative Suite', 'Figma', 'Sketch', 'Procreate'],
       color: 'orange',
-      image: 'https://metropolitan.hu/_next/image?url=https%3A%2F%2Fgephaz.metropolitan.hu%2Fstorage%2Fcontents%2F1200x800%20(5)-1733215548.png%3Fv%3D1764162419&w=1080&q=100'
+      image: '/img/services_graphic_design.png'
     },
     {
       id: 'video-editing',
@@ -65,7 +65,7 @@ const Services = () => {
       ],
       technologies: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Cinema 4D'],
       color: 'green',
-      image: 'https://blog.stockmusic.net/wp-content/uploads/2024/01/sanjeev-nagaraj-u4bvBOOpZB4-unsplash.jpg'
+      image: '/img/services_video_editing.png'
     },
     {
       id: 'ui-ux-design',
@@ -85,7 +85,7 @@ const Services = () => {
       ],
       technologies: ['Figma', 'Adobe XD', 'Sketch', 'InVision', 'Principle'],
       color: 'purple',
-      image: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=80'
+      image: '/img/services_ui_ux.png'
     }
   ];
 
@@ -122,160 +122,251 @@ const Services = () => {
     }
   ];
 
-  const getColorClasses = (color: string) => {
-    const map: Record<string, string> = {
-      cyan: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',
-      orange: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
-      green: 'text-green-400 bg-green-400/10 border-green-400/20',
-      purple: 'text-purple-400 bg-purple-400/10 border-purple-400/20'
-    };
-    return map[color] || map.cyan;
+  const [activeTab, setActiveTab] = React.useState(0);
+
+  const cardVariants = {
+    hidden: (index: number) => ({
+      opacity: 0,
+      x: [-120, -40, 40, 120][index] || 0,
+      rotate: [-8, -3, 3, 8][index] || 0,
+    }),
+    visible: (index: number) => ({
+      opacity: 1,
+      x: 0,
+      rotate: 0,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 80,
+        damping: 14,
+        delay: index * 0.12,
+      }
+    })
   };
 
-  const getBorderColor = (color: string) => {
-    const map: Record<string, string> = {
-      cyan: 'border-cyan-400',
-      orange: 'border-orange-400',
-      green: 'border-green-400',
-      purple: 'border-purple-400'
-    };
-    return map[color] || map.cyan;
-  };
-
-  const getButtonColor = (color: string) => {
-    const map: Record<string, string> = {
-      cyan: 'bg-cyan-500 hover:bg-cyan-400 shadow-cyan-500/25',
-      orange: 'bg-orange-500 hover:bg-orange-400 shadow-orange-500/25',
-      green: 'bg-green-500 hover:bg-green-400 shadow-green-500/25',
-      purple: 'bg-purple-500 hover:bg-purple-400 shadow-purple-500/25'
-    };
-    return map[color] || map.cyan;
-  };
+  const showcaseServices = [
+    {
+      id: 'web-development',
+      title: 'Web Platforms',
+      metricLabel: 'Lighthouse Score: 99%',
+      details: 'Supercharged React/Next.js architectures designed for speed, security, and organic discovery.',
+      image: '/img/services_web_dev.png'
+    },
+    {
+      id: 'graphic-design',
+      title: 'Brand Identities',
+      metricLabel: 'Industry Benchmark: 4.8x Recall',
+      details: 'Bold graphic design systems, bespoke logos, and print/digital collateral that tell your brand story.',
+      image: '/img/services_graphic_design.png'
+    },
+    {
+      id: 'video-editing',
+      title: 'Cinematic Media',
+      metricLabel: 'Audience Completion: 84%',
+      details: 'High-production video editing, color grading, motion graphics, and high-impact social edits.',
+      image: '/img/services_video_editing.png'
+    },
+    {
+      id: 'ui-ux-design',
+      title: 'UI/UX Ecosystems',
+      metricLabel: 'Conversion Uplift: +42%',
+      details: 'Meticulous wireframing, high-fidelity prototypes, and research-backed accessibility compliance.',
+      image: '/img/services_ui_ux.png'
+    }
+  ];
 
   return (
     <PageTransition>
-      <div className="pt-20">
+      <div className="pt-20 bg-gray-950">
         {/* Hero Section */}
-        <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-48 -mt-48 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 -ml-48 -mb-48 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <section className="py-24 lg:py-32 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+          {/* Animated decorative grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
           
           <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
-            >
-              <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
-                Elevate Your Brand with <br/> 
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Premium Services</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-                We blend creativity, technology, and strategy to build digital solutions that don't just look good, but drive real business results.
-              </p>
-              <div className="flex justify-center gap-4">
-                <Link to="/contact" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/25 flex items-center transform hover:-translate-y-1">
-                  Start Your Project
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
-            </motion.div>
+            <div className="grid lg:grid-cols-12 gap-16 items-center">
+              
+              {/* Left Column - Core Text Info */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-7 text-left space-y-6"
+              >
+                <div className="text-xs font-mono font-bold tracking-widest text-gray-500 uppercase">
+                  Excellence Redefined
+                </div>
+                
+                <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                  Elevate Your Brand with <br/> 
+                  Premium Services
+                </h1>
+                
+                <p className="text-lg text-gray-400 leading-relaxed max-w-2xl">
+                  We blend creativity, technology, and strategy to build digital solutions that don't just look good, but drive real business results.
+                </p>
+
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <Link to="/contact" className="bg-white hover:bg-gray-200 text-black font-bold py-4 px-8 rounded-full transition-all duration-300 flex items-center transform hover:-translate-y-1">
+                    Start Your Project
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                  <a href="#services" className="border border-gray-800 hover:border-gray-700 hover:bg-gray-900 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 flex items-center transform hover:-translate-y-1">
+                    Explore Services
+                  </a>
+                </div>
+              </motion.div>
+              
+              {/* Right Column - Premium Clean Showcase */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="lg:col-span-5 relative"
+              >
+                {/* Main Clean Dashboard Container */}
+                <div className="relative bg-gray-900 border border-gray-800 rounded-3xl p-6 shadow-2xl overflow-hidden">
+                  
+                  {/* Browser-like header row */}
+                  <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-5">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 rounded-full bg-gray-700"></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-700"></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-700"></div>
+                    </div>
+                    <div className="text-[10px] text-gray-500 font-mono tracking-wider">
+                      visuark.studio
+                    </div>
+                    <div className="w-2 h-2"></div>
+                  </div>
+
+                  {/* Service selector tabs (text-only, simple) */}
+                  <div className="grid grid-cols-4 gap-1 p-1 rounded-xl bg-gray-950 border border-gray-800 mb-6">
+                    {showcaseServices.map((tab, idx) => (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setActiveTab(idx)}
+                        className={`py-2 rounded-lg text-xs font-semibold text-center transition-all duration-300 ${
+                          activeTab === idx 
+                            ? 'bg-gray-800 text-white border border-gray-700' 
+                            : 'text-gray-500 hover:text-gray-300'
+                        }`}
+                      >
+                        {tab.title.split(' ')[0]}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Main Tab Screen Info */}
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-white leading-tight">
+                        {showcaseServices[activeTab].title}
+                      </h3>
+                      <span className="text-[10px] text-gray-500 font-mono">
+                        {showcaseServices[activeTab].metricLabel}
+                      </span>
+                    </div>
+
+                    {/* Image Frame */}
+                    <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-gray-800 bg-gray-950">
+                      <motion.img 
+                        key={activeTab}
+                        src={showcaseServices[activeTab].image} 
+                        alt={showcaseServices[activeTab].title}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Details text */}
+                    <p className="text-sm text-gray-400 leading-relaxed min-h-[48px]">
+                      {showcaseServices[activeTab].details}
+                    </p>
+
+                    {/* Action footer link */}
+                    <div className="pt-4 border-t border-gray-800 flex items-center justify-between">
+                      <span className="text-[10px] text-gray-500 font-mono">Pillar {activeTab + 1} of 4</span>
+                      <a
+                        href={`#${showcaseServices[activeTab].id}`}
+                        className="text-white hover:text-gray-300 text-xs font-semibold flex items-center gap-1 transition-colors duration-300"
+                      >
+                        Learn More
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+            </div>
           </div>
         </section>
 
         {/* Detailed Service Sections */}
-        <div className="bg-gray-900 py-10">
-          {services.map((service, index) => {
-            const isEven = index % 2 === 0;
-            return (
-              <section key={service.id} id={service.id} className={`py-20 ${isEven ? 'bg-gray-800/30' : 'bg-gray-900'}`}>
-                <div className="container mx-auto px-4">
-                  <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center`}>
-                    
-                    {/* Left/Right Text Content */}
-                    <motion.div 
-                      initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      className="w-full lg:w-1/2"
-                    >
-                      <div className="inline-block mb-6 p-4 rounded-2xl bg-gray-800 border border-gray-700 shadow-xl">
-                        {service.icon}
-                      </div>
-                      <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        {service.title}
-                      </h2>
-                      <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                        {service.fullDescription}
-                      </p>
-                      
-                      <div className="grid sm:grid-cols-2 gap-4 mb-10">
-                        {service.features.map((feature, i) => (
-                          <div key={i} className="flex items-center text-gray-300">
-                            <CheckCircle2 className={`h-5 w-5 mr-3 text-${service.color}-400`} />
-                            <span>{feature}</span>
-                          </div>
-                        ))}
+        <section id="services" className="py-24 bg-gray-950 relative z-10">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {services.map((service, index) => {
+                const borderClass = {
+                  cyan: 'border-cyan-500/20 hover:border-cyan-400',
+                  orange: 'border-orange-500/20 hover:border-orange-400',
+                  green: 'border-green-500/20 hover:border-green-400',
+                  purple: 'border-purple-500/20 hover:border-purple-400'
+                }[service.color] || 'border-gray-800 hover:border-gray-700';
+
+                return (
+                  <motion.div
+                    key={service.id}
+                    custom={index}
+                    initial="hidden"
+                    whileInView="visible"
+                    variants={cardVariants}
+                    viewport={{ once: false, amount: 0.1 }}
+                    className="group"
+                  >
+                    <div className={`relative bg-gray-900 border ${borderClass} rounded-3xl overflow-hidden transition-all duration-300 flex flex-col h-full p-6 md:p-8 justify-between`}>
+                      <div>
+                        <h3 className="text-2xl font-bold text-white mb-4">
+                          {service.title}
+                        </h3>
+
+                        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                          {service.fullDescription}
+                        </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-2 mb-10">
-                        {service.technologies.map((tech, i) => (
-                          <span key={i} className={`px-4 py-2 rounded-full text-sm font-medium border ${getColorClasses(service.color)}`}>
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Get Started Button replacing Investment */}
-                      <div className="mt-8">
-                        <Link to="/contact" className={`inline-flex items-center text-black font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg flex items-center transform hover:-translate-y-1 ${getButtonColor(service.color)}`}>
+                      {/* CTA Button */}
+                      <div className="pt-4">
+                        <Link to="/contact" className="inline-flex items-center justify-center bg-white hover:bg-gray-200 text-black font-bold py-3.5 px-6 rounded-full transition-all duration-300 w-full text-sm">
                           Get Started
-                          <ArrowRight className="ml-2 h-5 w-5" />
+                          <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </div>
-                    </motion.div>
-
-                    {/* Left/Right Visual/Image */}
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.8 }}
-                      viewport={{ once: true }}
-                      className="w-full lg:w-1/2"
-                    >
-                      <div className={`aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden relative group border-2 ${getBorderColor(service.color)} shadow-2xl`}>
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60 z-10 pointer-events-none"></div>
-                        <img 
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                        />
-                      </div>
-                    </motion.div>
-
-                  </div>
-                </div>
-              </section>
-            );
-          })}
-        </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         {/* Process */}
-        <section className="py-24 bg-gray-800">
+        <section className="py-32 bg-gray-900/30 border-y border-gray-900 relative">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Our Proven <span className="text-cyan-400">Process</span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                Our Proven Process
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                 A streamlined methodology that ensures successful project delivery, transparency, and top-tier quality every time.
               </p>
             </motion.div>
@@ -288,15 +379,17 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gray-900 rounded-2xl p-8 border-t-4 border-t-cyan-400 border border-gray-700 hover:shadow-xl hover:shadow-cyan-400/10 transition-all duration-300 transform hover:-translate-y-2 relative overflow-hidden"
+                  className="bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 border border-gray-800 hover:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative overflow-hidden group"
                 >
-                  <div className="absolute top-0 right-0 -mt-6 -mr-6 text-9xl font-bold text-gray-800 opacity-50 select-none pointer-events-none">
+                  <div className="absolute top-0 right-0 -mt-6 -mr-6 text-9xl font-extrabold text-gray-800/10 group-hover:text-gray-800/20 transition-colors duration-300 select-none pointer-events-none">
                     {step.step}
                   </div>
                   <div className="relative z-10">
-                    <div className="text-2xl font-bold text-cyan-400 mb-4 inline-block bg-cyan-400/10 px-4 py-1 rounded-full">Step {step.step}</div>
-                    <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{step.description}</p>
+                    <div className="text-sm font-bold text-gray-300 mb-4 inline-block bg-gray-800 px-3 py-1 rounded-full border border-gray-750">
+                      Step {step.step}
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-gray-100 transition-colors duration-300">{step.title}</h3>
+                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{step.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -305,27 +398,29 @@ const Services = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-gradient-to-t from-gray-900 to-gray-800 text-center">
-          <div className="container mx-auto px-4">
+        <section className="py-32 bg-gradient-to-t from-gray-950 to-gray-900 text-center relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 rounded-3xl p-12 max-w-4xl mx-auto shadow-2xl"
+              className="bg-gray-900 border border-gray-800 rounded-3xl p-12 max-w-4xl mx-auto shadow-xl relative overflow-hidden"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Transform Your Digital Presence?</h2>
-              <p className="text-xl text-gray-300 mb-10">
-                Let's discuss how our services can help you achieve your business objectives.
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                Ready to Transform Your <br className="hidden sm:inline" />
+                Digital Presence?
+              </h2>
+              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Let's discuss how our services can help you achieve your business objectives and elevate your brand.
               </p>
-              <Link to="/contact" className="inline-flex items-center justify-center bg-black text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-900 transition-all transform hover:scale-105">
+              <Link to="/contact" className="inline-flex items-center justify-center bg-white hover:bg-gray-200 text-black px-10 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-md">
                 Book a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </motion.div>
           </div>
         </section>
-
       </div>
     </PageTransition>
   );

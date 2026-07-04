@@ -1,11 +1,18 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Lock, Sparkles, Globe } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
+interface NotificationCardProps {
+  title: string;
+  subtitle: string;
+  info: string;
+  align?: 'left' | 'right';
+}
+
 // Reusable Notification Success Card (overlapping the images like Yousign page)
-const NotificationCard = ({ title, subtitle, info, align = 'left' }) => {
+const NotificationCard = ({ title, subtitle, info, align = 'left' }: NotificationCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}

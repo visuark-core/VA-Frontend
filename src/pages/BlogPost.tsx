@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { 
-  Calendar, 
-  User, 
-  ArrowLeft, 
-  Clock, 
-  Loader2, 
-  ChevronRight
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { blogPosts as localBlogPosts, BlogPostData } from '../data/blogs';
 
@@ -28,17 +21,7 @@ const BlogPost = () => {
   useEffect(() => {
     const b = localBlogPosts.find((p) => p.slug === slug || p.id === slug);
     if (b) {
-      setPost({
-        id: b.id,
-        title: b.title,
-        summary: b.excerpt,
-        author: b.author,
-        date: b.date,
-        image: b.image,
-        readTime: b.readTime,
-        content: b.content,
-        images: b.images || []
-      });
+      setPost(b);
       setError('');
     } else {
       setError('Article not found');
@@ -50,8 +33,11 @@ const BlogPost = () => {
   if (loading) {
     return (
       <PageTransition>
-        <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
-          <Loader2 className="w-8 h-8 text-cyan-600 animate-spin" />
+        <div className="min-h-screen flex items-center justify-center bg-[#ffffff]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-[#111111] animate-spin mx-auto mb-4" />
+            <p className="text-slate-700 text-lg font-serif italic">Retrieving archives...</p>
+          </div>
         </div>
       </PageTransition>
     );
@@ -60,11 +46,11 @@ const BlogPost = () => {
   if (error || !post) {
     return (
       <PageTransition>
-        <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] px-4">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">Post Not Found</h2>
-            <Link to="/blog" className="text-cyan-600 hover:text-cyan-500 font-medium inline-flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" /> Back to Blog
+        <div className="min-h-screen flex items-center justify-center bg-[#ffffff] px-4">
+          <div className="text-center p-10 border-2 border-dashed border-[#111111]/30 max-w-lg">
+            <h2 className="font-newspaper-serif text-3xl font-bold text-[#111111] uppercase mb-4">Dispatch Not Found</h2>
+            <Link to="/blog" className="text-sm font-mono uppercase tracking-wider hover:underline text-[#111111] inline-flex items-center gap-2">
+              ← Return to Archives
             </Link>
           </div>
         </div>
@@ -72,113 +58,122 @@ const BlogPost = () => {
     );
   }
 
+  const paragraphs = post.content.split('\n\n');
+
   return (
     <PageTransition>
-      <div className="bg-[#f8fafc] min-h-screen pb-20">
-        {/* Progress Bar */}
+      <div className="bg-[#ffffff] min-h-screen pt-28 pb-20 select-text font-newspaper-serif text-[#111111]">
+        <style>
+          {`
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&family=Special+Elite&display=swap');
+            .font-newspaper-gothic { font-family: 'UnifrakturMaguntia', serif; }
+            .font-newspaper-serif { font-family: 'Playfair Display', serif; }
+            .font-newspaper-typewriter { font-family: 'Special Elite', monospace; }
+          `}
+        </style>
+
+        {/* Progress Bar (Ink Line) */}
         <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-cyan-500 z-[100] origin-left"
+          className="fixed top-0 left-0 right-0 h-1 bg-[#111111] z-[100] origin-left"
           style={{ scaleX }}
         />
 
-
-        {/* Content Layout */}
-        <article className="pt-32 px-6">
-          <div className="max-w-3xl mx-auto">
+        <article className="container mx-auto px-4 max-w-4xl">
+          {/* Newspaper Page Wrapper */}
+          <div className="bg-[#ffffff] border border-[#e2e8f0] shadow-[0_20px_50px_rgba(0,0,0,0.06)] rounded-sm p-6 sm:p-10 lg:p-12 relative overflow-hidden animate-fadeInUp">
             
-            {/* Back Button */}
-            <Link to="/blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-cyan-600 transition-colors mb-8 font-medium group">
-              <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" />
-              <span>Back to Blog</span>
-            </Link>
-
-            {/* Header Metadata */}
-            <header className="mb-12">
-              <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-slate-500 text-sm mb-6 font-medium">
-                <span className="flex items-center gap-1.5">
-                  <User className="w-4 h-4" />
-                  {post.author}
-                </span>
-                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4" />
-                  {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                </span>
-                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4" />
-                  {post.readTime}
-                </span>
+            {/* Header / Nameplate */}
+            <header className="mb-8">
+              <div className="border-b border-[#111111] pb-3 mb-6 flex justify-between items-center text-xs font-mono uppercase tracking-widest text-[#555555] select-none">
+                <span>Miami, FL</span>
+                <span className="font-bold font-newspaper-gothic text-2xl lowercase">the visuark chronicle</span>
+                <span>Dispatch</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] mb-8 tracking-tight">
+              {/* Back Link */}
+              <Link to="/blog" className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#555555] hover:text-[#111111] hover:underline mb-6">
+                ← Back to Archives
+              </Link>
+
+              {/* Title */}
+              <h1 className="font-newspaper-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[1.03] text-[#111111] mb-6 text-left hover:underline">
                 {post.title}
               </h1>
 
-              {post.summary && (
-                <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-light border-l-2 border-cyan-500 pl-6 py-2 italic">
-                  {post.summary}
-                </p>
-              )}
+              {/* Metadata */}
+              <div className="text-xs md:text-sm font-mono uppercase tracking-wider text-[#555555] border-b border-[#111111]/20 pb-3 mb-8 text-left select-none">
+                BY {post.author.toUpperCase()} — {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()} — {post.readTime.toUpperCase()}
+              </div>
             </header>
 
-            {/* Main Featured Image */}
+            {/* Main Featured Image with Fig. I Caption */}
             {post.image && (
-              <div className="mb-16 rounded-2xl overflow-hidden shadow-xl bg-slate-100 aspect-video">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="border border-[#111111] p-3 bg-[#fafafa] shadow-sm mb-8 w-full">
+                <div className="overflow-hidden aspect-video border border-[#111111]">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover grayscale contrast-125 brightness-95"
+                  />
+                </div>
+                <p className="mt-2.5 text-xs italic font-serif text-[#555555] text-center border-t border-[#111111]/10 pt-2 select-none">
+                  Fig. I — Photographic visual documentation accompanying dispatch.
+                </p>
               </div>
             )}
 
-            {/* Article Body */}
-            <div className="max-w-none">
-              <div 
-                className="whitespace-pre-wrap leading-relaxed blog-body-content"
-                dangerouslySetInnerHTML={{ 
-                  __html: post.content
-                    .replace(/\n\n/g, '</p><p>')
-                    .replace(/\n/g, '<br/>')
-                }}
-              />
+            {/* Article Body in Double Columns */}
+            <div className="columns-1 md:columns-2 gap-8 text-justify font-serif text-[#222222] text-[15px] md:text-[17px] leading-relaxed border-b border-[#111111]/20 pb-10">
+              {paragraphs.map((para, i) => (
+                <p 
+                  key={i} 
+                  className={`mb-4 leading-relaxed ${
+                    i === 0 
+                      ? 'first-letter:text-[54px] first-letter:font-newspaper-gothic first-letter:float-left first-letter:mr-3 first-letter:-mt-1 first-letter:text-[#111111]' 
+                      : 'indent-6'
+                  }`}
+                >
+                  {para}
+                </p>
+              ))}
             </div>
 
-            {/* Gallery Section - Only if more images exist */}
+            {/* Supporting Gallery Images */}
             {post.images.length > 1 && (
-              <div className="mt-20 pt-16 border-t border-slate-200">
-                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-[0.2em] mb-10 text-center opacity-50">
-                  Visuals
+              <div className="mt-12 pt-8 border-t border-double border-[#111111]">
+                <h3 className="text-xs font-mono font-bold text-[#555555] uppercase tracking-[0.2em] mb-6 text-center select-none">
+                  SUPPORTING ARCHIVE VISUALS
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {post.images.slice(1).map((img: string, idx: number) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      className="rounded-xl overflow-hidden bg-slate-100 group shadow-md"
-                    >
+                    <div key={idx} className="border border-[#111111] p-2 bg-[#fafafa]">
                       <img 
                         src={img} 
                         alt={`Supporting visual ${idx + 1}`} 
-                        className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full aspect-[4/3] object-cover grayscale contrast-110 brightness-95"
                       />
-                    </motion.div>
+                      <p className="mt-1.5 text-[10px] italic font-serif text-center text-[#555555] select-none">
+                        Fig. II.{idx + 1} — Supplementary archive plate.
+                      </p>
+                    </div>
                   ))}
                 </div>
               </div>
             )}
 
             {/* Footer Navigation */}
-            <footer className="mt-24 pt-12 border-t border-slate-200 flex flex-col items-center">
+            <footer className="mt-12 pt-6 border-t border-dashed border-[#111111]/30 flex items-center justify-between">
               <Link 
                 to="/blog" 
-                className="group flex items-center gap-3 text-cyan-600 font-bold text-lg hover:text-cyan-500 transition-colors"
+                className="text-xs sm:text-sm font-bold uppercase tracking-wider hover:underline text-[#111111] font-mono"
               >
-                More Articles
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                ← Return to Archives
+              </Link>
+              <Link 
+                to="/blog" 
+                className="text-xs sm:text-sm font-bold uppercase tracking-wider hover:underline text-[#111111] font-mono"
+              >
+                Next Dispatch →
               </Link>
             </footer>
 
